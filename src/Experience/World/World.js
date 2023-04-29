@@ -10,6 +10,9 @@ export default class World
         this.scene = this.experience.scene
         this.resources = this.experience.resources
 
+         // Setup
+         this.floor = new Floor()
+
         // Wait for resources
         this.resources.on('ready', () =>
         {

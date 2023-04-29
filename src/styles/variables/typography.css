@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Dubai';
+    src: url('../../../static/fonts/Dubai-Medium.woff2') format('woff2'),
+        url('../../../static/fonts/Dubai-Medium.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roystorie';
+    src: url('../../../static/fonts/Roystorie-ExtraLight.otf') format('otf'),
+        url('../../../static/fonts/Roystorie-ExtraLight.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}

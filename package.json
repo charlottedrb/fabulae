@@ -11,7 +11,13 @@
     "vite": "^4.0.4"
   },
   "dependencies": {
+    "@unseenco/taxi": "^1.2.2",
+    "autoprefixer": "^10.4.14",
+    "gsap": "^3.11.5",
     "lil-gui": "^0.17.0",
+    "postcss": "^8.4.23",
+    "splitting": "^1.0.6",
+    "tailwindcss": "^3.3.2",
     "three": "^0.148.0"
   }
 }
