@@ -15,8 +15,17 @@ export default {
       container: '5rem'
     },
     spacing: {
+      50: '5rem',
       0: 0,
-      50: '5rem'
+    },
+    padding: {
+      300: '30rem',
+      150: '15rem',
+      0: 0,
+
+    },
+    fontSize: {
+      200: '200px'
     },
     extend: {
       width: {
