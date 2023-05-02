@@ -9,6 +9,7 @@ export default class World {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
+    this.books = [];
 
     /**
      * Setup
@@ -25,11 +26,10 @@ export default class World {
       this.environment = new Environment();
     });
 
-    this.init()
+    this.init();
   }
 
-  init()
-  {
+  init() {
     this.setBooksBound();
   }
 
@@ -46,11 +46,20 @@ export default class World {
         this.floor,
         Math.random() * 0xff0000,
         new THREE.Vector3(
-          initialPosition.x + (bookDistance * i),
+          initialPosition.x + bookDistance * i,
           initialPosition.y + 1,
           initialPosition.z
         )
       );
+
+      this.books.push({
+        position: new THREE.Vector3(
+          initialPosition.x + bookDistance * i,
+          initialPosition.y + 1,
+          initialPosition.z
+        ),
+        author: `Author ${i}`,
+      });
     }
   }
 }
