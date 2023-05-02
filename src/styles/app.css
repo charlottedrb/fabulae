@@ -25,3 +25,17 @@ body {
 .webgl {
     @apply fixed top-0 left-0 outline-none;
 }
+
+.book-point {
+    &__content {
+        @apply absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center;
+    }
+
+    &__title {
+        @apply opacity-0;
+    }
+
+    &.visible {
+        transform: scale(1, 1);
+    }
+}

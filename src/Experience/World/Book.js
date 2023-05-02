@@ -42,7 +42,6 @@ export default class Book {
         this.mesh.rotation.x = Math.PI * 0.5
         this.mesh.rotation.z = - Math.PI * 0.5
         this.mesh.position.set(this.position.x, this.position.y, this.position.z)
-        console.log(this.mesh);
         this.scene.add(this.mesh)
     }
 

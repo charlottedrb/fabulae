@@ -9,6 +9,7 @@ import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 
 import sources from './sources.js'
+import InterfaceUI from './InterfaceUI.js'
 
 let instance = null
 
@@ -38,6 +39,7 @@ export default class Experience
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
+        this.interface = new InterfaceUI()
 
         // Resize event
         this.sizes.on('resize', () =>
@@ -62,6 +64,7 @@ export default class Experience
     {
         this.camera.update()
         this.world.update()
+        this.interface.update()
         this.renderer.update()
     }
 
