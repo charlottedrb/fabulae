@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
 import Floor from './Floor.js'
+import Video from './Video.js'
 
 export default class World
 {
@@ -11,7 +12,7 @@ export default class World
         this.resources = this.experience.resources
 
          // Setup
-         this.floor = new Floor()
+         this.video = new Video()
 
         // Wait for resources
         this.resources.on('ready', () =>
