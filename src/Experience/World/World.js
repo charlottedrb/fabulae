@@ -24,6 +24,7 @@ export default class World {
       // Setup
       this.floor = new Floor();
       this.environment = new Environment();
+      this.experience.sceneReady = true
     });
 
     this.init();
