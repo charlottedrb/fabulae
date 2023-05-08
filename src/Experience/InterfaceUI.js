@@ -19,19 +19,19 @@ export default class InterfaceUI {
     this.raycaster = new THREE.Raycaster();
 
     this.createHTMLPoints();
+    this.createPoints();
   }
 
   createHTMLPoints() {
     this.books.forEach((book, index) => {
       const point = document.createElement("div");
-      point.classList.add("book-point");
+      point.classList.add("point");
       point.id = `book-${index}`;
       point.innerHTML = `
-            <div class="book-point__content">
-                <div class="book-point__title">${book.author}</div>
-            </div>
-        `;
-      document.querySelector(".books-points").appendChild(point);
+          <div class="label">${index}</div>
+          <div class="text">Ventilation with air purifier and detection of environment toxicity.</div>
+      `;
+      document.body.appendChild(point);
     });
   }
 
@@ -42,20 +42,19 @@ export default class InterfaceUI {
         element: document.querySelector(`#book-${index}`),
       });
     });
+  }
 
+  updatePoints() {
     // Waiting for the scene to be ready - important
     if (this.experience.sceneReady) {
-
       // Go through each point
       for (const point of this.points) {
-        
         // Get 2D screen position
         const screenPosition = point.position.clone();
-        this.camera.instance.updateMatrixWorld();
-        screenPosition.project(this.camera);
+        screenPosition.project(this.camera.instance);
 
         // Set the raycaster
-        this.raycaster.setFromCamera(screenPosition, this.camera);
+        this.raycaster.setFromCamera(screenPosition, this.camera.instance);
         const intersects = this.raycaster.intersectObjects(
           this.scene.children,
           true
@@ -71,7 +70,9 @@ export default class InterfaceUI {
         else {
           // Get the distance of the intersection and the distance of the point
           const intersectionDistance = intersects[0].distance;
-          const pointDistance = point.position.distanceTo(this.camera.position);
+          const pointDistance = point.position.distanceTo(
+            this.camera.instance.position
+          );
 
           // Intersection is close than the point
           if (intersectionDistance < pointDistance) {
@@ -93,6 +94,6 @@ export default class InterfaceUI {
   }
 
   update() {
-    this.createPoints();
+    this.updatePoints();
   }
 }
