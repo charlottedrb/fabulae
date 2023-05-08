@@ -8,6 +8,7 @@ export default class Animation {
 
   init() {
     this.getElements();
+    this.events();
     this.splitTitles();
     this.prepareAnimation();
     this.animateTitles();
@@ -18,6 +19,7 @@ export default class Animation {
      * Titles
      */
     this.titles = document.querySelectorAll(".landing__title");
+    this.titlesContent = document.querySelectorAll(".landing__title-content");
   }
 
   splitTitles() {
@@ -27,7 +29,11 @@ export default class Animation {
     });
   }
 
-  events() {}
+  events() {
+    // this.titles.forEach(title => {
+    //   title.addEventListener('mouseenter', this.showContent.bind(this, title))
+    // })
+  }
 
   animateTitles() {
     const animation = gsap.timeline().delay(0.5)
@@ -40,28 +46,18 @@ export default class Animation {
             stagger: 0.05
         }, '-=0.6')
     })
-    // gsap.to(this.titles, {
-    //     y: '0%',
-    //     alpha: 1,
-    //     delay: 0.5,
-    //     duration: 1.2,
-    //     ease: 'expo.out',
-    //     stagger: 0.18
-    // })
   }
 
   prepareAnimation() {
-    console.log(this.splittedTitles);
     this.splittedTitles.forEach((title) => {
       gsap.set(title.chars, {
         y: "100%",
         alpha: 0,
       });
     });
-    console.log("prepareAnimation");
-    // gsap.set(this.titles, {
-    //   y: "100%",
-    //   alpha: 0,
-    // });
+  }
+
+  showContent(title) {
+    console.log(title);
   }
 }
