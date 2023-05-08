@@ -57,7 +57,7 @@ export default class World {
         position: new THREE.Vector3(
           initialPosition.x + bookDistance * i,
           initialPosition.y + 1,
-          initialPosition.z
+          initialPosition.z + 1
         ),
         author: `Author ${i}`,
       });
