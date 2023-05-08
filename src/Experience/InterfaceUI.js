@@ -43,52 +43,56 @@ export default class InterfaceUI {
       });
     });
 
-    
-    // Go through each point
-    for (const point of this.points) {
-      // Get 2D screen position
-      const screenPosition = point.position.clone();
-      screenPosition.project(this.camera);
+    // Waiting for the scene to be ready - important
+    if (this.experience.sceneReady) {
 
-      // Set the raycaster
-      this.raycaster.setFromCamera(screenPosition, this.camera);
-      const intersects = this.raycaster.intersectObjects(
-        this.scene.children,
-        true
-      );
+      // Go through each point
+      for (const point of this.points) {
+        
+        // Get 2D screen position
+        const screenPosition = point.position.clone();
+        this.camera.instance.updateMatrixWorld();
+        screenPosition.project(this.camera);
 
-      // No intersect found
-      if (intersects.length === 0) {
-        // Show
-        point.element.classList.add("visible");
-      }
+        // Set the raycaster
+        this.raycaster.setFromCamera(screenPosition, this.camera);
+        const intersects = this.raycaster.intersectObjects(
+          this.scene.children,
+          true
+        );
 
-      // Intersect found
-      else {
-        // Get the distance of the intersection and the distance of the point
-        const intersectionDistance = intersects[0].distance;
-        const pointDistance = point.position.distanceTo(this.camera.position);
-
-        // Intersection is close than the point
-        if (intersectionDistance < pointDistance) {
-          // Hide
-          point.element.classList.remove("visible");
-        }
-        // Intersection is further than the point
-        else {
+        // No intersect found
+        if (intersects.length === 0) {
           // Show
           point.element.classList.add("visible");
         }
-      }
 
-      const translateX = screenPosition.x * this.sizes.width * 0.5;
-      const translateY = -screenPosition.y * this.sizes.height * 0.5;
-      point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
+        // Intersect found
+        else {
+          // Get the distance of the intersection and the distance of the point
+          const intersectionDistance = intersects[0].distance;
+          const pointDistance = point.position.distanceTo(this.camera.position);
+
+          // Intersection is close than the point
+          if (intersectionDistance < pointDistance) {
+            // Hide
+            point.element.classList.remove("visible");
+          }
+          // Intersection is further than the point
+          else {
+            // Show
+            point.element.classList.add("visible");
+          }
+        }
+
+        const translateX = screenPosition.x * this.sizes.width * 0.5;
+        const translateY = -screenPosition.y * this.sizes.height * 0.5;
+        point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
+      }
     }
   }
 
   update() {
-    // this.createHTMLPoints();
     this.createPoints();
   }
 }

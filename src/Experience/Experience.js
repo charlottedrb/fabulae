@@ -41,6 +41,8 @@ export default class Experience
         this.world = new World()
         this.interface = new InterfaceUI()
 
+        this.sceneReady = false
+
         // Resize event
         this.sizes.on('resize', () =>
         {
