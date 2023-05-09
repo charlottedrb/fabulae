@@ -5,11 +5,16 @@ export default class BookPoint {
   constructor(book, id) {
     this.experience = new Experience();
     this.interface = new InterfaceUI()
+    this.overlay = this.interface.overlay
 
     this.book = book
     this.id = id
     this.el = null
     this.isClicked = false
+    
+    this.overlay.on('closeBook', () => {
+      this.isClicked = false
+    })
 
     this.init()
   }
@@ -55,9 +60,12 @@ export default class BookPoint {
   {
     if (this.isClicked) return
     
-    this.interface.currentBook && this.experience.world.books[this.interface.currentBook].obj.clickIn();  
+    // Open the new book
     this.experience.world.books[this.id].obj.clickOut();
     this.interface.currentBook = this.id;
     this.isClicked = true
+
+    // Show the overlay
+    this.overlay.show()
   }
 }
