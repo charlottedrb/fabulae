@@ -1,6 +1,7 @@
 import Experience from "./Experience.js";
 import * as THREE from "three";
 import BookPoint from "./Interface/BookPoint.js";
+import Overlay from "./Interface/Overlay.js";
 
 let interfaceUi = null 
 
@@ -27,6 +28,7 @@ export default class InterfaceUI {
     this.books = this.experience.world.books;
     this.currentBook = null
     this.booksPoints = []
+    this.overlay = new Overlay()
 
     this.raycaster = null;
 

@@ -9,6 +9,7 @@ export default class BookPoint {
     this.book = book
     this.id = id
     this.el = null
+    this.isClicked = false
 
     this.init()
   }
@@ -30,6 +31,7 @@ export default class BookPoint {
         <div class="label">${this.id}</div>
         <div class="text">Ventilation with air purifier and detection of environment toxicity.</div>
     `;
+    // document.querySelector('.books-points').appendChild(this.el);
     document.body.appendChild(this.el);
   }
 
@@ -51,8 +53,11 @@ export default class BookPoint {
 
   onPointClick() 
   {
+    if (this.isClicked) return
+    
     this.interface.currentBook && this.experience.world.books[this.interface.currentBook].obj.clickIn();  
     this.experience.world.books[this.id].obj.clickOut();
     this.interface.currentBook = this.id;
+    this.isClicked = true
   }
 }
