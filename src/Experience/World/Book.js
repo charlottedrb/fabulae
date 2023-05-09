@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
+import gsap from 'gsap'
+import InterfaceUI from '../InterfaceUI.js'
 
 export default class Book {
     constructor(parent, color, position)
@@ -45,8 +47,39 @@ export default class Book {
         this.scene.add(this.mesh)
     }
 
-    checkPosition() 
+    hoverOut()
     {
+        gsap.to(this.mesh.position, {
+            duration: 0.2,
+            z: this.mesh.position.z + 0.25,
+            ease: 'power3.inOut'
+        })
+    }
 
+    hoverIn()
+    {
+        gsap.to(this.mesh.position, {
+            duration: 0.3,
+            z: this.mesh.position.z - 0.25,
+            ease: 'power3.inOut'
+        })
+    }
+
+    clickOut()
+    {
+        gsap.to(this.mesh.position, {
+            duration: 1,
+            z: this.mesh.position.z + 1,
+            ease: 'power3.inOut'
+        })
+    }
+
+    clickIn()
+    {
+        gsap.to(this.mesh.position, {
+            duration: 1,
+            z: this.mesh.position.z - 1,
+            ease: 'power3.inOut'
+        })
     }
 }

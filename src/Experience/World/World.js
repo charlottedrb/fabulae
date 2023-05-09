@@ -43,7 +43,7 @@ export default class World {
     initialPosition.x -= this.floor.geometry.parameters.width / 2;
 
     for (let i = 1; i < nbBooks; i++) {
-      new Book(
+      const book = new Book(
         this.floor,
         Math.random() * 0xff0000,
         new THREE.Vector3(
@@ -60,6 +60,7 @@ export default class World {
           initialPosition.z + 1
         ),
         author: `Author ${i}`,
+        obj: book
       });
     }
   }
