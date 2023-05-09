@@ -1,16 +1,34 @@
 import Experience from "./Experience.js";
 import * as THREE from "three";
+import BookPoint from "./Interface/BookPoint.js";
+
+let interfaceUi = null 
 
 export default class InterfaceUI {
   constructor() {
+    // Singleton
+    if(interfaceUi)
+    {
+        return interfaceUi
+    }
+    interfaceUi = this
+    
+    // Global access
+    window.interface = this
+
     this.experience = new Experience();
     this.camera = this.experience.camera;
     this.scene = this.experience.scene;
     this.sizes = this.experience.sizes;
+
+    /**
+     * Book interface
+     */
     this.books = this.experience.world.books;
+    this.currentBook = null
+    this.booksPoints = []
+
     this.raycaster = null;
-    this.bookPoints = null;
-    this.points = [];
 
     this.init();
   }
@@ -18,37 +36,23 @@ export default class InterfaceUI {
   init() {
     this.raycaster = new THREE.Raycaster();
 
-    this.createHTMLPoints();
-    this.createPoints();
-  }
-
-  createHTMLPoints() {
-    this.books.forEach((book, index) => {
-      const point = document.createElement("div");
-      point.classList.add("point");
-      point.id = `book-${index}`;
-      point.innerHTML = `
-          <div class="label">${index}</div>
-          <div class="text">Ventilation with air purifier and detection of environment toxicity.</div>
-      `;
-      document.body.appendChild(point);
-    });
+    this.createPoints()
   }
 
   createPoints() {
-    this.books.forEach((book, index) => {
-      this.points.push({
+    this.books.forEach((book, id) => {
+      this.booksPoints.push({
         position: book.position,
-        element: document.querySelector(`#book-${index}`),
+        obj: new BookPoint(book, id),
       });
     });
   }
-
+  
   updatePoints() {
     // Waiting for the scene to be ready - important
     if (this.experience.sceneReady) {
       // Go through each point
-      for (const point of this.points) {
+      for (const point of this.booksPoints) {
         // Get 2D screen position
         const screenPosition = point.position.clone();
         screenPosition.project(this.camera.instance);
@@ -63,7 +67,7 @@ export default class InterfaceUI {
         // No intersect found
         if (intersects.length === 0) {
           // Show
-          point.element.classList.add("visible");
+          point.obj.el.classList.add("visible");
         }
 
         // Intersect found
@@ -77,18 +81,18 @@ export default class InterfaceUI {
           // Intersection is close than the point
           if (intersectionDistance < pointDistance) {
             // Hide
-            point.element.classList.remove("visible");
+            point.obj.el.classList.remove("visible");
           }
           // Intersection is further than the point
           else {
             // Show
-            point.element.classList.add("visible");
+            point.obj.el.classList.add("visible");
           }
         }
 
         const translateX = screenPosition.x * this.sizes.width * 0.5;
         const translateY = -screenPosition.y * this.sizes.height * 0.5;
-        point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
+        point.obj.el.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
       }
     }
   }

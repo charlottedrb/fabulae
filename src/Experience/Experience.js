@@ -11,18 +11,18 @@ import Resources from './Utils/Resources.js'
 import sources from './sources.js'
 import InterfaceUI from './InterfaceUI.js'
 
-let instance = null
+let experience = null
 
 export default class Experience
 {
     constructor(_canvas)
     {
         // Singleton
-        if(instance)
+        if(experience)
         {
-            return instance
+            return experience
         }
-        instance = this
+        experience = this
         
         // Global access
         window.experience = this
