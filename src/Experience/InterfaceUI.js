@@ -30,6 +30,11 @@ export default class InterfaceUI {
     this.booksPoints = []
     this.overlay = new Overlay()
 
+    this.overlay.on('closeBook', () => {
+      console.log(this.currentBook);
+      this.books[this.currentBook].obj.clickIn()
+    })
+
     this.raycaster = null;
 
     this.init();

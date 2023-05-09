@@ -1,8 +1,10 @@
 import gsap from 'gsap'
+import EventEmitter from '../Utils/EventEmitter'
 
-export default class Overlay {
+export default class Overlay extends EventEmitter {
     constructor()
     {
+        super()
         this.getElements()
         this.init()
         this.events()
@@ -13,7 +15,6 @@ export default class Overlay {
         this.el = document.querySelector('.overlay')
         this.close = document.querySelector('.overlay-close')
     }
-
     
     init()
     {
@@ -25,11 +26,20 @@ export default class Overlay {
         this.close.addEventListener('click', this.onCloseClick.bind(this))
     }
 
+    show() 
+    {
+        gsap.to(this.el, {
+            alpha: 0.5,
+            pointerEvents: 'auto'
+        })
+    }
+
     onCloseClick()
     {
-        console.log('coucou');
+        this.trigger('closeBook')
         gsap.to(this.el, {
-            alpha: 0
+            alpha: 0,
+            pointerEvents: 'none'
         })
     }
 }
