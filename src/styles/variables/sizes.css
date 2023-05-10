@@ -1,0 +1,23 @@
+:root {
+    --size: 320;
+    
+    @media screen and (min-width: 768px) {
+        --size: 768;
+    }
+
+    @media screen and (min-width: 1024px) {
+        --size: 1024;
+    }
+
+    @media screen and (min-width: 1440px) {
+        --size: 1440;
+    }
+
+    @media screen and (min-width: 1920px) {
+        --size: 1920;
+    }
+
+    @media screen and (min-width: 2560px) {
+        --size: 2560;
+    }
+}
