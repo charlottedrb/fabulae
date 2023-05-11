@@ -30,6 +30,23 @@ export default class Experience
         this.canvas = _canvas
 
         // Setup
+        this.debug = null
+        this.sizes = null
+        this.time = null
+        this.scene = null
+        this.resources = null
+        this.camera = null
+        this.renderer = null
+        this.world = null
+
+        this.resizeBound = this.resize.bind(this)
+        this.updateBound = this.update.bind(this)
+
+        this.init()
+    }
+
+    init() {
+        // Setup
         this.debug = new Debug()
         this.sizes = new Sizes()
         this.time = new Time()
@@ -40,16 +57,10 @@ export default class Experience
         this.world = new World()
 
         // Resize event
-        this.sizes.on('resize', () =>
-        {
-            this.resize()
-        })
+        this.sizes.on('resize', this.resizeBound)
 
         // Time tick event
-        this.time.on('tick', () =>
-        {
-            this.update()
-        })
+        this.time.on('tick', this.updateBound)
     }
 
     resize()
@@ -67,8 +78,8 @@ export default class Experience
 
     destroy()
     {
-        this.sizes.off('resize')
-        this.time.off('tick')
+        this.sizes.off('resize', this.resizeBound)
+        this.time.off('tick', this.updateBound)
 
         // Traverse the whole scene
         this.scene.traverse((child) =>
@@ -92,10 +103,28 @@ export default class Experience
             }
         })
 
-        this.camera.controls.dispose()
-        this.renderer.instance.dispose()
+        // this.camera.controls.dispose()
+        // this.renderer.instance.dispose()
 
-        if(this.debug.active)
+        if(this.debug.active) {
             this.debug.ui.destroy()
+        }
+
+        this.canvas = null
+        this.debug = null
+        this.sizes = null
+        this.time = null
+        this.scene = null
+        this.resources = null
+
+        this.camera.destroy()
+        this.camera = null
+        this.renderer.destroy()
+        this.renderer = null
+        this.world.destroy()
+        this.world = null
+
+        this.resizeBound = null
+        this.updateBound = null
     }
 }

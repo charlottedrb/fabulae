@@ -38,4 +38,16 @@ export default class Camera
     {
         this.controls.update()
     }
+
+    destroy() {
+        this.scene.remove(this.instance)
+        this.instance = null
+        this.controls.dispose()
+        this.controls = null
+
+        this.experience = null
+        this.sizes = null
+        this.scene = null
+        this.canvas = null
+    }
 }

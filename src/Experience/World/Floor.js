@@ -47,4 +47,20 @@ export default class Floor
         this.axesHelper = new THREE.AxesHelper(5)
         this.scene.add(this.axesHelper)
     }
+
+    destroy() {
+        this.geometry.dispose()
+        this.geometry = null
+        this.scene.remove(this.mesh)
+        this.mesh = null
+        this.scene.remove(this.axesHelper)
+        this.axesHelper = null
+        this.material.dispose()
+        this.material = null
+        this.textures = null
+
+        this.experience = null
+        this.scene = null
+        this.resources = null
+    }
 }

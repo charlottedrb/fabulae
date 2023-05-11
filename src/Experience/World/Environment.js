@@ -98,4 +98,17 @@ export default class Environment
                 .onChange(this.environmentMap.updateMaterials)
         }
     }
+
+    destroy() {
+        this.debugFolder.remove()
+        this.sunLight.dispose()
+        this.sunLight = null
+        this.environmentMap.texture.dispose()
+        this.environmentMap = null
+
+        this.experience = null
+        this.scene = null
+        this.resources = null
+        this.debug = null
+    }
 }
