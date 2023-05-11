@@ -27,4 +27,9 @@ export default [
 //         type: 'gltfModel',
 //         path: 'models/Fox/glTF/Fox.gltf'
 //     }
+    {
+        name: 'stairsModel',
+        type: 'gltfModel',
+        path: 'models/stairs.gltf'
+    }
 ]
