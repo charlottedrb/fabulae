@@ -22,9 +22,24 @@ export default [
 //         type: 'texture',
 //         path: 'textures/dirt/normal.jpg'
 //     },
-//     {
-//         name: 'foxModel',
-//         type: 'gltfModel',
-//         path: 'models/Fox/glTF/Fox.gltf'
-//     }
+    // {
+    //     name: 'foxModel',
+    //     type: 'gltfModel',
+    //     path: 'models/Fox/glTF/Fox.gltf'
+    // }
+    {
+        name: 'stairsRoom',
+        type: 'gltfModel',
+        path: 'models/room_stairs.gltf'
+    },
+    {
+        name: 'stairs',
+        type: 'gltfModel',
+        path: 'models/stairs.gltf'
+    },
+    {
+        name: 'stairsCamera',
+        type: 'gltfModel',
+        path: 'models/camera_stairs.gltf'
+    },
 ]

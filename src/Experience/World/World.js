@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
 import Floor from './Floor.js'
+import StairsRoom from './StairsRoom.js'
 
 export default class World
 {
@@ -11,14 +12,13 @@ export default class World
         this.resources = this.experience.resources
 
         // Setup
-        this.floor = new Floor()
+        this.environment = new Environment()
 
         // Wait for resources
         this.resources.on('ready', () =>
         {
-            // Setup
-            // this.floor = new Floor()
-            // this.environment = new Environment()
+            console.log('resources', this.resources);
+            this.stairsRoom = new StairsRoom()
         })
     }
 
