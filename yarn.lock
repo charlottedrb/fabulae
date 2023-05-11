@@ -299,6 +299,11 @@ cssesc@^3.0.0:
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
+debounce-throttle@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/debounce-throttle/-/debounce-throttle-1.0.4.tgz#1a89befeb05302bf2edd67f739ae92de1fe6c945"
+  integrity sha512-dg3ImASYct9Kymx8Wm+uC9luq2BkbTrULrS/CzAVTYvVJibhYgXznKVytlqhMC8plSl6U5Fxy5bfWu+JhYI7ww==
+
 didyoumean@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/didyoumean/-/didyoumean-1.2.2.tgz#989346ffe9e839b4555ecf5666edea0d3e8ad037"

@@ -1,6 +1,6 @@
 import Experience from "./Experience.js";
 import * as THREE from "three";
-import BookPoint from "./Interface/BookPoint.js";
+import BookPoint from "./World/Book/BookPoint.js";
 import Overlay from "./Interface/Overlay.js";
 
 let interfaceUi = null 
@@ -30,11 +30,6 @@ export default class InterfaceUI {
     this.booksPoints = []
     this.overlay = new Overlay()
 
-    this.overlay.on('closeBook', () => {
-      console.log(this.currentBook);
-      this.books[this.currentBook].obj.clickIn()
-    })
-
     this.raycaster = null;
 
     this.init();
@@ -42,6 +37,10 @@ export default class InterfaceUI {
 
   init() {
     this.raycaster = new THREE.Raycaster();
+
+    this.overlay.on('closeBook', () => {
+      this.currentBook.book.obj.clickIn()
+    })
 
     this.createPoints()
   }

@@ -6,6 +6,8 @@ export default class BookContent {
 
     init()
     {
+        this.pager = new Pager()
+
         this.getElements()
         this.onEnterCompleted()
     }
@@ -19,7 +21,7 @@ export default class BookContent {
 
     events()
     {
-
+        
     }
 
     onEnterCompleted()

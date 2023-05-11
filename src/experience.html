@@ -13,12 +13,44 @@
             <canvas class="webgl"></canvas>
         </div>
     </main>
-    <div class="overlay relative w-screen h-screen bg-night-blue opacity-0 z-[1] pointer-events-none">
-        <div class="absolute top-50 right-50 w-[2.5rem] h-[2.5rem] cursor-pointer overlay-close">
-            <div class="bg-white w-full h-[1px] rotate-45"></div>
-            <div class="bg-white w-full h-[1px] -rotate-45"></div>
+    <div class="overlay relative w-screen h-screen grid grid-cols-12  opacity-0 z-[1] pointer-events-none">
+        <div class="bg-night-blue/50 overlay__content">
+            <!-- Book content -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 book__content">
+            </div>
+
+            <!-- Pager -->
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 pager">
+                <div class="absolute bottom-10 -translate-x-full left-0 text-white font-roystorie text-30 pr-25 opacity-0 pager__previous">Précédente</div>
+                <div class="absolute bottom-10 translate-x-full right-0 text-white font-roystorie text-30 pl-25 opacity-0 pager__next">Suivante</div>
+                <!-- Board -->
+                <div class="svg-wrapper w-300">
+                    <img class="pager__board" src="/images/page-board.svg" alt="page-board">
+                </div>
+                <!-- Line -->
+                <div class="border-b-white border-dotted border-b-[0.3rem] rotate-90 origin-center w-300 pager__line"></div>
+                <!-- Guide -->
+                <div class="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 svg-wrapper w-100 pager__guide">
+                    <img src="/images/logo-icon.svg" alt="logo-icon">
+                </div>
+            </div>
+
+            <!-- Login content -->
+            <div class="hidden flex-col gap-y-70 px-container pt-100">
+                <div class="font-roystorie text-white text-45 uppercase">Connectez-vous.</div>
+                <form class="flex flex-col gap-y-40">
+                    <input type="email" placeholder="Email">
+                    <input type="password" placeholder="Mot de passe">
+                </form>
+            </div>
         </div>
 
+        
+        <!-- Close button -->
+        <div class="absolute top-50 right-50 w-[2.5rem] h-[2.5rem] cursor-pointer overlay-close">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-white w-full h-[1px] rotate-45"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-white w-full h-[1px] -rotate-45"></div>
+        </div>
     </div>
     <script type="module" src="./script.js"></script>
 </body>

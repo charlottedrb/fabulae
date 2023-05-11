@@ -1,6 +1,8 @@
 @import "variables/colors.css";
 @import "variables/sizes.css";
 @import "variables/typography.css";
+@import "components/overlay.css";
+@import "components/form.css";
 
 @import 'splitting/dist/splitting.css';
 @import 'splitting/dist/splitting-cells.css';
@@ -24,6 +26,12 @@ body {
 
 .webgl {
     @apply fixed top-0 left-0 outline-none;
+}
+
+.svg-wrapper {
+    svg {
+        @apply w-full h-full;
+    }
 }
 
 .book-point {

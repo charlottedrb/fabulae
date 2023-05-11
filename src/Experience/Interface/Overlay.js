@@ -1,10 +1,13 @@
 import gsap from 'gsap'
 import EventEmitter from '../Utils/EventEmitter'
+import Pager from './Book/Pager'
 
 export default class Overlay extends EventEmitter {
     constructor()
     {
         super()
+        
+        this.pager = null 
         this.getElements()
         this.init()
         this.events()
@@ -20,6 +23,11 @@ export default class Overlay extends EventEmitter {
     {
         
     }
+
+    initPager()
+    {
+        this.pager = new Pager()
+    }
     
     events()
     {
@@ -29,7 +37,7 @@ export default class Overlay extends EventEmitter {
     show() 
     {
         gsap.to(this.el, {
-            alpha: 0.5,
+            alpha: 1,
             pointerEvents: 'auto'
         })
     }

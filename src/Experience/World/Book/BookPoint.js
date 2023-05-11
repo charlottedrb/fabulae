@@ -1,8 +1,11 @@
-import Experience from "../Experience";
-import InterfaceUI from "../InterfaceUI";
+import Experience from "../../Experience";
+import InterfaceUI from "../../InterfaceUI";
+import EventEmitter from "../../Utils/EventEmitter";
 
-export default class BookPoint {
+export default class BookPoint extends EventEmitter {
   constructor(book, id) {
+    super()
+
     this.experience = new Experience();
     this.interface = new InterfaceUI()
     this.overlay = this.interface.overlay
@@ -34,7 +37,6 @@ export default class BookPoint {
     this.el.id = `book-${this.id}`;
     this.el.innerHTML = `
         <div class="label">${this.id}</div>
-        <div class="text">Ventilation with air purifier and detection of environment toxicity.</div>
     `;
     // document.querySelector('.books-points').appendChild(this.el);
     document.body.appendChild(this.el);
@@ -62,10 +64,11 @@ export default class BookPoint {
     
     // Open the new book
     this.experience.world.books[this.id].obj.clickOut();
-    this.interface.currentBook = this.id;
+    this.interface.currentBook = this;
     this.isClicked = true
 
     // Show the overlay
     this.overlay.show()
+    this.overlay.initPager()
   }
 }

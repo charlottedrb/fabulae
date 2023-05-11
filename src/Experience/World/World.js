@@ -1,5 +1,5 @@
 import Experience from "../Experience.js";
-import Book from "./Book.js";
+import Book from "./Book/Book.js";
 import Environment from "./Environment.js";
 import Floor from "./Floor.js";
 import * as THREE from "three";
