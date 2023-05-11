@@ -1,6 +1,7 @@
 import gsap from 'gsap'
 import EventEmitter from '../Utils/EventEmitter'
 import Pager from './Book/Pager'
+import BookContent from './Book/BookContent'
 
 export default class Overlay extends EventEmitter {
     constructor()
@@ -8,6 +9,8 @@ export default class Overlay extends EventEmitter {
         super()
         
         this.pager = null 
+        this.bookContent = null 
+
         this.getElements()
         this.init()
         this.events()
@@ -27,6 +30,11 @@ export default class Overlay extends EventEmitter {
     initPager()
     {
         this.pager = new Pager()
+    }
+
+    initBookContent()
+    {
+        this.bookContent = new BookContent()
     }
     
     events()

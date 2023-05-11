@@ -1,10 +1,13 @@
 import gsap from 'gsap'
 import { throttle } from 'debounce-throttle'
 import Sizes from '../../Utils/Sizes'
+import EventEmitter from '../../Utils/EventEmitter'
  
-export default class Pager {
+export default class Pager extends EventEmitter {
     constructor()
     {
+        super()
+
         this.sizes = new Sizes()
 
         this.init()
@@ -22,6 +25,7 @@ export default class Pager {
             x: null,
             y: null
         }
+        this.status = null
 
         this.getElements()
         this.bindMethods()
@@ -40,6 +44,14 @@ export default class Pager {
     events()
     {
         window.addEventListener('mousemove', this.onMouseMove.bind(this))
+        window.addEventListener('click', this.onClick.bind(this))
+    }
+
+    onClick()
+    {
+        if (this.status === null) return
+
+        this.trigger('changePage', [this.status])
     }
 
     onMouseMove(e)
@@ -49,8 +61,16 @@ export default class Pager {
 
         if (this.mouse.x > 0.30 || this.mouse.x < -0.30)  return 
         
-        this.mouse.x > 0.2 ? gsap.to(this.next, { alpha: 1 }) : gsap.to(this.next, { alpha: 0 })
-        this.mouse.x < -0.2 ? gsap.to(this.previous, { alpha: 1 }) : gsap.to(this.previous, { alpha: 0 })
+        if (this.mouse.x > 0.20) {
+            gsap.to(this.next, { alpha: 1 })
+            this.status = 'next'
+        } else if (this.mouse.x < -0.20) {
+            gsap.to(this.previous, { alpha: 1 })
+            this.status = 'previous'
+        } else {
+            gsap.to([this.next, this.previous], { alpha: 0 })
+            this.status = null
+        }
 
         const rotation = this.mouse.x * 90
         

@@ -70,5 +70,6 @@ export default class BookPoint extends EventEmitter {
     // Show the overlay
     this.overlay.show()
     this.overlay.initPager()
+    this.overlay.initBookContent()
   }
 }
