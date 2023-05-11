@@ -67,6 +67,7 @@ export default class RaycasterHandler
 
     destroy() {
         window.removeEventListener('mousemove', this.moveBound)
+        this.moveBound = null
 
         this.raycaster = null
         this.mouse = null
