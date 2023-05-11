@@ -17,11 +17,13 @@ export default class RaycasterHandler
         this.objectsToTest = []
         this.callbacks = {}
 
-        window.addEventListener('mousemove', (event) =>
-        {
-            this.mouse.x = event.clientX / this.sizes.width * 2 - 1
-            this.mouse.y = - (event.clientY / this.sizes.height) * 2 + 1
-        })
+        this.moveBound = this.move.bind(this)
+        window.addEventListener('mousemove', this.moveBound)
+    }
+
+    move(event) {
+        this.mouse.x = event.clientX / this.sizes.width * 2 - 1
+        this.mouse.y = - (event.clientY / this.sizes.height) * 2 + 1
     }
 
     addObjectToTest(object, callback) {
@@ -61,5 +63,20 @@ export default class RaycasterHandler
             
             this.currentIntersect = null
         }
+    }
+
+    destroy() {
+        window.removeEventListener('mousemove', this.moveBound)
+
+        this.raycaster = null
+        this.mouse = null
+        this.currentIntersect = null
+        this.objectsToTest = null
+        this.callbacks = null
+
+        this.scene = null
+        this.time = null
+        this.sizes = null
+        this.camera = null
     }
 }

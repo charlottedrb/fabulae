@@ -36,4 +36,13 @@ export default class AnimationHandler
             }
         }
     }
+
+    destroy() {
+        this.actions = null
+        this.mixer = null
+
+        this.experience = null
+        this.scene = null
+        this.time = null
+    }
 }
