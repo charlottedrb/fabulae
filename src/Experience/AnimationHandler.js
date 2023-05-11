@@ -29,8 +29,11 @@ export default class AnimationHandler
     play(name) {
         const anim = this.actions.find(anim => anim.name === name)
         if (anim) {
-            console.log('anim', anim);
-            anim.action.play()
+            let isRunning = anim.action.isRunning()
+            if (isRunning == false) {
+                anim.action.reset()
+                anim.action.play()
+            }
         }
     }
 }

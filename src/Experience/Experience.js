@@ -9,6 +9,7 @@ import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './sources.js'
 import AnimationHandler from './AnimationHandler.js'
+import RaycasterHandler from './RaycasterHandler.js'
 
 let instance = null
 
@@ -39,6 +40,7 @@ export default class Experience
         this.renderer = new Renderer()
         this.world = new World()
         this.animationHandler = new AnimationHandler()
+        this.raycasterHandler = new RaycasterHandler()
 
         // Resize event
         this.sizes.on('resize', () =>
@@ -67,6 +69,10 @@ export default class Experience
 
         if (this.animationHandler) {
             this.animationHandler.update()
+        }
+
+        if (this.raycasterHandler) {
+            this.raycasterHandler.update()
         }
     }
 
