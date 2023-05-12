@@ -31,10 +31,10 @@ export default class StairsRoom
     }
 
     setCamera() {
-        let position = this.resources.items.stairsCamera.scene.children[0].position
-        this.camera.instance.position.set(position.x, 2.4, 8.7)
+        // let position = this.resources.items.stairsRoom.scene.children[0].position
+        this.camera.instance.position.set(0, 2.4, 8.7)
 
-        let rotation = this.resources.items.stairsCamera.scene.children[0].rotation
+        let rotation = this.resources.items.stairsRoom.scene.children[0].rotation
         this.camera.instance.rotation.set(...rotation)
     }
 
