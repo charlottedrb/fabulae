@@ -28,6 +28,8 @@ export default class StairsRoom
 
         this.leftStair = new Stair(this.stairs.scene.children[0], this.stairs.animations[0], this.room.scene.children[1])
         this.rightStair = new Stair(this.stairs.scene.children[1], this.stairs.animations[1], this.room.scene.children[4])
+
+        this.setVideo()
     }
 
     setCamera() {
@@ -36,6 +38,29 @@ export default class StairsRoom
 
         let rotation = this.resources.items.stairsRoom.scene.children[0].rotation
         this.camera.instance.rotation.set(...rotation)
+    }
+
+    setVideo()
+    {
+        this.video = document.getElementById('video');
+        this.video.play();
+        this.setBackground()
+    }
+
+    setBackground()
+    {
+        this.texture = new THREE.VideoTexture(this.video);
+        this.texture.wrapS = THREE.RepeatWrapping;
+        this.texture.flipY = false;
+        this.texture.needsUpdate = true;
+
+        this.material = new THREE.MeshBasicMaterial( {map: this.texture, side: THREE.FrontSide, toneMapped: false} );
+
+        this.setBackgroundVideo()
+    }
+
+    setBackgroundVideo() {
+        this.room.scene.children[8].material = this.material
     }
 
     update() {

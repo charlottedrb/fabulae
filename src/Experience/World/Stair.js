@@ -64,7 +64,6 @@ export default class Stair
         }
 
         const onFinishPlaying = (info) => {
-            console.log('finished', info);
             this.canAnim = false
             if (reverse) {
                 this.setStairsPosition()
@@ -76,7 +75,6 @@ export default class Stair
 
     update() {
         if (this.canAnim === true) {
-            console.log('update');
             this.animMixer.update(this.time.delta / 1000)
         }
     }
