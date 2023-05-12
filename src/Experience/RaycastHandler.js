@@ -16,6 +16,8 @@ export default class RaycasterHandler
         this.currentIntersect = null
         this.objectsToTest = []
         this.callbacks = {}
+        this.timings = {}
+        this.indexes = {}
 
         this.moveBound = this.move.bind(this)
         window.addEventListener('mousemove', this.moveBound)
@@ -26,15 +28,24 @@ export default class RaycasterHandler
         this.mouse.y = - (event.clientY / this.sizes.height) * 2 + 1
     }
 
-    addObjectToTest(object, callback) {
+    // Le premier callback qu'on add sur un objet sera pour l'event enter et le deuxième sera pour l'event leave
+    addObjectToTest(object, callback, timing = 'enter') {
+        const uniqueID = object.uuid + '_' + timing
+        if (this.indexes[object.uuid]) {
+            this.indexes[object.uuid] = this.indexes[object.uuid].concat(uniqueID)
+        } else {
+            this.indexes[object.uuid] = [uniqueID]
+        }
         if (Array.isArray(object)) {
             object.forEach((obj) => {
                 this.objectsToTest.push(obj)
-                this.callbacks[obj.uuid] = callback
+                this.callbacks[uniqueID] = callback
+                this.timings[uniqueID] = timing
             })
         } else {
             this.objectsToTest.push(object)
-            this.callbacks[object.uuid] = callback
+            this.callbacks[uniqueID] = callback
+            this.timings[uniqueID] = timing
         }
     }
 
@@ -47,11 +58,11 @@ export default class RaycasterHandler
             if(!this.currentIntersect)
             {
                 // console.log('mouse enter')
-            }
-
-            this.currentIntersect = intersects[0]
-            if (this.callbacks[this.currentIntersect.object.uuid]) {
-                this.callbacks[this.currentIntersect.object.uuid]()
+                this.currentIntersect = intersects[0]
+                const uniqueID = this.indexes[this.currentIntersect.object.uuid][0]
+                if (this.callbacks[uniqueID] && (this.timings[uniqueID] == 'enter') || (this.timings[uniqueID] == 'both')) {
+                    this.callbacks[uniqueID]()
+                }
             }
         }
         else
@@ -59,6 +70,10 @@ export default class RaycasterHandler
             if(this.currentIntersect)
             {
                 // console.log('mouse leave')
+                const uniqueID = this.indexes[this.currentIntersect.object.uuid][1]
+                if (this.callbacks[uniqueID] && (this.timings[uniqueID] == 'leave' || this.timings[uniqueID] == 'both')) {
+                    this.callbacks[uniqueID]()
+                }
             }
             
             this.currentIntersect = null

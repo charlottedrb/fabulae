@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
+import Stair from './Stair.js'
 
 export default class StairsRoom
 {
@@ -9,6 +10,9 @@ export default class StairsRoom
         this.scene = this.experience.scene
         this.resources = this.experience.resources
         this.camera = this.experience.camera
+        this.raycastHandler = this.experience.raycastHandler
+        this.time = this.experience.time
+        this.canAnim = false
 
         this.setModels()
         this.setCamera()
@@ -21,6 +25,9 @@ export default class StairsRoom
 
         this.scene.add(this.room.scene)
         this.scene.add(this.stairs.scene)
+
+        this.leftStair = new Stair(this.stairs.scene.children[0], this.stairs.animations[0], this.room.scene.children[1])
+        this.rightStair = new Stair(this.stairs.scene.children[1], this.stairs.animations[1], this.room.scene.children[4])
     }
 
     setCamera() {
@@ -29,5 +36,10 @@ export default class StairsRoom
 
         let rotation = this.resources.items.stairsCamera.scene.children[0].rotation
         this.camera.instance.rotation.set(...rotation)
+    }
+
+    update() {
+        this.leftStair.update()
+        this.rightStair.update()
     }
 }

@@ -24,7 +24,9 @@ export default class World
 
     update()
     {
-        
+        if (this.stairsRoom) {
+            this.stairsRoom.update()
+        }
     }
 
     destroy() {

@@ -22,16 +22,26 @@ export default class AnimationHandler
 
     add(anim, name) {
         const action = this.mixer.clipAction(anim)
+        // action.time = (this.mixer.time + 0.04)
         action.setLoop(THREE.LoopOnce)
+        console.log('anim', anim);
+        console.log('action', action);
         this.actions.push({action, name})
     }
 
-    play(name) {
+    play(name, reverse = false) {
         const anim = this.actions.find(anim => anim.name === name)
+        anim.action.timeScale = 1
+        if (reverse) {
+            anim.action.timeScale = -1
+        }
         if (anim) {
             let isRunning = anim.action.isRunning()
             if (isRunning == false) {
                 anim.action.reset()
+                if (reverse) {
+                    anim.action.time = anim.action.getClip().duration;
+                }
                 anim.action.play()
             }
         }
