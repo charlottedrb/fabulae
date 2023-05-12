@@ -1,4 +1,5 @@
 import Pager from './Pager'
+import gsap from 'gsap'
 export default class BookContent {
     constructor()
     {
@@ -15,6 +16,9 @@ export default class BookContent {
         this.images = []
         this.imagesCount = 121
         this.imagesKeyFrames = [42, 82, 100]
+        this.lastImageFrame = 1
+        this.intervalNextPage = null
+        this.intervalPreviousPage = null
 
         this.getImagesPath()
         this.getElements()
@@ -54,7 +58,13 @@ export default class BookContent {
         // TODO: handle last page
         if (!this.isBookOpen) this.isBookOpen = true
         this.pageIndex++ 
-        this.image.src = this.images[this.pageIndex]
+        
+        clearInterval(this.intervalNextPage)
+        this.intervalNextPage = setInterval(() => {
+            if (this.lastImageFrame === this.imagesKeyFrames[this.pageIndex]) clearInterval(this.intervalNextPage)
+            this.image.src = this.images[this.lastImageFrame]
+            this.lastImageFrame++
+        }, 24);
     }
 
     previousPage()
@@ -62,7 +72,14 @@ export default class BookContent {
         if (this.isBookOpen) { 
             // TODO: handle first page
             this.pageIndex--
-            this.image.src = this.images[this.pageIndex]
+            
+            this.intervalPreviousPage = setInterval(() => {
+                console.log(this.lastImageFrame);
+                if (this.lastImageFrame === 1) clearInterval(this.intervalPreviousPage)
+                if (this.lastImageFrame === this.imagesKeyFrames[this.pageIndex]) clearInterval(this.intervalPreviousPage)
+                this.image.src = this.images[this.lastImageFrame]
+                this.lastImageFrame--
+            }, 24);
         }
     }
 
@@ -78,5 +95,6 @@ export default class BookContent {
         this.isBookOpen = false
         this.isLastPage = false
         this.pageIndex = -1
+        this.image.src = this.images[0]
     }
 }
