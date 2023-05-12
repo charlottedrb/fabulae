@@ -40,6 +40,8 @@ export default class InterfaceUI {
 
     this.overlay.on('closeBook', () => {
       this.currentBook.book.obj.clickIn()
+      this.overlay.bookContent.destroy()
+      this.overlay.pager.destroy()
     })
 
     this.createPoints()

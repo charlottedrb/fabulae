@@ -83,4 +83,15 @@ export default class Pager extends EventEmitter {
             rotate: 90 + rotation,
         })
     }
+
+    destroy()
+    {
+        console.log('destroy pager');
+        window.removeEventListener('mousemove', this.onMouseMove)
+        this.mouse = {
+            x: null,
+            y: null
+        }
+        this.status = null
+    }
 }

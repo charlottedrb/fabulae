@@ -12,13 +12,15 @@ export default class BookContent {
         this.isLastPage = false
         this.pageIndex = -1
 
-        this.keyPoints = [3000, 1000]
+        this.images = []
+        this.imagesCount = 121
+        this.imagesKeyFrames = [42, 82, 100]
 
+        this.getImagesPath()
         this.getElements()
         this.onEnterCompleted()
 
         this.pager.on('changePage', (status) => {
-            console.log(status);
             if (status === 'next') {
                 this.nextPage()
             } else {
@@ -27,10 +29,17 @@ export default class BookContent {
         })
     }
 
+    getImagesPath()
+    {
+        for (let i = 1; i <= this.imagesCount; i++) {
+            this.images.push(`/images/book/Livre_300${i < 10 ? '0' + i : i}.webp`)
+        }
+    }
+
     getElements()
     {
         this.el = document.querySelector('.book__content')
-        this.video = this.el.querySelector('.book__video')
+        this.image = document.querySelector('.book__image')
         this.leftPage = this.el.querySelector('.book__left-page')
         this.rightPage = this.el.querySelector('.book__right-page')
     }
@@ -45,43 +54,29 @@ export default class BookContent {
         // TODO: handle last page
         if (!this.isBookOpen) this.isBookOpen = true
         this.pageIndex++ 
-        this.playVideo()
-
-        setTimeout(() => {
-            this.pauseVideo()
-        }, this.keyPoints[this.pageIndex])
+        this.image.src = this.images[this.pageIndex]
     }
 
     previousPage()
     {
         if (this.isBookOpen) { 
-            // TODO: handle first page 
-            this.video.currentTime -= this.keyPoints[this.pageIndex]
+            // TODO: handle first page
+            this.pageIndex--
+            this.image.src = this.images[this.pageIndex]
         }
     }
 
-    playVideo()
-    {
-        this.video.play()
-    }
+    onEnterCompleted() {}
 
-    pauseVideo()
-    {
-        this.video.pause()
-    }
+    fadeIn() {}
 
-    onEnterCompleted()
-    {
+    fadeOut() {}
 
-    }
+    destroy() {
+        this.pager.destroy()
 
-    fadeIn()
-    {
-
-    }
-
-    fadeOut()
-    {
-
+        this.isBookOpen = false
+        this.isLastPage = false
+        this.pageIndex = -1
     }
 }
