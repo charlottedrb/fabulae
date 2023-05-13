@@ -3,11 +3,11 @@ import Experience from '../Experience.js'
 
 export default class Stair
 {
-    constructor(stair, animationClip, door)
+    constructor(stair, animationClip, doors)
     {
         this.stair = stair
         this.animationClip = animationClip
-        this.door = door
+        this.doors = doors
         this.experience = new Experience()
         this.raycastHandler = this.experience.raycastHandler
         this.time = this.experience.time
@@ -39,12 +39,14 @@ export default class Stair
     }
 
     setRaycast() {
-        this.raycastHandler.addObjectToTest(this.door, () => {
-            this.playAnim(this.animationClip)
-        }, 'enter')
-        this.raycastHandler.addObjectToTest(this.door, () => {
-            this.playAnim(this.animationClip, true)
-        }, 'leave')
+        this.doors.forEach(door => {
+            this.raycastHandler.addObjectToTest(door, () => {
+                this.playAnim(this.animationClip)
+            }, 'enter')
+            this.raycastHandler.addObjectToTest(door, () => {
+                this.playAnim(this.animationClip, true)
+            }, 'leave')
+        });
     }
 
     playAnim(clip, reverse = false) {

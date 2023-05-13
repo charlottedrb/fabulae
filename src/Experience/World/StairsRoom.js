@@ -26,18 +26,39 @@ export default class StairsRoom
         this.scene.add(this.room.scene)
         this.scene.add(this.stairs.scene)
 
-        this.leftStair = new Stair(this.stairs.scene.children[0], this.stairs.animations[0], this.room.scene.children[1])
-        this.rightStair = new Stair(this.stairs.scene.children[1], this.stairs.animations[1], this.room.scene.children[4])
-
-        this.setVideo()
+        this.backgroundMesh = this.room.scene.getObjectByName('Fond_plane')
+        
+        this.setStairs()
         this.setBackgroundSize()
     }
 
+    setStairs() {
+        const leftStairMesh = this.stairs.scene.getObjectByName('ESCALIER_GAUCHE_MDD')
+        const rightStairMesh = this.stairs.scene.getObjectByName('ESCALIER_DROIT_MDD')
+        const leftStairAnim = THREE.AnimationClip.findByName(this.stairs.animations, 'Key.003Action')
+        const rightStairAnim = THREE.AnimationClip.findByName(this.stairs.animations, 'Key.004Action')
+
+        const storyDoors = []
+        const storyLeftDoor = this.room.scene.getObjectByName('PORTE_SOUVENIR_gauche')
+        const storyRightDoor = this.room.scene.getObjectByName('PORTE_SOUVENIR_droite')
+        storyDoors.push(storyLeftDoor, storyRightDoor)
+
+        const knowledgeDoors = []
+        const knowledgeLeftDoor = this.room.scene.getObjectByName('PORTE_SAVOIR_gauche')
+        const knowledgeRightDoor = this.room.scene.getObjectByName('PORTE_SAVOIR_droite')
+        knowledgeDoors.push(knowledgeLeftDoor, knowledgeRightDoor)
+
+        this.leftStair = new Stair(leftStairMesh, leftStairAnim, storyDoors)
+        this.rightStair = new Stair(rightStairMesh, rightStairAnim, knowledgeDoors)
+
+        // Set video background after the stairs are officially set
+        this.setVideo()
+    }
+
     setCamera() {
-        // let position = this.resources.items.stairsRoom.scene.children[0].position
         this.camera.instance.position.set(0, 2.4, 8.7)
 
-        let rotation = this.resources.items.stairsRoom.scene.children[0].rotation
+        let rotation = this.room.scene.getObjectByName('Camera').rotation
         this.camera.instance.rotation.set(...rotation)
     }
 
@@ -61,11 +82,11 @@ export default class StairsRoom
     }
 
     setBackgroundVideo() {
-        this.room.scene.children[8].material = this.material
+        this.backgroundMesh.material = this.material
     }
 
     setBackgroundSize() {
-        this.room.scene.children[8].geometry.scale(1.3, 1.3, 1.3)
+        this.backgroundMesh.geometry.scale(1.3, 1.3, 1.3)
     }
 
     update() {
