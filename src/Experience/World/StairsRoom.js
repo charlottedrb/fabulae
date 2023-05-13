@@ -30,6 +30,7 @@ export default class StairsRoom
         this.rightStair = new Stair(this.stairs.scene.children[1], this.stairs.animations[1], this.room.scene.children[4])
 
         this.setVideo()
+        this.setBackgroundSize()
     }
 
     setCamera() {
@@ -61,6 +62,10 @@ export default class StairsRoom
 
     setBackgroundVideo() {
         this.room.scene.children[8].material = this.material
+    }
+
+    setBackgroundSize() {
+        this.room.scene.children[8].geometry.scale(1.3, 1.3, 1.3)
     }
 
     update() {
