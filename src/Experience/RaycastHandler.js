@@ -21,6 +21,9 @@ export default class RaycasterHandler
 
         this.moveBound = this.move.bind(this)
         window.addEventListener('mousemove', this.moveBound)
+
+        this.onClickHandlerBound = this.onClickHandler.bind(this)
+        window.addEventListener('click', this.onClickHandlerBound)
     }
 
     move(event) {
@@ -28,7 +31,22 @@ export default class RaycasterHandler
         this.mouse.y = - (event.clientY / this.sizes.height) * 2 + 1
     }
 
-    // Le premier callback qu'on add sur un objet sera pour l'event enter et le deuxième sera pour l'event leave
+    onClickHandler() {
+        if(this.currentIntersect)
+        {
+            let uniqueID = null
+            this.indexes[this.currentIntersect.object.uuid].forEach(element => {
+                const timing = element.split('_')[1]
+                if (timing == 'click') {
+                    uniqueID = element
+                }
+            });
+            if (this.callbacks[uniqueID] && (this.timings[uniqueID] == 'click')) {
+                this.callbacks[uniqueID]()
+            }
+        }
+    }
+
     addObjectToTest(object, callback, timing = 'enter') {
         const uniqueID = object.uuid + '_' + timing
         if (this.indexes[object.uuid]) {
@@ -49,6 +67,14 @@ export default class RaycasterHandler
         }
     }
 
+    removeObjectToTest(object, timing) {
+        const uniqueID = object.uuid + '_' + timing
+        const toDeleteIndex = this.indexes[object.uuid].indexOf(uniqueID)
+        if (toDeleteIndex !== undefined) {
+            this.indexes[object.uuid].splice(toDeleteIndex, 1)
+        }
+    }
+
     update() {
         this.raycaster.setFromCamera(this.mouse, this.camera.instance)
         const intersects = this.raycaster.intersectObjects(this.objectsToTest)
@@ -59,7 +85,13 @@ export default class RaycasterHandler
             {
                 // console.log('mouse enter')
                 this.currentIntersect = intersects[0]
-                const uniqueID = this.indexes[this.currentIntersect.object.uuid][0]
+                let uniqueID = null
+                this.indexes[this.currentIntersect.object.uuid].forEach(element => {
+                    const timing = element.split('_')[1]
+                    if (timing == 'enter') {
+                        uniqueID = element
+                    }
+                });
                 if (this.callbacks[uniqueID] && (this.timings[uniqueID] == 'enter') || (this.timings[uniqueID] == 'both')) {
                     this.callbacks[uniqueID]()
                 }
@@ -70,7 +102,13 @@ export default class RaycasterHandler
             if(this.currentIntersect)
             {
                 // console.log('mouse leave')
-                const uniqueID = this.indexes[this.currentIntersect.object.uuid][1]
+                let uniqueID = null
+                this.indexes[this.currentIntersect.object.uuid].forEach(element => {
+                    const timing = element.split('_')[1]
+                    if (timing == 'leave') {
+                        uniqueID = element
+                    }
+                });
                 if (this.callbacks[uniqueID] && (this.timings[uniqueID] == 'leave' || this.timings[uniqueID] == 'both')) {
                     this.callbacks[uniqueID]()
                 }
@@ -83,6 +121,8 @@ export default class RaycasterHandler
     destroy() {
         window.removeEventListener('mousemove', this.moveBound)
         this.moveBound = null
+        window.removeEventListener('click', this.onClickHandlerBound)
+        this.onClickHandlerBound = null
 
         this.raycaster = null
         this.mouse = null

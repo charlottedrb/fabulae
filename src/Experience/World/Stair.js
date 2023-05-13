@@ -23,7 +23,7 @@ export default class Stair
         clipAction.setLoop(THREE.LoopOnce)
         this.setStairsPosition()
 
-        this.setRaycast()
+        this.setRaycastEvents()
     }
 
     setStairsPosition() {
@@ -38,7 +38,7 @@ export default class Stair
         this.animMixer.update(timeStairsDown)
     }
 
-    setRaycast() {
+    setRaycastEvents() {
         this.doors.forEach(door => {
             this.raycastHandler.addObjectToTest(door, () => {
                 this.playAnim(this.animationClip)
@@ -73,6 +73,13 @@ export default class Stair
             this.animMixer.removeEventListener("finished", onFinishPlaying)
         }
         this.animMixer.addEventListener("finished", onFinishPlaying)
+    }
+
+    onClickHandler() {
+        const action = this.animMixer.clipAction(this.animationClip)
+        if (action.isRunning()) {
+            action.clampWhenFinished = true;
+        }
     }
 
     update() {
