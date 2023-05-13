@@ -86,8 +86,8 @@ export default class Pager extends EventEmitter {
 
     destroy()
     {
-        console.log('destroy pager');
         window.removeEventListener('mousemove', this.onMouseMove)
+        window.removeEventListener('click', this.onClick)
         this.mouse = {
             x: null,
             y: null

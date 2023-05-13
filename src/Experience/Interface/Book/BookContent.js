@@ -1,5 +1,9 @@
 import Pager from './Pager'
 import gsap from 'gsap'
+/**
+ * @class BookContent
+ * @description Handle the book content
+ */
 export default class BookContent {
     constructor()
     {
@@ -13,10 +17,15 @@ export default class BookContent {
         this.isLastPage = false
         this.pageIndex = -1
 
+        /**
+         * Images management
+         */
         this.images = []
-        this.imagesCount = 121
-        this.imagesKeyFrames = [42, 82, 100]
+        this.imagesCount = 120
+        this.imagesKeyFrames = [41, 81, 99]
         this.lastImageFrame = 1
+
+        // Loops to handle the images
         this.intervalNextPage = null
         this.intervalPreviousPage = null
 
@@ -24,6 +33,7 @@ export default class BookContent {
         this.getElements()
         this.onEnterCompleted()
 
+        // When the pager change page
         this.pager.on('changePage', (status) => {
             if (status === 'next') {
                 this.nextPage()
@@ -36,7 +46,10 @@ export default class BookContent {
     getImagesPath()
     {
         for (let i = 1; i <= this.imagesCount; i++) {
-            this.images.push(`/images/book/Livre_300${i < 10 ? '0' + i : i}.webp`)
+            let id = '0' + i
+            if (i < 10) id = '00' + i
+            if (i >= 100) id = i
+            this.images.push(`/images/book/Livre_30${id}.webp`)
         }
     }
 
@@ -55,10 +68,18 @@ export default class BookContent {
 
     nextPage()
     {
-        // TODO: handle last page
+        // If first opening of the book
         if (!this.isBookOpen) this.isBookOpen = true
+
         this.pageIndex++ 
+
+        // If last image showed was the last animation available
+        if(this.lastImageFrame >= this.imagesKeyFrames[this.imagesKeyFrames.length - 1]) {
+            this.pageIndex = this.imagesKeyFrames.length - 1
+            this.lastImageFrame = 81
+        }
         
+        // Loop to show images sequence
         clearInterval(this.intervalNextPage)
         this.intervalNextPage = setInterval(() => {
             if (this.lastImageFrame === this.imagesKeyFrames[this.pageIndex]) clearInterval(this.intervalNextPage)
@@ -69,16 +90,23 @@ export default class BookContent {
 
     previousPage()
     {
+        // If first page
+        console.log(this.lastImageFrame);
+        if (this.lastImageFrame === 1) {
+            this.isBookOpen = false
+            return
+        }
+
         if (this.isBookOpen) { 
             // TODO: handle first page
             this.pageIndex--
             
+            clearInterval(this.intervalNextPage)
             this.intervalPreviousPage = setInterval(() => {
-                console.log(this.lastImageFrame);
                 if (this.lastImageFrame === 1) clearInterval(this.intervalPreviousPage)
                 if (this.lastImageFrame === this.imagesKeyFrames[this.pageIndex]) clearInterval(this.intervalPreviousPage)
-                this.image.src = this.images[this.lastImageFrame]
                 this.lastImageFrame--
+                this.image.src = this.images[this.lastImageFrame]
             }, 24);
         }
     }
@@ -96,5 +124,9 @@ export default class BookContent {
         this.isLastPage = false
         this.pageIndex = -1
         this.image.src = this.images[0]
+        this.lastImageFrame = 1
+
+        clearInterval(this.intervalNextPage)
+        clearInterval(this.intervalPreviousPage)
     }
 }
