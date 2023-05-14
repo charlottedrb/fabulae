@@ -14,7 +14,6 @@ export default class StairsRoom
         this.camera = this.experience.camera
         this.raycastHandler = this.experience.raycastHandler
         this.time = this.experience.time
-        this.canAnim = false
         this.debug = this.experience.debug
         
         // Debug
@@ -38,8 +37,20 @@ export default class StairsRoom
 
         if(this.debug.active) {
             this.debugFolder
-                .add(this.room.scene.rotation, 'y')
-                .name('Room Rotation Y')
+                .add(this.room.scene.position, 'x')
+                .name('scene position X')
+                .min(- 5)
+                .max(5)
+                .step(0.001)
+            this.debugFolder
+                .add(this.room.scene.position, 'y')
+                .name('scene position Y')
+                .min(- 5)
+                .max(5)
+                .step(0.001)
+            this.debugFolder
+                .add(this.room.scene.position, 'z')
+                .name('scene position Z')
                 .min(- 5)
                 .max(5)
                 .step(0.001)
@@ -91,7 +102,7 @@ export default class StairsRoom
     }
 
     onClickHandler() {
-        gsap.to(this.room.scene.rotation, { y: 0.6, duration: 1 })
+        gsap.to(this.room.scene.rotation, { y: 0.645, duration: 1 })
         this.leftStair.onClickHandler()
         this.rightStair.onClickHandler()
         this.doors.doors.forEach(door => {
@@ -100,12 +111,30 @@ export default class StairsRoom
             this.raycastHandler.removeObjectToTest(door, 'click')
         });
         this.doors.onClickHandler()
+        setTimeout(() => {
+            this.cameraAction.reset()
+            this.cameraAction.play()
+        }, 1500);
     }
 
     setCamera() {
-        // let rotation = this.room.scene.getObjectByName('Camera').rotation
         this.camera.instance.position.set(0, 2.4, 4.2)
         this.camera.instance.rotation.set(-0.08726649245206389, 0, 0)
+
+        this.setCameraAnimation()
+    }
+
+    setCameraAnimation() {
+        this.stairsCamera = this.resources.items.stairsCamera
+        let rotation = this.stairsCamera.scene.getObjectByName('Camera').rotation
+        let position = this.stairsCamera.scene.getObjectByName('Camera').position
+        // this.camera.instance.position.set(...position)
+        // this.camera.instance.rotation.set(...rotation)
+
+        this.animMixer = new THREE.AnimationMixer(this.camera.instance)
+        this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.stairsCamera.animations, 'CameraAction'))
+        this.cameraAction.setLoop(THREE.LoopOnce)
+        this.cameraAction.clampWhenFinished = true
     }
 
     setVideo()
@@ -139,6 +168,7 @@ export default class StairsRoom
         this.leftStair.update()
         this.rightStair.update()
         this.doors.update()
+        this.animMixer.update(this.time.delta / 1000)
     }
 
     destroy() {
@@ -148,7 +178,6 @@ export default class StairsRoom
         this.camera = null
         this.raycastHandler = null
         this.time = null
-        this.canAnim = null
         this.debug = null
         this.debugFolder = null
         this.onClickHandlerBound = null

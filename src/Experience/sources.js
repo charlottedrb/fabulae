@@ -36,5 +36,10 @@ export default [
         name: 'stairs',
         type: 'gltfModel',
         path: 'models/stairs.gltf'
+    },
+    {
+        name: 'stairsCamera',
+        type: 'gltfModel',
+        path: 'models/stairs_camera.gltf'
     }
 ]

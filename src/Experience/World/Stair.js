@@ -21,6 +21,7 @@ export default class Stair
         this.animMixer = new THREE.AnimationMixer(this.stair)
         const clipAction = this.animMixer.clipAction(this.animationClip)
         clipAction.setLoop(THREE.LoopOnce)
+        clipAction.clampWhenFinished = true;
         this.setStairsPosition()
 
         this.setRaycastEvents()
@@ -65,14 +66,14 @@ export default class Stair
             action.play()
         }
 
-        const onFinishPlaying = (info) => {
-            this.canAnim = false
-            if (reverse) {
-                this.setStairsPosition()
-            }
-            this.animMixer.removeEventListener("finished", onFinishPlaying)
-        }
-        this.animMixer.addEventListener("finished", onFinishPlaying)
+        // const onFinishPlaying = (info) => {
+        //     this.canAnim = false
+        //     if (reverse) {
+        //         this.setStairsPosition()
+        //     }
+        //     this.animMixer.removeEventListener("finished", onFinishPlaying)
+        // }
+        // this.animMixer.addEventListener("finished", onFinishPlaying)
     }
 
     onClickHandler() {
