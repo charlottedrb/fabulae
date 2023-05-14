@@ -65,18 +65,9 @@ export default class Stair
             }
             action.play()
         }
-
-        // const onFinishPlaying = (info) => {
-        //     this.canAnim = false
-        //     if (reverse) {
-        //         this.setStairsPosition()
-        //     }
-        //     this.animMixer.removeEventListener("finished", onFinishPlaying)
-        // }
-        // this.animMixer.addEventListener("finished", onFinishPlaying)
     }
 
-    onClickHandler() {
+    freezeCurrentAnimation() {
         const action = this.animMixer.clipAction(this.animationClip)
         if (action.isRunning()) {
             action.clampWhenFinished = true;
