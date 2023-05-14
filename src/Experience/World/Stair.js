@@ -87,4 +87,16 @@ export default class Stair
             this.animMixer.update(this.time.delta / 1000)
         }
     }
+
+    destroy() {
+        this.stair = null
+        this.animationClip = null
+        this.doors = null
+        this.experience = null
+        this.raycastHandler = null
+        this.time = null
+        this.canAnim = null
+
+        this.animMixer = null
+    }
 }

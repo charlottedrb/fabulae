@@ -140,4 +140,32 @@ export default class StairsRoom
         this.rightStair.update()
         this.doors.update()
     }
+
+    destroy() {
+        this.experience = null
+        this.scene = null
+        this.resources = null
+        this.camera = null
+        this.raycastHandler = null
+        this.time = null
+        this.canAnim = null
+        this.debug = null
+        this.debugFolder = null
+        this.onClickHandlerBound = null
+
+        this.room = null
+        this.backgroundMesh.geometry.dispose()
+        this.backgroundMesh = null
+        this.leftStair.destroy()
+        this.leftStair = null
+        this.rightStair.destroy()
+        this.rightStair = null
+        this.doors.destroy()
+        this.doors = null
+        this.video = null
+        this.texture.dispose()
+        this.texture = null
+        this.material.dispose()
+        this.material = null
+    }
 }

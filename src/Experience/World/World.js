@@ -30,12 +30,19 @@ export default class World
     }
 
     destroy() {
-        this.floor.destroy()
-        this.floor = null
+        if (this.floor) {
+            this.floor.destroy()
+            this.floor = null
+        }
 
         if (this.environment) {
             this.environment.destroy()
             this.environment = null
+        }
+
+        if (this.stairsRoom) {
+            this.stairsRoom.destroy()
+            this.stairsRoom = null
         }
 
         this.experience = null

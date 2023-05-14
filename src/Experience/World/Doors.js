@@ -53,4 +53,15 @@ export default class Doors
     update() {
         this.animMixer.update(this.time.delta / 1000)
     }
+
+    destroy() {
+        this.scene = null
+        this.doors = null
+        this.doorsAnimationClips = null
+        this.experience = null
+        this.raycastHandler = null
+        this.time = null
+
+        this.animMixer = null
+    }
 }
