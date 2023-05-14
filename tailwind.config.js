@@ -3,7 +3,7 @@ export default {
   content: ["./src/**/*.{html,js}"],
   theme: {
     colors: {
-      'night-blue': 'var(--color-night-blue)',
+      'night-blue': 'rgba(var(--color-night-blue) / <alpha-value>)',
       'pale-blue': 'var(--color-pale-blue)',
       'white': 'var(--color-white)',
     },
@@ -14,14 +14,20 @@ export default {
     spacing: {
       300: '30rem',
       150: '15rem',
+      100: '10rem',
+      70: '7rem',
       50: '5rem',
+      40: '4rem',
       35: '3.5rem',
       25: '2.5rem',
+      10: '1rem',
       0: 0,
       container: '5rem'
     },
     fontSize: {
       150: '15rem',
+      45: '4.5rem',
+      30: '3rem',
       22: '2.2rem',
       18: '1.8rem',
       15: '1.5rem',

@@ -9,19 +9,20 @@ import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 
 import sources from './sources.js'
+import InterfaceUI from './InterfaceUI.js'
 
-let instance = null
+let experience = null
 
 export default class Experience
 {
     constructor(_canvas)
     {
         // Singleton
-        if(instance)
+        if(experience)
         {
-            return instance
+            return experience
         }
-        instance = this
+        experience = this
         
         // Global access
         window.experience = this
@@ -55,6 +56,9 @@ export default class Experience
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
+        this.interface = new InterfaceUI()
+
+        this.sceneReady = true
 
         // Resize event
         this.sizes.on('resize', this.resizeBound)
@@ -73,6 +77,7 @@ export default class Experience
     {
         this.camera.update()
         this.world.update()
+        this.interface.update()
         this.renderer.update()
     }
 
