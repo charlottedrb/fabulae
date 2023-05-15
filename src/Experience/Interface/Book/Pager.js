@@ -25,6 +25,8 @@ export default class Pager extends EventEmitter {
             x: null,
             y: null
         }
+
+        this.currentPage = 0
         this.status = null
 
         this.getElements()
@@ -51,6 +53,7 @@ export default class Pager extends EventEmitter {
     {
         if (this.status === null) return
 
+        this.currentPage = this.status === 'next' ? this.currentPage++ : this.currentPage--
         this.trigger('changePage', [this.status])
     }
 
@@ -63,8 +66,9 @@ export default class Pager extends EventEmitter {
         
         if (this.mouse.x > 0.20) {
             gsap.to(this.next, { alpha: 1 })
+            this.next.innerHTML = this.currentPage > 0 ? 'Suivante' : 'Ouvrir'
             this.status = 'next'
-        } else if (this.mouse.x < -0.20) {
+        } else if (this.mouse.x < -0.20 && this.currentPage > 0) {
             gsap.to(this.previous, { alpha: 1 })
             this.status = 'previous'
         } else {
@@ -86,8 +90,8 @@ export default class Pager extends EventEmitter {
 
     destroy()
     {
-        window.removeEventListener('mousemove', this.onMouseMove)
-        window.removeEventListener('click', this.onClick)
+        window.removeEventListener('mousemove', this.onMouseMove.bind(this))
+        window.removeEventListener('click', this.onClick.bind(this))
         this.mouse = {
             x: null,
             y: null

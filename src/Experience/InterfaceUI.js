@@ -39,7 +39,7 @@ export default class InterfaceUI {
     this.raycaster = new THREE.Raycaster();
 
     this.overlay.on('closeBook', () => {
-      this.currentBook.book.obj.clickIn()
+      this.currentBook.clickIn()
       this.overlay.bookContent.destroy()
       this.overlay.pager.destroy()
     })

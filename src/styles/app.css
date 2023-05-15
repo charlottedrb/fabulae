@@ -1,8 +1,10 @@
 @import "variables/colors.css";
 @import "variables/sizes.css";
 @import "variables/typography.css";
+
 @import "components/overlay.css";
 @import "components/form.css";
+@import "components/book.css";
 
 @import 'splitting/dist/splitting.css';
 @import 'splitting/dist/splitting-cells.css';

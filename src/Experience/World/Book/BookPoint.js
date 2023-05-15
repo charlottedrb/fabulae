@@ -64,12 +64,12 @@ export default class BookPoint extends EventEmitter {
     
     // Open the new book
     this.experience.world.books[this.id].obj.clickOut();
-    this.interface.currentBook = this;
+    this.interface.currentBook = this.book.obj;
     this.isClicked = true
 
     // Show the overlay
     this.overlay.show()
     this.overlay.initPager()
-    this.overlay.initBookContent()
+    this.overlay.initBookContent(this.id)
   }
 }

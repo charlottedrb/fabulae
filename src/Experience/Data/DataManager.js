@@ -3,6 +3,9 @@ import * as books from './books'
 import * as comments from './comments'
 import * as users from './users'
 import * as categories from './categories'
+import * as stories from './stories'
+
+let dataManager = null
 
 /**
  * @class DataManager
@@ -11,8 +14,19 @@ import * as categories from './categories'
 export default class DataManager {
     constructor() 
     {
+        // Singleton 
+        if(dataManager)
+        {
+            return dataManager
+        }
+        dataManager = this
+        
+        // Global access
+        window.dataManager = this
+    
         this.authors = null
         this.books = null 
+        this.stories = null
         this.comments = null 
         this.users = null
         this.categories = null
@@ -24,6 +38,7 @@ export default class DataManager {
     {
         this.authors = authors.default
         this.books = books.default
+        this.stories = stories.default
         this.comments = comments.default
         this.users = users.default
         this.categories = categories.default
@@ -85,6 +100,20 @@ export default class DataManager {
     getBooksByCategory(id) 
     {
         return this.books.filter(book => book.categoryId === id)
+    }
+
+    /**
+     * Stories
+     */
+
+    /**
+     * 
+     * @param {int} id 
+     * @returns {array}
+     */
+    getStoriesByBookId(id)
+    {
+        return this.stories.filter(story => story.bookId === id)
     }
 
     /**
