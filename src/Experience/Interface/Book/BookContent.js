@@ -14,6 +14,10 @@ export default class BookContent {
         this.init()
     }
 
+    /**
+     * Functional methods
+     */
+
     init()
     {
         /**
@@ -27,6 +31,8 @@ export default class BookContent {
         this.isBookOpen = false
         this.isLastPage = false
         this.pageIndex = -1
+        this.textOverflowing = false
+        this.textDiv = null
 
         /**
          * Images management
@@ -44,7 +50,6 @@ export default class BookContent {
 
         this.getImagesPath()
         this.getElements()
-        this.onEnterCompleted()
         this.getBookContent()
 
         // When the pager change page
@@ -92,6 +97,24 @@ export default class BookContent {
         }
     }
 
+    destroy() {
+        this.pager.destroy()
+
+        this.isBookOpen = false
+        this.isLastPage = false
+        this.pageIndex = -1
+        this.image.src = this.images[0]
+        this.lastImageFrame = 1
+
+        clearInterval(this.intervalNextPage)
+        clearInterval(this.intervalPreviousPage)
+    }
+
+    /**
+     * Page management and events
+     */
+
+    /** Show empty or story title */
     showLeftPageContent()
     {
         if (this.pager.currentPage === 1 || this.pager.currentPage === 0) {
@@ -100,37 +123,66 @@ export default class BookContent {
             return
         } 
 
-        const startingChapter = document.createElement('div')
-        const title = document.createElement('div')
-        const text = document.createElement('div')
-        
-        startingChapter.classList.add('book__starting-chapter')
-        
-        title.classList.add('book__starting-chapter__title')
-        title.innerHTML = this.stories[this.pager.currentPage - 2].title
+        // Creating necessary HTML elements
 
-        startingChapter.appendChild(title)
+        if (this.textOverflowing) {
+            const text = document.createElement('div')
+            text.classList.add('book__text')
+            text.innerHTML = this.textDiv.innerHTML
+            text.style.marginTop = -this.rightPageContent.clientHeight + 'px'
 
-        this.leftPageContent.innerHTML = startingChapter.outerHTML
-        gsap.to(this.leftPageBorder, { alpha: 1 })
+            this.leftPageContent.innerHTML = text.outerHTML
+            gsap.to(this.leftPageBorder, { alpha: 1 })
+
+            // Get freshly created div in DOM to check if it's overflowing
+            this.textDiv = this.leftPageContent.querySelector('.book__text')
+            this.checkOverflowing(this.leftPageContent)
+            return
+
+        } else {
+            // If not overflowing, we add the next chapter title
+            const startingChapter = document.createElement('div')
+            const title = document.createElement('div')
+            
+            startingChapter.classList.add('book__starting-chapter')
+            
+            title.classList.add('book__starting-chapter__title')
+            title.innerHTML = this.stories[this.pager.currentPage - 2].title
+            
+            startingChapter.appendChild(title)
+
+            this.leftPageContent.innerHTML = startingChapter.outerHTML
+            gsap.to(this.leftPageBorder, { alpha: 1 })
+        }
     }
 
+    /** Show book title or story content */
     showRightPageContent()
     {
+        // If the book is closed
         if (this.pager.currentPage === 0) {
             this.rightPageContent.innerHTML = ''
             return 
+
+        // If it's the first page
         } else if (this.pager.currentPage === 1) {
             const title = document.createElement('div')
             title.classList.add('book__title')
             title.innerHTML = this.book.title
             this.rightPageContent.innerHTML = title.outerHTML
+
+        // Classic content page
         } else {
             const text = document.createElement('div')
             text.classList.add('book__text')
-            this.pager.currentPage === 2 && text.classList.add('after-starting-chapter')
+            // this.pager.currentPage === 2 && text.classList.add('after-starting-chapter')
             text.innerHTML = this.stories[this.pager.currentPage - 2].content
             this.rightPageContent.innerHTML = text.outerHTML
+
+            // Get freshly created div in DOM to check if it's overflowing
+            this.textDiv = this.rightPageContent.querySelector('.book__text')
+
+            this.checkOverflowing(this.rightPageContent)
         }
     }
 
@@ -157,6 +209,7 @@ export default class BookContent {
             this.lastImageFrame++
         }, 24);
 
+        // Show the content
         setTimeout(() => {
             this.fadeIn()
         }, 0);
@@ -183,14 +236,25 @@ export default class BookContent {
                 return
             }
 
+            // Show the content
             setTimeout(() => {
                 this.fadeIn()
             }, 0);
         }
     }
 
-    onEnterCompleted() {}
+    checkOverflowing(container)
+    {
+        if (this.textDiv.scrollHeight > container.clientHeight) {
+            this.textOverflowing = true
+        } else {
+            this.textOverflowing = false
+        }
+    }
 
+    /**
+     * Animations
+     */
     fadeIn() {
         this.animation.to([this.leftPage, this.rightPage], {
             alpha: 1,
@@ -209,18 +273,5 @@ export default class BookContent {
                 this.showRightPageContent()
             }  
         })
-    }
-
-    destroy() {
-        this.pager.destroy()
-
-        this.isBookOpen = false
-        this.isLastPage = false
-        this.pageIndex = -1
-        this.image.src = this.images[0]
-        this.lastImageFrame = 1
-
-        clearInterval(this.intervalNextPage)
-        clearInterval(this.intervalPreviousPage)
     }
 }
