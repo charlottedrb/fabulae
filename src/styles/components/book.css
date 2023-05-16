@@ -15,7 +15,7 @@
     }
     
     &__text {
-        @apply font-dubai text-22 text-night-blue; 
+        @apply h-full font-dubai text-22 text-night-blue overflow-auto; 
     }
 
     &__right-page, &__left-page {

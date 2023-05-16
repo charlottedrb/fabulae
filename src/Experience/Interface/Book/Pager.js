@@ -70,6 +70,7 @@ export default class Pager extends EventEmitter {
             this.status = 'next'
         } else if (this.mouse.x < -0.20 && this.currentPage > 0) {
             gsap.to(this.previous, { alpha: 1 })
+            this.previous.innerHTML = this.currentPage === 1 ? 'Fermer' : 'Précédente'
             this.status = 'previous'
         } else {
             gsap.to([this.next, this.previous], { alpha: 0 })

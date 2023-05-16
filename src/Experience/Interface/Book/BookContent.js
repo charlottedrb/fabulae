@@ -65,7 +65,10 @@ export default class BookContent {
 
     showLeftPageContent()
     {
-        if (this.pager.currentPage === 1 || this.pager.currentPage === 0) return 
+        if (this.pager.currentPage === 1 || this.pager.currentPage === 0) {
+            this.leftPage.innerHTML = ''
+            return
+        } 
 
         const startingChapter = document.createElement('div')
         const title = document.createElement('div')
@@ -83,7 +86,10 @@ export default class BookContent {
 
     showRightPageContent()
     {
-        if (this.pager.currentPage === 1 || this.pager.currentPage === 0) {
+        if (this.pager.currentPage === 0) {
+            this.rightPage.innerHTML = ''
+            return 
+        } else if (this.pager.currentPage === 1) {
             const title = document.createElement('div')
             title.classList.add('book__title')
             title.innerHTML = this.book.title
@@ -119,12 +125,11 @@ export default class BookContent {
     {   
         // If first opening of the book
         if (!this.isBookOpen) this.isBookOpen = true
-
+        
         this.pageIndex++ 
         this.pager.currentPage++
 
-        this.showLeftPageContent()
-        this.showRightPageContent()
+        this.fadeOut()
 
         // If last image showed was the last animation available
         if(this.lastImageFrame >= this.imagesKeyFrames[this.imagesKeyFrames.length - 1]) {
@@ -139,24 +144,20 @@ export default class BookContent {
             this.image.src = this.images[this.lastImageFrame]
             this.lastImageFrame++
         }, 24);
+
+        setTimeout(() => {
+            this.fadeIn()
+        }, 0);
     }
 
     previousPage()
-    {
-        // If first page
-        if (this.lastImageFrame === 1) {
-            this.isBookOpen = false
-            return
-        }
-
+    {     
         if (this.isBookOpen) { 
-            // TODO: handle first page
             this.pageIndex--
             this.pager.currentPage--
 
-            this.showLeftPageContent()
-            this.showRightPageContent()
-                
+            this.fadeOut()
+
             clearInterval(this.intervalPreviousPage)
             this.intervalPreviousPage = setInterval(() => {
                 if (this.lastImageFrame === 1) clearInterval(this.intervalPreviousPage)
@@ -165,9 +166,14 @@ export default class BookContent {
                 this.image.src = this.images[this.lastImageFrame]
             }, 24);
 
-            if (this.pager.currentPage === 1) {
+            // If first page was open, we close the book
+            if (this.lastImageFrame === 1 || this.pager.currentPage === 0) {
                 this.isBookOpen = false
             }
+
+            setTimeout(() => {
+                this.fadeIn()
+            }, 0);
         }
     }
 
@@ -176,17 +182,20 @@ export default class BookContent {
     fadeIn() {
         this.animation.to([this.leftPage, this.rightPage], {
             alpha: 1,
-            duration: 1,
-            ease: 'power2.out'
+            duration: 0.5,
+            ease: 'power2.in'
         })
     }
 
     fadeOut() {
-        console.log('fade out');
         this.animation.to([this.leftPage, this.rightPage], {
             alpha: 0,
-            duration: 1,
-            ease: 'power2.out'
+            duration: 0.7,
+            ease: 'expo.out',
+            onComplete: () => {
+                this.showLeftPageContent()
+                this.showRightPageContent()
+            }  
         })
     }
 
