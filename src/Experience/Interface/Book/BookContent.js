@@ -57,16 +57,46 @@ export default class BookContent {
         })
     }
 
+    getElements()
+    {
+        this.el = document.querySelector('.book__content')
+        this.image = document.querySelector('.book__image')
+
+        /**
+         * Left page
+         */
+        this.leftPage = this.el.querySelector('.book__left-page')
+        this.leftPageContent = this.el.querySelector('.book__left-page__content')
+        this.leftPageBorder = this.leftPage.querySelector('.book__page-border')
+
+        /**
+         * Right page
+         */
+        this.rightPage = this.el.querySelector('.book__right-page')
+        this.rightPageContent = this.el.querySelector('.book__right-page__content')
+    }
+
     getBookContent()
     {
         this.book = this.dataManager.getBookById(this.id)
         this.stories = this.dataManager.getStoriesByBookId(this.id)
     }
 
+    getImagesPath()
+    {
+        for (let i = 1; i <= this.imagesCount; i++) {
+            let id = '0' + i
+            if (i < 10) id = '00' + i
+            if (i >= 100) id = i
+            this.images.push(`/images/book/Livre_30${id}.webp`)
+        }
+    }
+
     showLeftPageContent()
     {
         if (this.pager.currentPage === 1 || this.pager.currentPage === 0) {
-            this.leftPage.innerHTML = ''
+            this.leftPageContent.innerHTML = ''
+            gsap.to(this.leftPageBorder, { alpha: 0 })
             return
         } 
 
@@ -81,44 +111,27 @@ export default class BookContent {
 
         startingChapter.appendChild(title)
 
-        this.leftPage.innerHTML = startingChapter.outerHTML
+        this.leftPageContent.innerHTML = startingChapter.outerHTML
+        gsap.to(this.leftPageBorder, { alpha: 1 })
     }
 
     showRightPageContent()
     {
         if (this.pager.currentPage === 0) {
-            this.rightPage.innerHTML = ''
+            this.rightPageContent.innerHTML = ''
             return 
         } else if (this.pager.currentPage === 1) {
             const title = document.createElement('div')
             title.classList.add('book__title')
             title.innerHTML = this.book.title
-            this.rightPage.innerHTML = title.outerHTML
+            this.rightPageContent.innerHTML = title.outerHTML
         } else {
             const text = document.createElement('div')
             text.classList.add('book__text')
             this.pager.currentPage === 2 && text.classList.add('after-starting-chapter')
             text.innerHTML = this.stories[this.pager.currentPage - 2].content
-            this.rightPage.innerHTML = text.outerHTML
+            this.rightPageContent.innerHTML = text.outerHTML
         }
-    }
-
-    getImagesPath()
-    {
-        for (let i = 1; i <= this.imagesCount; i++) {
-            let id = '0' + i
-            if (i < 10) id = '00' + i
-            if (i >= 100) id = i
-            this.images.push(`/images/book/Livre_30${id}.webp`)
-        }
-    }
-
-    getElements()
-    {
-        this.el = document.querySelector('.book__content')
-        this.image = document.querySelector('.book__image')
-        this.leftPage = this.el.querySelector('.book__left-page')
-        this.rightPage = this.el.querySelector('.book__right-page')
     }
 
     nextPage()
@@ -127,7 +140,6 @@ export default class BookContent {
         if (!this.isBookOpen) this.isBookOpen = true
         
         this.pageIndex++ 
-        this.pager.currentPage++
 
         this.fadeOut()
 
@@ -154,7 +166,6 @@ export default class BookContent {
     {     
         if (this.isBookOpen) { 
             this.pageIndex--
-            this.pager.currentPage--
 
             this.fadeOut()
 
@@ -169,6 +180,7 @@ export default class BookContent {
             // If first page was open, we close the book
             if (this.lastImageFrame === 1 || this.pager.currentPage === 0) {
                 this.isBookOpen = false
+                return
             }
 
             setTimeout(() => {
