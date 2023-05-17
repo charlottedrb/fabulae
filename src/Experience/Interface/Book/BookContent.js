@@ -106,6 +106,10 @@ export default class BookContent {
         this.image.src = this.images[0]
         this.lastImageFrame = 1
 
+        this.leftPageContent.innerHTML = ''
+        this.rightPageContent.innerHTML = ''
+        gsap.to([this.leftPageBorder, this.rightPageBorder], { alpha: 0 })
+
         clearInterval(this.intervalNextPage)
         clearInterval(this.intervalPreviousPage)
     }
