@@ -9,7 +9,8 @@ export default class BookPoint extends EventEmitter {
     this.experience = new Experience();
     this.interface = new InterfaceUI()
     this.overlay = this.interface.overlay
-
+    this.resources = this.experience.resources;
+    
     this.book = book
     this.id = id
     this.el = null
@@ -19,7 +20,7 @@ export default class BookPoint extends EventEmitter {
       this.isClicked = false
     })
 
-    this.init()
+    this.init();
   }
 
   init() {

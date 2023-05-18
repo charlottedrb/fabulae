@@ -27,4 +27,9 @@ export default [
 //         type: 'gltfModel',
 //         path: 'models/Fox/glTF/Fox.gltf'
 //     }
+        {
+            name: 'blueBookModel', 
+            type: 'gltfModel',
+            path: 'models/Book/glTF/Livre_Bleu.gltf'
+        }
 ]

@@ -11,12 +11,7 @@ export default class World {
     this.resources = this.experience.resources;
     this.books = [];
 
-    /**
-     * Setup
-     */
-    this.floor = new Floor();
-
-    // Books
+    // Methods binding
     this.setBooksBound = this.setBooks.bind(this);
 
     // Wait for resources
@@ -25,9 +20,10 @@ export default class World {
       this.floor = new Floor();
       this.environment = new Environment();
       this.experience.sceneReady = true
+      this.init();
     });
 
-    this.init();
+    this.debug = this.experience.debug;
   }
 
   init() {
@@ -38,27 +34,27 @@ export default class World {
 
   setBooks() {
     const nbBooks = 10;
-    const bookDistance = 0.6;
+    const bookDistance = 0.05;
     let initialPosition = this.floor.mesh.position.clone();
     initialPosition.x -= this.floor.geometry.parameters.width / 2;
 
+    // Debug
+    let booksFolder = null
+
     for (let i = 1; i < nbBooks; i++) {
+      const position = new THREE.Vector3(
+        initialPosition.x + bookDistance * i,
+        initialPosition.y + this.floor.geometry.parameters.height + 0.1,
+        initialPosition.z
+      )
+
       const book = new Book(
         this.floor,
-        Math.random() * 0xff0000,
-        new THREE.Vector3(
-          initialPosition.x + bookDistance * i,
-          initialPosition.y + 1,
-          initialPosition.z
-        )
+        position
       );
 
       this.books.push({
-        position: new THREE.Vector3(
-          initialPosition.x + bookDistance * i,
-          initialPosition.y + 1,
-          initialPosition.z + 1
-        ),
+        position: position,
         author: `Author ${i}`,
         obj: book
       });

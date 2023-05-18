@@ -48,6 +48,9 @@ export default class BookContent {
 
         this.animation = gsap.timeline()
 
+        // Change to disable overflow scroll on content
+        this.overflowScroll = true
+
         this.getImagesPath()
         this.getElements()
         this.getBookContent()
@@ -129,7 +132,7 @@ export default class BookContent {
 
         // Creating necessary HTML elements
 
-        if (this.textOverflowing) {
+        if (!this.overflowScroll && this.textOverflowing) {
             const text = document.createElement('div')
             text.classList.add('book__text')
             text.innerHTML = this.textDiv.innerHTML
@@ -142,7 +145,6 @@ export default class BookContent {
             this.textDiv = this.leftPageContent.querySelector('.book__text')
             this.checkOverflowing(this.leftPageContent)
             return
-
         } else {
             // If not overflowing, we add the next chapter title
             const startingChapter = document.createElement('div')
@@ -186,7 +188,7 @@ export default class BookContent {
             // Get freshly created div in DOM to check if it's overflowing
             this.textDiv = this.rightPageContent.querySelector('.book__text')
 
-            this.checkOverflowing(this.rightPageContent)
+            !this.overflowScroll && this.checkOverflowing(this.rightPageContent)
         }
     }
 

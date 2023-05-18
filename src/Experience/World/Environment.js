@@ -16,8 +16,9 @@ export default class Environment
             this.debugFolder = this.debug.ui.addFolder('environment')
         }
 
-        this.setSunLight()
-        this.setEnvironmentMap()
+        // this.setSunLight()
+        this.setAmbientLight()
+        // this.setEnvironmentMap()
     }
 
     setSunLight()
@@ -27,7 +28,7 @@ export default class Environment
         this.sunLight.shadow.camera.far = 15
         this.sunLight.shadow.mapSize.set(1024, 1024)
         this.sunLight.shadow.normalBias = 0.05
-        this.sunLight.position.set(3.5, 2, - 1.25)
+        this.sunLight.position.set(0.5, 1.2, 0.9)
         this.scene.add(this.sunLight)
 
         // Debug
@@ -61,6 +62,12 @@ export default class Environment
                 .max(5)
                 .step(0.001)
         }
+    }
+
+    setAmbientLight()
+    {
+        this.ambientLight = new THREE.AmbientLight('#ffffff', 2)
+        this.scene.add(this.ambientLight)
     }
 
     setEnvironmentMap()

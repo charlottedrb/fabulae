@@ -21,6 +21,7 @@ export default class InterfaceUI {
     this.camera = this.experience.camera;
     this.scene = this.experience.scene;
     this.sizes = this.experience.sizes;
+    this.resources = this.experience.resources;
 
     /**
      * Book interface
@@ -32,7 +33,10 @@ export default class InterfaceUI {
 
     this.raycaster = null;
 
-    this.init();
+    // Wait for resources
+    this.resources.on("ready", () => {  
+      this.init();
+    })
   }
 
   init() {
@@ -61,42 +65,42 @@ export default class InterfaceUI {
     if (this.experience.sceneReady) {
       // Go through each point
       for (const point of this.booksPoints) {
-        // Get 2D screen position
+        // Get 2D screen position 
         const screenPosition = point.position.clone();
         screenPosition.project(this.camera.instance);
 
         // Set the raycaster
-        this.raycaster.setFromCamera(screenPosition, this.camera.instance);
-        const intersects = this.raycaster.intersectObjects(
-          this.scene.children,
-          true
-        );
+        // this.raycaster.setFromCamera(screenPosition, this.camera.instance);
+        // const intersects = this.raycaster.intersectObjects(
+        //   this.scene.children,
+        //   true
+        // );
 
-        // No intersect found
-        if (intersects.length === 0) {
-          // Show
-          point.obj.el.classList.add("visible");
-        }
+        // // No intersect found
+        // if (intersects.length === 0) {
+        //   // Show
+        //   point.obj.el.classList.add("visible");
+        // }
 
-        // Intersect found
-        else {
-          // Get the distance of the intersection and the distance of the point
-          const intersectionDistance = intersects[0].distance;
-          const pointDistance = point.position.distanceTo(
-            this.camera.instance.position
-          );
+        // // Intersect found
+        // else {
+        //   // Get the distance of the intersection and the distance of the point
+        //   const intersectionDistance = intersects[0].distance;
+        //   const pointDistance = point.position.distanceTo(
+        //     this.camera.instance.position
+        //   );
 
-          // Intersection is close than the point
-          if (intersectionDistance < pointDistance) {
-            // Hide
-            point.obj.el.classList.remove("visible");
-          }
-          // Intersection is further than the point
-          else {
-            // Show
-            point.obj.el.classList.add("visible");
-          }
-        }
+        //   // Intersection is close than the point
+        //   if (intersectionDistance < pointDistance) {
+        //     // Hide
+        //     point.obj.el.classList.remove("visible");
+        //   }
+        //   // Intersection is further than the point
+        //   else {
+        //     // Show
+        //     point.obj.el.classList.add("visible");
+        //   }
+        // }
 
         const translateX = screenPosition.x * this.sizes.width * 0.5;
         const translateY = -screenPosition.y * this.sizes.height * 0.5;
