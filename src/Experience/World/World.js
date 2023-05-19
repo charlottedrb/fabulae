@@ -49,6 +49,9 @@ export default class World
             this.stairsRoom = null
         }
 
+        this.visualLoader.destroy()
+        this.visualLoader = null
+
         this.experience = null
         this.scene = null
         this.resources = null

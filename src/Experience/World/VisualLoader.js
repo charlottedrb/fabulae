@@ -10,6 +10,11 @@ export default class VisualLoader
         this.scene = this.experience.scene
         this.resources = this.experience.resources
 
+        this.loadingRate = document.querySelector('.rate')
+        this.resources.on('progress', (progressRatio) => {
+            this.updateLoadingRate(progressRatio)
+        })
+
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
@@ -52,10 +57,17 @@ export default class VisualLoader
     }
 
     disapear() {
-        gsap.to(this.material.uniforms.uAlpha, { duration: 3, value: 0, delay: 1 })
+        gsap.to(this.material.uniforms.uAlpha, { duration: 2, value: 0, delay: 1 })
+        document.querySelector('.loader').style.opacity = 0
+    }
+
+    updateLoadingRate(progressRatio) {
+        this.loadingRate.innerHTML = Math.round(progressRatio * 100)
     }
 
     destroy() {
+        this.resources.off('progress')
+        this.loadingRate = null
         this.geometry.dispose()
         this.geometry = null
         this.scene.remove(this.mesh)
