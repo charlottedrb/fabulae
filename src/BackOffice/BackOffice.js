@@ -32,11 +32,6 @@ export default class BackOffice {
         this.setAuthorFirstName()
     }
 
-    setCategoriesOptions()
-    {
-
-    }
-
     setAuthorFirstName()
     {
         document.querySelectorAll('.author__first-name').forEach(el => {

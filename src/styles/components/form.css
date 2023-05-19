@@ -1,9 +1,41 @@
 form {
+    @apply flex flex-col gap-y-40;
+
+    span {
+        @apply font-roystorie text-white text-30;
+    }
+
     input[type='email'], input[type='password'], input[type='text'] {
         @apply h-70 pl-10 bg-[transparent] font-roystorie text-white text-30 border-b-white border-b-px outline-none;
-          
+        
         &::placeholder {
             @apply font-roystorie text-white text-30 opacity-50 pb-10;
         }
+    }
+    
+    #category {
+        @apply flex gap-x-25;
+
+        .form__radio-group {
+            label {
+                @apply p-10 font-roystorie text-white text-30;
+            }
+            
+            input[type='radio'] {
+                @apply hidden;
+
+                &:checked + label {
+                    @apply border-b-white border-b-px;
+                }
+            }
+        }
+    }
+
+    textarea {
+        @apply h-300 p-25 bg-[transparent] font-roystorie text-white text-30 border-white border-px outline-none;
+    }
+
+    input[type='submit'] {
+        @apply px-25 py-10 bg-white font-roystorie text-night-blue text-30 rounded-full;
     }
 }

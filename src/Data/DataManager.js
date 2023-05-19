@@ -3,6 +3,7 @@ import * as books from './books'
 import * as comments from './comments'
 import * as users from './users'
 import * as categories from './categories'
+import { stories, addStory } from './stories'
 
 /**
  * @class DataManager
@@ -16,6 +17,7 @@ export default class DataManager {
         this.comments = null 
         this.users = null
         this.categories = null
+        this.stories = null
 
         this.init()
     }
@@ -27,6 +29,7 @@ export default class DataManager {
         this.comments = comments.default
         this.users = users.default
         this.categories = categories.default
+        this.stories = stories
     }
 
     /**
@@ -101,7 +104,7 @@ export default class DataManager {
      */
     addStory(story) 
     {
-        this.stories.push(story)
+        addStory(story)
     }
 
     /**

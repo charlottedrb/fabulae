@@ -1,10 +1,11 @@
 import DataManager from "../Data/DataManager"
+import BackOffice from "./BackOffice"
 
 export default class Story {
     constructor() {
         this.dataManager = new DataManager()
         this.backOffice = new BackOffice()
-        this.setCategorySelectionOptions()
+        this.setCategoryCheckboxes()
 
         this.events()
     }
@@ -37,15 +38,28 @@ export default class Story {
         this.dataManager.addStory(story)
     }
 
-    setCategorySelectionOptions()
+    setCategoryCheckboxes()
     {
-        const select = document.querySelector('#category')
+        const container = document.querySelector('#category')
 
         this.dataManager.categories.forEach(category => {
-            const option = document.createElement('option')
-            option.value = category.id
-            option.innerHTML = category.name
-            select.appendChild(option)
+            const radio = document.createElement('input')
+            const label = document.createElement('label')
+
+            radio.type = 'radio'
+            radio.value = category.id
+            radio.id = category.id
+            radio.name = 'category'
+
+            label.setAttribute('for', category.id)
+            label.innerHTML = category.name
+
+            const div = document.createElement('div')
+            div.classList.add('form__radio-group')
+            div.appendChild(radio)
+            div.appendChild(label)
+
+            container.appendChild(div)
         })
     }
 }

@@ -11,7 +11,7 @@ import Story from './BackOffice/Story.js'
  */
 const taxi = new Taxi.Core()
 
-if (window.location.pathname === '/index.html') {
+if (window.location.pathname === '/') {
     const animation = new Animation()
 }
 
