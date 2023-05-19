@@ -10,12 +10,12 @@
 <body>
     <main data-taxi>
         <div class="h-screen w-screen relative p-container" data-taxi-view>
-            <div class="flex items-center justify-between">
-                <div class="font-roystorie text-white text-60">Bienvenue <span class="author__first-name"></span>.</div>
-                <a href="create-story.html" class="px-25 py-10 bg-white font-roystorie text-night-blue text-30 rounded-full">Raconter une histoire</a>
-            </div>
-            <div class="font-roystorie text-white text-30 uppercase">Mes livres</div>
-            <!-- <canvas class="webgl"></canvas> -->
+            <form>
+                <input type="text" name="title" id="title" placeholder="Titre de l'histoire">
+                <select name="category" id="category"></select>
+                <textarea name="content" placeholder="Content" id="content"></textarea>
+                <input type="submit" value="Envoyer">
+            </form>
             <div class="w-full h-full relative svg-wrapper">
                 <img src="/images/logo-no-icon.svg" class="absolute bottom-0 left-0 w-full"/>
             </div>

@@ -26,6 +26,7 @@ export default {
     },
     fontSize: {
       150: '15rem',
+      60: '6rem',
       45: '4.5rem',
       30: '3rem',
       22: '2.2rem',
@@ -37,6 +38,7 @@ export default {
     },
     borderRadius: {
       10: '1rem',
+      full: '9999px',
     },
     borderWidth: {
       px: '1px',

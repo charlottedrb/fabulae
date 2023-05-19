@@ -1,5 +1,5 @@
 form {
-    input[type='email'], input[type='password'] {
+    input[type='email'], input[type='password'], input[type='text'] {
         @apply h-70 pl-10 bg-[transparent] font-roystorie text-white text-30 border-b-white border-b-px outline-none;
           
         &::placeholder {

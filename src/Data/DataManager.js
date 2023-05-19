@@ -45,6 +45,15 @@ export default class DataManager {
 
     /**
      * 
+     * @returns {object}
+     */
+    getFirstAuthor()
+    {
+        return this.authors[0]
+    }
+
+    /**
+     * 
      * @param {string} name 
      * @returns {object}
      */
@@ -85,6 +94,14 @@ export default class DataManager {
     getBooksByCategory(id) 
     {
         return this.books.filter(book => book.categoryId === id)
+    }
+    
+    /**
+     * Stories
+     */
+    addStory(story) 
+    {
+        this.stories.push(story)
     }
 
     /**
