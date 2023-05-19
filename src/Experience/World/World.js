@@ -1,7 +1,7 @@
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
-import Floor from './Floor.js'
 import StairsRoom from './StairsRoom.js'
+import VisualLoader from './VisualLoader.js'
 
 export default class World
 {
@@ -11,14 +11,18 @@ export default class World
         this.scene = this.experience.scene
         this.resources = this.experience.resources
 
-        // Setup
-        this.environment = new Environment()
+        this.visualLoader = new VisualLoader()
 
         // Wait for resources
         this.resources.on('ready', () =>
         {
-            console.log('resources', this.resources);
+            // Setup
+            this.environment = new Environment()
+
+            // console.log('resources', this.resources);
             this.stairsRoom = new StairsRoom()
+
+            this.visualLoader.disapear()
         })
     }
 
