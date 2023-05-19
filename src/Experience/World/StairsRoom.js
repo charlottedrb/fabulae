@@ -22,7 +22,8 @@ export default class StairsRoom
             this.debugFolder = this.debug.ui.addFolder('stairsRoom')
         }
 
-        this.onClickHandlerBound = this.onClickHandler.bind(this)
+        this.onChoiceMadeBound = this.onChoiceMade.bind(this)
+        this.playCameraAnimationBound = this.playCameraAnimation.bind(this)
 
         this.setModels()
         this.setCamera()
@@ -31,23 +32,12 @@ export default class StairsRoom
     setModels()
     {
         this.room = this.resources.items.stairsRoom
+
         // Separate the background from the room
         this.backgroundMesh = this.room.scene.getObjectByName('Fond_plane').clone()
         this.room.scene.remove(this.room.scene.getObjectByName('Fond_plane'))
 
         if(this.debug.active) {
-            this.debugFolder
-                .add(this.room.scene.position, 'x')
-                .name('scene position X')
-                .min(- 5)
-                .max(5)
-                .step(0.001)
-            this.debugFolder
-                .add(this.room.scene.position, 'y')
-                .name('scene position Y')
-                .min(- 5)
-                .max(5)
-                .step(0.001)
             this.debugFolder
                 .add(this.room.scene.position, 'z')
                 .name('scene position Z')
@@ -97,24 +87,29 @@ export default class StairsRoom
 
     setRaycastEvents() {
         this.doors.doors.forEach(door => {
-            this.raycastHandler.addObjectToTest(door, this.onClickHandlerBound, 'click')
+            this.raycastHandler.addObjectToTest(door, this.onChoiceMadeBound, 'click')
         });
     }
 
-    onClickHandler() {
-        gsap.to(this.room.scene.rotation, { y: 0.645, duration: 1 })
-        this.leftStair.onClickHandler()
-        this.rightStair.onClickHandler()
+    onChoiceMade() {
+        this.leftStair.freezeCurrentAnimation()
+        this.rightStair.freezeCurrentAnimation()
+
+        // clear all listeners when door is chosen
         this.doors.doors.forEach(door => {
             this.raycastHandler.removeObjectToTest(door, 'leave')
             this.raycastHandler.removeObjectToTest(door, 'enter')
             this.raycastHandler.removeObjectToTest(door, 'click')
         });
-        this.doors.onClickHandler()
-        setTimeout(() => {
-            this.cameraAction.reset()
-            this.cameraAction.play()
-        }, 1500);
+
+        // Get the position and rotation of the camera animation's first frame for smoother transition
+        const firstFrameAnimPosition = this.cameraAction.getClip().tracks[0].values.slice(0, 3)
+        const firstFrameAnimRotation = this.cameraAction.getClip().tracks[1].values.slice(0, 3)
+
+        const tl = gsap.timeline({ onComplete: this.playCameraAnimationBound})
+        tl.to(this.room.scene.rotation, { y: 0.645, duration: 1 })
+        tl.to(this.camera.instance.position, { x: firstFrameAnimPosition[0], y: firstFrameAnimPosition[1], z: firstFrameAnimPosition[2], duration: 1, ease: 'power2.easeOut' })
+        tl.to(this.camera.instance.rotation, { x: firstFrameAnimRotation[0], y: firstFrameAnimRotation[1], z: firstFrameAnimRotation[2], duration: 1, ease: 'power2.easeOut' }, '<')
     }
 
     setCamera() {
@@ -126,19 +121,24 @@ export default class StairsRoom
 
     setCameraAnimation() {
         this.stairsCamera = this.resources.items.stairsCamera
-        let rotation = this.stairsCamera.scene.getObjectByName('Camera').rotation
-        let position = this.stairsCamera.scene.getObjectByName('Camera').position
-        // this.camera.instance.position.set(...position)
-        // this.camera.instance.rotation.set(...rotation)
-
         this.animMixer = new THREE.AnimationMixer(this.camera.instance)
         this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.stairsCamera.animations, 'CameraAction'))
         this.cameraAction.setLoop(THREE.LoopOnce)
         this.cameraAction.clampWhenFinished = true
     }
 
+    playCameraAnimation() {
+        // Open the chosen door
+        this.doors.openDoors()
+
+        // Make the camera go through the chosen door
+        this.cameraAction.reset()
+        this.cameraAction.play()
+    }
+
     setVideo()
     {
+         // Start html video
         this.video = document.getElementById('video');
         this.video.play();
         this.setBackground()
@@ -146,6 +146,7 @@ export default class StairsRoom
 
     setBackground()
     {
+        // Get video source from html and create as a material
         this.texture = new THREE.VideoTexture(this.video);
         this.texture.wrapS = THREE.RepeatWrapping;
         this.texture.flipY = false;
@@ -157,10 +158,12 @@ export default class StairsRoom
     }
 
     setBackgroundVideo() {
+        // Apply video material to the background
         this.backgroundMesh.material = this.material
     }
 
     setBackgroundSize() {
+        // Make the background bigger to cover the whole scene
         this.backgroundMesh.geometry.scale(1.3, 1.3, 1.3)
     }
 
@@ -169,6 +172,8 @@ export default class StairsRoom
         this.rightStair.update()
         this.doors.update()
         this.animMixer.update(this.time.delta / 1000)
+
+        // console.log(this.camera.instance.position);
     }
 
     destroy() {
@@ -180,7 +185,8 @@ export default class StairsRoom
         this.time = null
         this.debug = null
         this.debugFolder = null
-        this.onClickHandlerBound = null
+        this.onChoiceMadeBound = null
+        this.playCameraAnimationBound = null
 
         this.room = null
         this.backgroundMesh.geometry.dispose()
@@ -196,5 +202,8 @@ export default class StairsRoom
         this.texture = null
         this.material.dispose()
         this.material = null
+        this.stairsCamera = null
+        this.animMixer = null
+        this.cameraAction = null
     }
 }

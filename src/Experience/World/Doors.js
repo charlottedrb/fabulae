@@ -27,7 +27,7 @@ export default class Doors
         // this.setRaycastEvents()
     }
 
-    onClickHandler() {
+    openDoors() {
         this.playAnim(this.doorsAnimationClips[0])
         this.playAnim(this.doorsAnimationClips[1])
     }
