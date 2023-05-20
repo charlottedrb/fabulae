@@ -48,7 +48,7 @@ export default class Book {
     {
         gsap.to(this.model.position, {
             duration: 1,
-            z: this.model.position.z + 1,
+            z: this.model.position.z + 0.2,
             ease: 'power3.inOut'
         })
     }
@@ -57,7 +57,7 @@ export default class Book {
     {
         gsap.to(this.model.position, {
             duration: 1,
-            z: this.model.position.z - 1,
+            z: this.model.position.z - 0.2,
             ease: 'power3.inOut'
         })
     }

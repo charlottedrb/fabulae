@@ -34,7 +34,7 @@ export default class BookPoint extends EventEmitter {
   createHTMLPoint()
   {
     this.el = document.createElement("div");
-    this.el.classList.add("point");
+    this.el.classList.add('point');
     this.el.id = `book-${this.id}`;
     this.el.innerHTML = `
         <div class="label">${this.id}</div>

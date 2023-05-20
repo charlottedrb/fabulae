@@ -66,8 +66,8 @@ export default class Experience
     {
         this.camera.update()
         this.world.update()
-        this.interface.update()
         this.renderer.update()
+        this.sceneReady && this.interface.update()
     }
 
     destroy()

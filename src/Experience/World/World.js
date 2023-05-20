@@ -34,7 +34,7 @@ export default class World {
 
   setBooks() {
     const nbBooks = 10;
-    const bookDistance = 0.05;
+    const bookDistance = 0.07;
     let initialPosition = this.floor.mesh.position.clone();
     initialPosition.x -= this.floor.geometry.parameters.width / 2;
 
