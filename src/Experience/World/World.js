@@ -5,6 +5,7 @@ import Book from "./Book/Book.js";
 import Environment from "./Environment.js";
 import * as THREE from "three";
 import StairsRoom from "./StairsRoom.js";
+import VisualLoader from './VisualLoader.js'
 
 export default class World {
     constructor() {
@@ -12,6 +13,8 @@ export default class World {
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.books = [];
+      
+        this.visualLoader = new VisualLoader()
 
         // Wait for resources
         this.resources.on("ready", () => {
@@ -60,9 +63,12 @@ export default class World {
             this.stairsRoom = null;
         }
 
-        this.experience = null;
-        this.scene = null;
-        this.resources = null;
+        this.visualLoader.destroy()
+        this.visualLoader = null
+
+        this.experience = null
+        this.scene = null
+        this.resources = null
     }
 
     setBooks() {
