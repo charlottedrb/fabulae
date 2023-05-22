@@ -83,7 +83,6 @@ export default class RaycasterHandler
         {
             if(!this.currentIntersect)
             {
-                // console.log('mouse enter')
                 this.currentIntersect = intersects[0]
                 let uniqueID = null
                 this.indexes[this.currentIntersect.object.uuid].forEach(element => {
@@ -101,7 +100,6 @@ export default class RaycasterHandler
         {
             if(this.currentIntersect)
             {
-                // console.log('mouse leave')
                 let uniqueID = null
                 this.indexes[this.currentIntersect.object.uuid].forEach(element => {
                     const timing = element.split('_')[1]
