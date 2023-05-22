@@ -11,12 +11,12 @@ export default class World
         this.scene = this.experience.scene
         this.resources = this.experience.resources
 
-        // Setup
-        this.environment = new Environment()
-
         // Wait for resources
         this.resources.on('ready', () =>
         {
+            // Setup
+            this.environment = new Environment()
+
             console.log('resources', this.resources);
             this.stairsRoom = new StairsRoom()
         })
