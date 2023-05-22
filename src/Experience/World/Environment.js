@@ -17,6 +17,7 @@ export default class Environment
         }
 
         this.setSunLight()
+        this.setAmbientLight()
         // this.setEnvironmentMap()
     }
 
@@ -65,6 +66,12 @@ export default class Environment
                 .max(5)
                 .step(0.001)
         }
+    }
+
+    setAmbientLight()
+    {
+        this.ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
+        this.scene.add(this.ambientLight)
     }
 
     setEnvironmentMap()

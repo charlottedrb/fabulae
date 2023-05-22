@@ -28,6 +28,10 @@ export default class World
         if (this.stairsRoom) {
             this.stairsRoom.update()
         }
+
+        if (this.libraryRoom) {
+            this.libraryRoom.update()
+        }
     }
 
     destroy() {
