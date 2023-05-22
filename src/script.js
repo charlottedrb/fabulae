@@ -1,9 +1,15 @@
-import Experience from './Experience/Experience.js'
+
+import DataManager from './Data/DataManager.js'
 import * as Taxi from '@unseenco/taxi'
-import Animation from './Landing/animation.js'
+import CustomRenderer from './config/Renderer.js'
 
 /**
  * Landing
  */
-const taxi = new Taxi.Core()
+const taxi = new Taxi.Core({
+    renderers: {
+		default: CustomRenderer,
+	}
+})
+
 const animation = new Animation()

@@ -30,6 +30,7 @@ export default class DataManager {
         this.comments = null 
         this.users = null
         this.categories = null
+        this.stories = null
 
         this.init()
     }
@@ -42,6 +43,7 @@ export default class DataManager {
         this.comments = comments.default
         this.users = users.default
         this.categories = categories.default
+        this.stories = stories
     }
 
     /**
@@ -56,6 +58,15 @@ export default class DataManager {
     getAuthorById(id)
     {
         return this.authors.find(author => author.id === id)
+    }
+
+    /**
+     * 
+     * @returns {object}
+     */
+    getFirstAuthor()
+    {
+        return this.authors[0]
     }
 
     /**
@@ -100,6 +111,14 @@ export default class DataManager {
     getBooksByCategory(id) 
     {
         return this.books.filter(book => book.categoryId === id)
+    }
+    
+    /**
+     * Stories
+     */
+    addStory(story) 
+    {
+        addStory(story)
     }
 
     /**
