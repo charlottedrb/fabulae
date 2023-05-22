@@ -1,6 +1,7 @@
 import Experience from "../Experience";
 import * as THREE from "three";
 import gsap from 'gsap';
+import { throttle } from 'throttle-debounce';
 
 export default class LibraryRoom {
     constructor()
@@ -10,22 +11,45 @@ export default class LibraryRoom {
         this.scene = this.experience.scene
         this.resources = this.experience.resources
         this.time = this.experience.time
+        this.timer = null
 
         this.playCameraAnimationBound = this.playCameraAnimation.bind(this)
+        this.resetCameraAnimationBound = this.resetCameraAnimation.bind(this)
+        this.pauseCameraAnimationBound = this.pauseCameraAnimation.bind(this)
+        this.onScrollBound = throttle(5, this.onScroll.bind(this))
 
+        this.events()
         this.setModels()
         this.setCamera()
     }
 
-    init()
+    events()
     {
+        window.addEventListener('wheel', this.onScrollBound)
+    }
 
+    onScroll(e) 
+    {
+        if(this.timer !== null) {
+            clearTimeout(this.timer);        
+        }
+        
+        if (e.deltaY < 0) {
+            this.cameraAction.timeScale = -1
+            this.playCameraAnimationBound()
+        } else {
+            this.cameraAction.timeScale = 1
+            this.playCameraAnimationBound()
+        }
+
+        this.timer = setTimeout(() => {
+            this.pauseCameraAnimationBound()
+        }, 150);
     }
 
     setModels()
     {
         this.room = this.resources.items.libraryRoom
-        console.log(this.room);
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake')
         this.scene.add(this.room.scene)
     }
@@ -42,26 +66,32 @@ export default class LibraryRoom {
     {
         this.animMixer = new THREE.AnimationMixer(this.camera.instance)
         this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.room.animations, 'CameraAction.001'))
-        this.cameraAction.setLoop(THREE.LoopPingPong)
+        this.cameraAction.setLoop(THREE.LoopOnce)
         this.cameraAction.clampWhenFinished = true
 
-        console.log(this.cameraAction, this.room.animations);
-
         setTimeout(() => {
-            this.playCameraAnimationBound()
+            this.resetCameraAnimationBound()
         },0)
+    }
+
+    resetCameraAnimation()
+    {
+        this.cameraAction.reset()
     }
 
     playCameraAnimation()
     {
-        this.cameraAction.reset()
+        this.cameraAction.paused = false
         this.cameraAction.play()
+    }
+
+    pauseCameraAnimation()
+    {
+        this.cameraAction.paused = true
     }
 
     update()
     {
-        const cameraInitialPosition = this.cameraAction.getClip().tracks[0].values.slice(0, 3)
-        const cameraInitialRotation = this.cameraAction.getClip().tracks[1].values.slice(0, 3)
         this.animMixer.update(this.time.delta / 1000)
     }
 
@@ -74,5 +104,8 @@ export default class LibraryRoom {
         this.playCameraAnimationBound = null
 
         this.room = null
+        
+        window.removeEventListener('scroll', this.onScrollBound)
+        this.onScrollBound = null
     }
 }

@@ -172,8 +172,6 @@ export default class StairsRoom
         this.rightStair.update()
         this.doors.update()
         this.animMixer.update(this.time.delta / 1000)
-
-        // console.log(this.camera.instance.position);
     }
 
     destroy() {

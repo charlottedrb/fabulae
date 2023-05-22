@@ -23,7 +23,7 @@ export default class Environment
 
     setSunLight()
     {
-        this.sunLight = new THREE.DirectionalLight('#ffffff', 4)
+        this.sunLight = new THREE.DirectionalLight('#0000FF', 4)
         this.sunLight.castShadow = true
         this.sunLight.shadow.camera.far = 15
         this.sunLight.shadow.mapSize.set(1024, 1024)
@@ -55,8 +55,8 @@ export default class Environment
             this.debugFolder
                 .add(this.sunLight.position, 'y')
                 .name('sunLightY')
-                .min(- 5)
-                .max(5)
+                .min(- 100)
+                .max(100)
                 .step(0.001)
             
             this.debugFolder
