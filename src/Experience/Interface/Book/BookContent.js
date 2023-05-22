@@ -1,6 +1,3 @@
-import Splitting from 'splitting'
-import DataManager from '../../Data/DataManager'
-import Pager from './Pager'
 import gsap from 'gsap'
 import InterfaceUI from '../../InterfaceUI'
 import Experience from '../../Experience'
