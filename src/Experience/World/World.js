@@ -1,7 +1,7 @@
-import Floor from "./Floor.js";
-import LibraryRoom from "./LibraryRoom.js";
+import Floor from "./LibraryRoom/Floor.js";
+import LibraryRoom from "./LibraryRoom/LibraryRoom.js";
 import Experience from "../Experience.js";
-import Book from "./Book/Book.js";
+import Book from "./LibraryRoom/Book/Book.js";
 import Environment from "./Environment.js";
 import * as THREE from "three";
 import StairsRoom from "./StairsRoom.js";

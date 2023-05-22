@@ -1,7 +1,6 @@
 import * as THREE from 'three'
-import Experience from '../../Experience.js'
+import Experience from '../../../Experience'
 import gsap from 'gsap'
-import InterfaceUI from '../../InterfaceUI.js'
 
 export default class Book {
     constructor(parent, position)

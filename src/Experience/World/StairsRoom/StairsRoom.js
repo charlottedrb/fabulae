@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import Experience from '../Experience.js'
+import Experience from '../../Experience.js'
 import Doors from './Doors.js'
 import Stair from './Stair.js'
 import gsap from "gsap";

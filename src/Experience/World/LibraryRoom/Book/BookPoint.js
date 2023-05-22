@@ -1,6 +1,6 @@
-import Experience from "../../Experience";
-import InterfaceUI from "../../InterfaceUI";
-import EventEmitter from "../../Utils/EventEmitter";
+import Experience from "../../Environment";
+import InterfaceUI from "../../../InterfaceUI";
+import EventEmitter from "../../../Utils/EventEmitter";
 
 export default class BookPoint extends EventEmitter {
   constructor(book, id) {
