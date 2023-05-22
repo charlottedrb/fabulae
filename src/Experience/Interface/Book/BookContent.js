@@ -3,6 +3,7 @@ import DataManager from '../../Data/DataManager'
 import Pager from './Pager'
 import gsap from 'gsap'
 import InterfaceUI from '../../InterfaceUI'
+import Experience from '../../Experience'
 /**
  * @class BookContent
  * @description Handle the book content
@@ -23,7 +24,8 @@ export default class BookContent {
         /**
          * Data management
          */
-        this.dataManager = new DataManager()
+        this.experience = new Experience()
+        this.dataManager = this.experience.dataManager
         this.getBookContent()
 
         this.interface = new InterfaceUI()

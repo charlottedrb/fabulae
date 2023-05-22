@@ -21,6 +21,7 @@ export default class InterfaceUI {
         this.scene = this.experience.scene;
         this.sizes = this.experience.sizes;
         this.resources = this.experience.resources;
+        this.dataManager = this.experience.dataManager;
 
         /**
          * Book interface
@@ -52,10 +53,12 @@ export default class InterfaceUI {
 
     createPoints() {
         this.books.forEach((book, id) => {
-            this.booksPoints.push({
-                position: book.position,
-                obj: new BookPoint(book, id),
-            });
+            if (this.dataManager.books.find((b) => b.id === id)) {
+                this.booksPoints.push({
+                    position: book.position,
+                    obj: new BookPoint(book, id),
+                });
+            }
         });
     }
 

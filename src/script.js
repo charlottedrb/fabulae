@@ -11,11 +11,6 @@ const taxi = new Taxi.Core()
 const animation = new Animation()
 
 /**
- * Data
- */
-const dataManager = new DataManager()
-
-/**
  * Experience
  */
 const experience = new Experience(document.querySelector('canvas.webgl'))
