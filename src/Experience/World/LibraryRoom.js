@@ -28,6 +28,22 @@ export default class LibraryRoom {
         window.addEventListener('wheel', this.onScrollBound)
     }
 
+    setModels()
+    {
+        this.room = this.resources.items.libraryRoom
+        this.roomShelfDown = this.room.scene.getObjectByName('étagères')
+        this.roomCamera = this.room.scene.getObjectByName('Camera_Bake')
+        this.scene.add(this.room.scene)
+    }
+    
+    setCamera()
+    {
+        this.setCameraAnimation()
+
+        this.camera.instance.position.set(this.roomCamera.position.x, this.roomCamera.position.y, this.roomCamera.position.z)
+        this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
+    }
+
     onScroll(e) 
     {
         if(this.timer !== null) {
@@ -45,21 +61,6 @@ export default class LibraryRoom {
         this.timer = setTimeout(() => {
             this.pauseCameraAnimationBound()
         }, 150);
-    }
-
-    setModels()
-    {
-        this.room = this.resources.items.libraryRoom
-        this.roomCamera = this.room.scene.getObjectByName('Camera_Bake')
-        this.scene.add(this.room.scene)
-    }
-    
-    setCamera()
-    {
-        this.setCameraAnimation()
-
-        this.camera.instance.position.set(this.roomCamera.position.x, this.roomCamera.position.y, this.roomCamera.position.z)
-        this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
     }
 
     setCameraAnimation()
@@ -101,9 +102,12 @@ export default class LibraryRoom {
         this.scene = null
         this.resources = null
         this.camera = null
+        this.timer = null
         this.playCameraAnimationBound = null
 
         this.room = null
+        this.roomCamera.dispose()
+        this.roomCamera = null
         
         window.removeEventListener('scroll', this.onScrollBound)
         this.onScrollBound = null

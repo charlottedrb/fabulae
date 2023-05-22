@@ -27,7 +27,7 @@ export default class World {
             // Setup
             this.floor = new Floor()
             this.environment = new Environment()
-            this.stairsRoom = new StairsRoom()
+            // this.stairsRoom = new StairsRoom()
             this.experience.sceneReady = true
             this.init();
         })
@@ -64,6 +64,11 @@ export default class World {
           this.stairsRoom = null
       }
 
+      if (this.libraryRoom) {
+        this.libraryRoom.destroy()
+        this.libraryRoom = null
+    }
+
       this.experience = null
       this.scene = null
       this.resources = null
@@ -72,11 +77,10 @@ export default class World {
   setBooks() {
     const nbBooks = 10;
     const bookDistance = 0.05;
-    let initialPosition = this.floor.mesh.position.clone();
-    initialPosition.x -= this.floor.geometry.parameters.width / 2;
-
-    // Debug
-    let booksFolder = null
+    let initialPosition = this.libraryRoom.roomShelfDown.position.clone();
+    console.log(this.libraryRoom.roomShelfDown);
+    // console.log(this.libraryRoom.roomShelfDown);
+    // initialPosition.x -= this.libraryRoom.roomShelfDown.mesh.parameters.width / 2;
 
     for (let i = 1; i < nbBooks; i++) {
       const position = new THREE.Vector3(
