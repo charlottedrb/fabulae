@@ -27,6 +27,8 @@ export default class World {
             this.stairsRoom = new StairsRoom();
             this.experience.sceneReady = true;
             this.init();
+
+            this.visualLoader.disapear()
         });
       
         // Methods binding
