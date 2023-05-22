@@ -1,0 +1,9 @@
+form {
+    input[type='email'], input[type='password'] {
+        @apply h-70 pl-10 bg-[transparent] font-roystorie text-white text-30 border-b-white border-b-px outline-none;
+          
+        &::placeholder {
+            @apply font-roystorie text-white text-30 opacity-50 pb-10;
+        }
+    }
+}

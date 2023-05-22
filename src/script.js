@@ -7,8 +7,3 @@ import Animation from './Landing/animation.js'
  */
 const taxi = new Taxi.Core()
 const animation = new Animation()
-
-/**
- * Experience
- */
-// const experience = new Experience(document.querySelector('canvas.webgl'))
