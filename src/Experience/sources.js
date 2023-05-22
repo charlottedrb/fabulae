@@ -38,6 +38,11 @@ export default [
         path: "models/room_stairs.gltf",
     },
     {
+        name: 'stairsCamera',
+        type: 'gltfModel',
+        path: 'models/stairs_camera.gltf'
+    },
+    {
         name: "stairs",
         type: "gltfModel",
         path: "models/stairs.gltf",
@@ -47,4 +52,9 @@ export default [
         type: "gltfModel",
         path: "models/stairs_camera.gltf",
     },
+      {
+        name: 'libraryRoom',
+        type: 'gltfModel',
+        path: 'models/Library/glTF/Salle_2_03.gltf'
+    } 
 ];

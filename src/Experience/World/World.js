@@ -1,3 +1,5 @@
+import Floor from './Floor.js'
+import LibraryRoom from './LibraryRoom.js'
 import Experience from "../Experience.js";
 import Book from "./Book/Book.js";
 import Environment from "./Environment.js";
@@ -20,6 +22,9 @@ export default class World {
         // Wait for resources
         this.resources.on('ready', () =>
         {
+            // this.stairsRoom = new StairsRoom()
+            this.libraryRoom = new LibraryRoom()
+          
             // Setup
             this.floor = new Floor()
             this.environment = new Environment()
@@ -35,9 +40,13 @@ export default class World {
 
     update()
     {
-      if (this.stairsRoom) {
-        this.stairsRoom.update()
-    }
+        if (this.stairsRoom) {
+            this.stairsRoom.update()
+        }
+
+        if (this.libraryRoom) {
+            this.libraryRoom.update()
+        }
     }
 
     destroy() {
