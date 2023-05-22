@@ -19,7 +19,6 @@ export default class Camera
         }
 
         this.setInstance()
-        // this.setControls()
     }
 
     setInstance()
@@ -88,10 +87,7 @@ export default class Camera
         this.instance.updateProjectionMatrix()
     }
 
-    update()
-    {
-        // this.controls.update()
-    }
+    update() { }
 
     destroy() {
         this.scene.remove(this.instance)

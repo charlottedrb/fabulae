@@ -18,12 +18,11 @@ export default class World {
 
         // Wait for resources
         this.resources.on("ready", () => {
-            // this.stairsRoom = new StairsRoom()
-            this.libraryRoom = new LibraryRoom();
-
+            
             // Setup
             this.floor = new Floor();
             this.environment = new Environment();
+            this.libraryRoom = new LibraryRoom();
             this.stairsRoom = new StairsRoom();
             this.experience.sceneReady = true;
             this.init();
