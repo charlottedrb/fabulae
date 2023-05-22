@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/app.css">
+    <title>Fabulae - Mon espace</title>
+</head>
+<body>
+    <main data-taxi>
+        <div class="min-h-screen w-screen relative p-container" data-taxi-view>
+            <form>
+                <div class="flex justify-between items-center">
+                    <div class="font-roystorie text-white text-60">Ajouter une histoire</div>
+                    <input type="submit" value="Partager mon histoire">
+                </div>
+                <input class="w-2/3" type="text" name="title" id="title" placeholder="Titre de l'histoire">
+                <div class="flex flex-col gap-y-10 w-2/3">
+                    <span>Catégorie de votre histoire</span>
+                    <div id="category"></div>
+                </div>
+                <textarea class="w-2/3" name="content" placeholder="Histoire" id="content"></textarea>
+            </form>
+            <div class="absolute bottom-0 left-0 w-screen svg-wrapper pointer-events-none">
+                <img src="/images/logo-no-icon.svg" class="w-full"/>
+            </div>
+        </div>
+      </main>
+      <script type="module" src="./script.js"></script>
+</body>
+</html>

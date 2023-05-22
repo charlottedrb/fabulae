@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in process.env
 
 export default {
@@ -13,6 +14,13 @@ export default {
     {
         outDir: '../dist',
         emptyOutDir: true,
-        sourcemap: true
+        sourcemap: true,
+        rollupOptions: {
+            input: {
+              main: resolve(__dirname, 'src/index.html'),
+              experience: resolve(__dirname, 'src/experience.html'),
+              backOffice: resolve(__dirname, 'src/back-office.html'),
+            },
+        },
     }
 }

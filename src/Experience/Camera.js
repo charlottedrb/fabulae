@@ -26,6 +26,8 @@ export default class Camera
     {
         this.instance = new THREE.PerspectiveCamera(35, this.sizes.width / this.sizes.height, 0.1, 150)
         this.instance.position.set(0, 0, 0)
+        this.instance.near = 0.1
+        this.instance.far = 1000
         this.scene.add(this.instance)
 
         if(this.debug.active)
@@ -47,7 +49,7 @@ export default class Camera
             this.debugFolder
                 .add(this.instance.position, 'z')
                 .name('cameraZ')
-                .min(-15)
+                .min(-50)
                 .max(15)
                 .step(0.001)
 

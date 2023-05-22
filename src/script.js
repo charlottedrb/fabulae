@@ -1,14 +1,15 @@
-import Experience from './Experience/Experience.js'
+
+import DataManager from './Data/DataManager.js'
 import * as Taxi from '@unseenco/taxi'
-import Animation from './Landing/animation.js'
+import CustomRenderer from './config/Renderer.js'
 
 /**
  * Landing
  */
-const taxi = new Taxi.Core()
-const animation = new Animation()
+const taxi = new Taxi.Core({
+    renderers: {
+		default: CustomRenderer,
+	}
+})
 
-/**
- * Experience
- */
-// const experience = new Experience(document.querySelector('canvas.webgl'))
+const animation = new Animation()

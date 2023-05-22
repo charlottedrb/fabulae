@@ -1,0 +1,24 @@
+.book {
+    &__content {
+    }
+
+    &__title {
+        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full font-roystorie text-100 text-center text-night-blue leading-1;
+    }
+
+    &__starting-chapter {
+        @apply flex flex-col justify-end gap-y-40 w-full h-full;
+
+        &__title {
+            @apply font-roystorie text-100 text-left text-night-blue leading-1;
+        }
+    }
+    
+    &__text {
+        @apply font-dubai text-22 text-night-blue; 
+    }
+
+    &__right-page, &__left-page {
+        @apply overflow-hidden;
+    }
+}
