@@ -13,11 +13,6 @@ export default class World {
         this.resources = this.experience.resources;
         this.books = [];
 
-        // Setup
-        this.environment = new Environment();
-        // Methods binding
-        this.setBooksBound = this.setBooks.bind(this);
-
         // Wait for resources
         this.resources.on("ready", () => {
             // this.stairsRoom = new StairsRoom()
@@ -30,6 +25,9 @@ export default class World {
             this.experience.sceneReady = true;
             this.init();
         });
+      
+        // Methods binding
+        this.setBooksBound = this.setBooks.bind(this);
     }
 
     init() {
