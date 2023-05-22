@@ -9,7 +9,8 @@ export default class BookPoint extends EventEmitter {
     this.experience = new Experience();
     this.interface = new InterfaceUI()
     this.overlay = this.interface.overlay
-
+    this.resources = this.experience.resources;
+    
     this.book = book
     this.id = id
     this.el = null
@@ -19,7 +20,7 @@ export default class BookPoint extends EventEmitter {
       this.isClicked = false
     })
 
-    this.init()
+    this.init();
   }
 
   init() {
@@ -33,7 +34,7 @@ export default class BookPoint extends EventEmitter {
   createHTMLPoint()
   {
     this.el = document.createElement("div");
-    this.el.classList.add("point");
+    this.el.classList.add('point');
     this.el.id = `book-${this.id}`;
     this.el.innerHTML = `
         <div class="label">${this.id}</div>
@@ -64,12 +65,12 @@ export default class BookPoint extends EventEmitter {
     
     // Open the new book
     this.experience.world.books[this.id].obj.clickOut();
-    this.interface.currentBook = this;
+    this.interface.currentBook = this.book.obj;
     this.isClicked = true
 
     // Show the overlay
     this.overlay.show()
     this.overlay.initPager()
-    this.overlay.initBookContent()
+    this.overlay.initBookContent(this.id)
   }
 }

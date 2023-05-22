@@ -1,4 +1,4 @@
-export let stories =  [
+export default [
     {
         id: 0,
         bookId: 0,
@@ -12,7 +12,3 @@ export let stories =  [
         content: 'C\'était un soir de printemps, il faisait beau, il faisait chaud. J\'étais avec ma copine, on était dans un parc, on s\'est assis sur un banc, on a commencé à s\'embrasser'
     }
 ]
-
-export const addStory = (story) => {
-    stories.push(story)
-}

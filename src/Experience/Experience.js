@@ -7,8 +7,9 @@ import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
-
+import DataManager from './Data/DataManager.js'
 import sources from './sources.js'
+import RaycasterHandler from './RaycastHandler.js'
 import InterfaceUI from './InterfaceUI.js'
 
 let experience = null
@@ -39,6 +40,7 @@ export default class Experience
         this.camera = null
         this.renderer = null
         this.world = null
+        this.raycastHandler = null
 
         this.resizeBound = this.resize.bind(this)
         this.updateBound = this.update.bind(this)
@@ -52,13 +54,15 @@ export default class Experience
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
+        this.dataManager = new DataManager()
         this.resources = new Resources(sources)
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
+        this.raycastHandler = new RaycasterHandler()
         this.interface = new InterfaceUI()
 
-        this.sceneReady = true
+        this.sceneReady = false
 
         // Resize event
         this.sizes.on('resize', this.resizeBound)
@@ -77,8 +81,12 @@ export default class Experience
     {
         this.camera.update()
         this.world.update()
-        this.interface.update()
         this.renderer.update()
+
+        if (this.raycastHandler) {
+            this.raycastHandler.update()
+        }
+        this.sceneReady && this.interface.update()
     }
 
     destroy()
@@ -128,6 +136,8 @@ export default class Experience
         this.renderer = null
         this.world.destroy()
         this.world = null
+        this.raycastHandler.destroy()
+        this.raycastHandler = null
 
         this.resizeBound = null
         this.updateBound = null

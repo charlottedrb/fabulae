@@ -26,6 +26,7 @@ export default {
     },
     fontSize: {
       150: '15rem',
+      100: '10rem',
       60: '6rem',
       45: '4.5rem',
       30: '3rem',
@@ -34,7 +35,8 @@ export default {
       15: '1.5rem',
     },
     lineHeight: {
-      '1.6' : '160%'
+      '1.6' : '160%',
+      1: '100%',
     },
     borderRadius: {
       10: '1rem',

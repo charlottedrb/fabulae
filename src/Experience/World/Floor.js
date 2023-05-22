@@ -18,7 +18,7 @@ export default class Floor
 
     setGeometry()
     {
-        this.geometry = new THREE.BoxGeometry(10, 0.1, 2)
+        this.geometry = new THREE.BoxGeometry(1.5, 0.1, 0.3)
     }
 
     setTextures()
@@ -37,7 +37,7 @@ export default class Floor
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.receiveShadow = true
-        this.mesh.position.y = 1
+        this.mesh.position.y = 0
         this.scene.add(this.mesh)
     }
 

@@ -4,82 +4,73 @@ import gsap from 'gsap'
 import InterfaceUI from '../../InterfaceUI.js'
 
 export default class Book {
-    constructor(parent, color, position)
+    constructor(parent, position)
     {
         this.experience = new Experience()
         this.parent = parent
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.resource = this.resources.items.blueBookModel
 
-        this.color = color
         this.position = position || new THREE.Vector3(0, 0, 0)
 
-        this.setGeometry()
-        this.setTextures()
-        this.setMaterial()
-        this.setMesh()
+        this.setModel()
     }
 
-    setGeometry()
+    setModel() 
     {
-        this.geometry = new THREE.BoxGeometry(1.9, 0.5, 2)
-    }
-
-    setTextures()
-    {
-        this.textures = {}
-    }
-
-    setMaterial()
-    {
-        this.material = new THREE.MeshBasicMaterial({
-            color: this.color,
-        })
-    }
-
-    setMesh()
-    {
-        this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.mesh.receiveShadow = true
-        this.mesh.rotation.x = Math.PI * 0.5
-        this.mesh.rotation.z = - Math.PI * 0.5
-        this.mesh.position.set(this.position.x, this.position.y, this.position.z)
-        this.scene.add(this.mesh)
+        this.model = this.resource.scene.clone()
+        this.model.receiveShadow = true
+        this.model.rotation.z = - Math.PI * 0.5
+        this.model.position.set(this.position.x, this.position.y, this.position.z)
+        this.scene.add(this.model)
     }
 
     hoverOut()
     {
-        gsap.to(this.mesh.position, {
+        gsap.to(this.model.position, {
             duration: 0.2,
-            z: this.mesh.position.z + 0.25,
+            z: this.model.position.z + 0.25,
             ease: 'power3.inOut'
         })
     }
 
     hoverIn()
     {
-        gsap.to(this.mesh.position, {
+        gsap.to(this.model.position, {
             duration: 0.3,
-            z: this.mesh.position.z - 0.25,
+            z: this.model.position.z - 0.25,
             ease: 'power3.inOut'
         })
     }
 
     clickOut()
     {
-        gsap.to(this.mesh.position, {
+        gsap.to(this.model.position, {
             duration: 1,
-            z: this.mesh.position.z + 1,
+            z: this.model.position.z + 0.2,
             ease: 'power3.inOut'
         })
     }
 
     clickIn()
     {
-        gsap.to(this.mesh.position, {
+        gsap.to(this.model.position, {
             duration: 1,
-            z: this.mesh.position.z - 1,
+            z: this.model.position.z - 0.2,
             ease: 'power3.inOut'
         })
+    }
+
+    addDebug()
+    {
+        
+    }
+
+    destroy()
+    {
+        this.model.dispose()
+        this.model = null
+        this.scene.remove(this.model)
     }
 }

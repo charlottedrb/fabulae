@@ -12,7 +12,4 @@ const taxi = new Taxi.Core({
 	}
 })
 
-/**
- * Data
- */
-const dataManager = new DataManager()
+const animation = new Animation()
