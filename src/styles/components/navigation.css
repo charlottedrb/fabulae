@@ -1,0 +1,9 @@
+.navigation {
+    &__link {
+        @apply font-roystorie text-white text-30 cursor-pointer;
+
+        &-icon {
+            @apply group-hover:rotate-180 transition-transform duration-300 ease-expo-out;
+        }
+    }
+}

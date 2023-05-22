@@ -2,6 +2,7 @@ import Experience from "./Experience.js";
 import * as THREE from "three";
 import BookPoint from "./World/LibraryRoom/Book/BookPoint.js";
 import Overlay from "./Interface/Overlay.js";
+import Navigation from "./Interface/Navigation.js";
 
 let interfaceUi = null;
 
@@ -23,19 +24,21 @@ export default class InterfaceUI {
         this.resources = this.experience.resources;
         this.dataManager = this.experience.dataManager;
 
+        
         /**
          * Book interface
-         */
-        this.books = this.experience.world.books;
-        this.currentBook = null;
-        this.booksPoints = [];
-        this.overlay = new Overlay();
-
-        this.raycaster = null;
-
-        // Wait for resources
-        this.resources.on("ready", () => {
-            this.init();
+        */
+       this.books = this.experience.world.books;
+       this.currentBook = null;
+       this.booksPoints = [];
+       this.overlay = new Overlay();
+       
+       this.raycaster = null;
+       
+       // Wait for resources
+       this.resources.on("ready", () => {
+           this.navigation = new Navigation();
+           this.init();
         });
     }
 
