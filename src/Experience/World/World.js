@@ -3,7 +3,6 @@ import LibraryRoom from './LibraryRoom.js'
 import Experience from "../Experience.js";
 import Book from "./Book/Book.js";
 import Environment from "./Environment.js";
-import Floor from "./Floor.js";
 import * as THREE from "three";
 import StairsRoom from './StairsRoom.js'
 

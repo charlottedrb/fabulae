@@ -1,5 +1,5 @@
 import gsap from 'gsap'
-import { throttle } from 'debounce-throttle'
+import { throttle } from 'throttle-debounce'
 import Sizes from '../../Utils/Sizes'
 import EventEmitter from '../../Utils/EventEmitter'
  
