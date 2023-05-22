@@ -18,8 +18,7 @@ export default class Floor
 
     setGeometry()
     {
-        this.geometry = new THREE.BoxGeometry(10, 0.1, 2)
-        this.geometry.rotateX(- Math.PI * 0.5)
+        this.geometry = new THREE.BoxGeometry(1.5, 0.1, 0.3)
     }
 
     setTextures()
@@ -37,8 +36,8 @@ export default class Floor
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.mesh.rotation.x = - Math.PI * 0.5
         this.mesh.receiveShadow = true
+        this.mesh.position.y = 0
         this.scene.add(this.mesh)
     }
 

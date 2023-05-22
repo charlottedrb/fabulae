@@ -7,21 +7,23 @@ import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
+import DataManager from './Data/DataManager.js'
 import sources from './sources.js'
 import RaycasterHandler from './RaycastHandler.js'
+import InterfaceUI from './InterfaceUI.js'
 
-let instance = null
+let experience = null
 
 export default class Experience
 {
     constructor(_canvas)
     {
         // Singleton
-        if(instance)
+        if(experience)
         {
-            return instance
+            return experience
         }
-        instance = this
+        experience = this
         
         // Global access
         window.experience = this
@@ -52,11 +54,15 @@ export default class Experience
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
+        this.dataManager = new DataManager()
         this.resources = new Resources(sources)
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
         this.raycastHandler = new RaycasterHandler()
+        this.interface = new InterfaceUI()
+
+        this.sceneReady = false
 
         // Resize event
         this.sizes.on('resize', this.resizeBound)
@@ -80,6 +86,7 @@ export default class Experience
         if (this.raycastHandler) {
             this.raycastHandler.update()
         }
+        this.sceneReady && this.interface.update()
     }
 
     destroy()

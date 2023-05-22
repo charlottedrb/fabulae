@@ -16,6 +16,8 @@ export default class Environment
             this.debugFolder = this.debug.ui.addFolder('environment')
         }
 
+        // this.setSunLight()
+        this.setAmbientLight()
         this.setSunLight()
         // this.setEnvironmentMap()
     }
@@ -65,6 +67,12 @@ export default class Environment
                 .max(5)
                 .step(0.001)
         }
+    }
+
+    setAmbientLight()
+    {
+        this.ambientLight = new THREE.AmbientLight('#ffffff', 2)
+        this.scene.add(this.ambientLight)
     }
 
     setEnvironmentMap()
