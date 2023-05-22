@@ -1,4 +1,4 @@
-import Experience from './Experience/Experience.js'
+import Experience from '../Experience/Experience.js'
 import * as Taxi from '@unseenco/taxi'
 
 /**

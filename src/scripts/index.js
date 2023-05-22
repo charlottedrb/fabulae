@@ -1,7 +1,7 @@
 
-import DataManager from './Data/DataManager.js'
+import DataManager from '../Data/DataManager.js'
 import * as Taxi from '@unseenco/taxi'
-import CustomRenderer from './config/Renderer.js'
+import CustomRenderer from '../config/Renderer.js'
 
 /**
  * Landing
