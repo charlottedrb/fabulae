@@ -1,4 +1,4 @@
-import Experience from "../../Environment";
+import Experience from "../../../Experience";
 import InterfaceUI from "../../../InterfaceUI";
 import EventEmitter from "../../../Utils/EventEmitter";
 

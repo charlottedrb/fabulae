@@ -43,7 +43,7 @@ export default class DataManager {
         this.comments = comments.default
         this.users = users.default
         this.categories = categories.default
-        this.stories = stories
+        this.stories = stories.default
     }
 
     /**
@@ -111,14 +111,6 @@ export default class DataManager {
     getBooksByCategory(id) 
     {
         return this.books.filter(book => book.categoryId === id)
-    }
-    
-    /**
-     * Stories
-     */
-    addStory(story) 
-    {
-        addStory(story)
     }
 
     /**
