@@ -3,6 +3,7 @@ import Book from "./Book/Book.js";
 import Environment from "./Environment.js";
 import Floor from "./Floor.js";
 import * as THREE from "three";
+import StairsRoom from './StairsRoom.js'
 
 export default class World {
   constructor() {
@@ -11,26 +12,54 @@ export default class World {
     this.resources = this.experience.resources;
     this.books = [];
 
-    // Methods binding
-    this.setBooksBound = this.setBooks.bind(this);
+        // Setup
+        this.environment = new Environment()
+        // Methods binding
+        this.setBooksBound = this.setBooks.bind(this);
 
-    // Wait for resources
-    this.resources.on("ready", () => {
-      // Setup
-      this.floor = new Floor();
-      this.environment = new Environment();
-      this.experience.sceneReady = true
-      this.init();
-    });
+        // Wait for resources
+        this.resources.on('ready', () =>
+        {
+            // Setup
+            this.floor = new Floor()
+            this.environment = new Environment()
+            this.stairsRoom = new StairsRoom()
+            this.experience.sceneReady = true
+            this.init();
+        })
+    }
 
-    this.debug = this.experience.debug;
+    init() {
+      this.setBooksBound();
+    }
+
+    update()
+    {
+      if (this.stairsRoom) {
+        this.stairsRoom.update()
+    }
+    }
+
+    destroy() {
+      if (this.floor) {
+          this.floor.destroy()
+          this.floor = null
+      }
+
+      if (this.environment) {
+          this.environment.destroy()
+          this.environment = null
+      }
+
+      if (this.stairsRoom) {
+          this.stairsRoom.destroy()
+          this.stairsRoom = null
+      }
+
+      this.experience = null
+      this.scene = null
+      this.resources = null
   }
-
-  init() {
-    this.setBooksBound();
-  }
-
-  update() {}
 
   setBooks() {
     const nbBooks = 10;

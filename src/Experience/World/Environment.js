@@ -18,6 +18,7 @@ export default class Environment
 
         // this.setSunLight()
         this.setAmbientLight()
+        this.setSunLight()
         // this.setEnvironmentMap()
     }
 
@@ -28,8 +29,12 @@ export default class Environment
         this.sunLight.shadow.camera.far = 15
         this.sunLight.shadow.mapSize.set(1024, 1024)
         this.sunLight.shadow.normalBias = 0.05
-        this.sunLight.position.set(0.5, 1.2, 0.9)
+        this.sunLight.position.set(0.8, 2.5, 1.7)
+        this.sunLight.target.position.set(0, 0, 0)
         this.scene.add(this.sunLight)
+
+        // this.lightHelper = new THREE.DirectionalLightHelper(this.sunLight, 0.25)
+        // this.scene.add(this.lightHelper)
 
         // Debug
         if(this.debug.active)
@@ -104,5 +109,18 @@ export default class Environment
                 .step(0.001)
                 .onChange(this.environmentMap.updateMaterials)
         }
+    }
+
+    destroy() {
+        this.debugFolder.remove()
+        this.sunLight.dispose()
+        this.sunLight = null
+        this.environmentMap.texture.dispose()
+        this.environmentMap = null
+
+        this.experience = null
+        this.scene = null
+        this.resources = null
+        this.debug = null
     }
 }

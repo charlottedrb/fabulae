@@ -11,6 +11,7 @@
         <div data-taxi-view>
             <div class="books-points"></div>
             <canvas class="webgl"></canvas>
+            <video id="video" playsinline webkit-playsinline muted loop autoplay width="320" height="240" src="/videos/test.mp4" style="display: none;"></video>
         </div>
     </main>
     <div class="overlay relative w-screen h-screen grid grid-cols-12 opacity-0 z-[1] pointer-events-none">
@@ -54,13 +55,12 @@
             </div>
         </div>
 
-        
         <!-- Close button -->
         <div class="absolute top-50 right-50 w-[2.5rem] h-[2.5rem] cursor-pointer overlay-close">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-white w-full h-[1px] rotate-45"></div>
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-white w-full h-[1px] -rotate-45"></div>
         </div>
     </div>
-    <script type="module" src="./script.js"></script>
+    <script type="module" src="./index.js"></script>
 </body>
 </html>
