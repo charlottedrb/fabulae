@@ -4,7 +4,7 @@ import Experience from "../Experience.js";
 import Book from "./LibraryRoom/Book/Book.js";
 import Environment from "./Environment.js";
 import * as THREE from "three";
-import StairsRoom from "./StairsRoom.js";
+import StairsRoom from "./StairsRoom/StairsRoom.js";
 import VisualLoader from './VisualLoader.js'
 
 export default class World {
