@@ -26,7 +26,6 @@ export default class InterfaceUI {
         /**
          * Book interface
          */
-        this.books = this.experience.world.books;
         this.currentBook = null;
         this.booksPoints = [];
         this.overlay = new Overlay();
@@ -34,7 +33,7 @@ export default class InterfaceUI {
         this.raycaster = null;
 
         // Wait for resources
-        this.resources.on("ready", () => {
+        this.resources.on("initLibrary", () => {
             this.books = this.experience.world.libraryRoom.books;
             this.init();
         });
