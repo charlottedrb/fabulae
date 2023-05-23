@@ -57,7 +57,9 @@ export default class LibraryRoom {
     setCamera()
     {
         this.setCameraAnimation()
+    }
 
+    setCameraPosition() {
         this.camera.instance.position.set(this.roomCamera.position.x, this.roomCamera.position.y, this.roomCamera.position.z)
         this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
     }

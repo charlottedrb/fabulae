@@ -22,12 +22,19 @@ export default class World {
             // Setup
             this.floor = new Floor();
             this.environment = new Environment();
-            this.libraryRoom = new LibraryRoom();
             this.stairsRoom = new StairsRoom();
             this.experience.sceneReady = true;
             this.init();
 
             this.visualLoader.disapear()
+
+            this.stairsRoom.on('initLibrary', () => {
+                this.libraryRoom = new LibraryRoom()
+            })
+
+            this.stairsRoom.on('endTransition', () => {
+                this.libraryRoom.setCameraPosition()
+            })
         });
       
         // Methods binding
