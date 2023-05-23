@@ -3,73 +3,113 @@ import Experience from '../../../Experience'
 import gsap from 'gsap'
 
 export default class Book {
-    constructor(parent, position)
-    {
-        this.experience = new Experience()
-        this.parent = parent
-        this.scene = this.experience.scene
-        this.resources = this.experience.resources
-        this.resource = this.resources.items.blueBookModel
+    constructor(parent, position) {
+        this.experience = new Experience();
+        this.parent = parent;
+        this.scene = this.experience.scene;
+        this.resources = this.experience.resources;
+        this.resource = this.resources.items.blueBookModel;
+        this.debug = this.experience.debug;
 
-        this.position = position || new THREE.Vector3(0, 0, 0)
+        this.position = position || new THREE.Vector3(0, 0, 0);
 
-        this.setModel()
+        this.setModel();
     }
 
-    setModel() 
-    {
-        this.model = this.resource.scene.clone()
-        this.model.receiveShadow = true
-        this.model.rotation.z = - Math.PI * 0.5
-        this.model.position.set(this.position.x, this.position.y, this.position.z)
-        this.scene.add(this.model)
+    setModel() {
+        this.model = this.resource.scene.clone();
+        this.model.scale.set(3, 4.7, 3)
+        this.model.rotation.z = -Math.PI * 0.5;
+        this.model.rotation.y = -Math.PI * 0.5;
+        this.model.position.set(
+            this.position.x,
+            this.position.y,
+            this.position.z
+        );
+
+        if (this.debug.active) {
+            this.debug.ui.addFolder("Book");
+            this.debug.ui
+                .add(this.model.position, "x")
+                .min(-100)
+                .max(100)
+                .step(0.01)
+                .name("Book X");
+
+            this.debug.ui
+                .add(this.model.position, "y")
+                .min(-10)
+                .max(10)
+                .step(0.01)
+                .name("Book Y");
+
+            this.debug.ui
+                .add(this.model.position, "z")
+                .min(-10)
+                .max(10)
+                .step(0.01)
+                .name("Book Z");
+
+            this.debug.ui
+                .add(this.model.scale, "x")
+                .min(0)
+                .max(10)
+                .step(0.01)
+                .name("Book Scale X");
+
+            this.debug.ui
+                .add(this.model.scale, "y")
+                .min(0)
+                .max(10)
+                .step(0.01)
+                .name("Book Scale Y");
+
+            this.debug.ui
+                .add(this.model.scale, "z")
+                .min(0)
+                .max(10)
+                .step(0.01)
+                .name("Book Scale Z");
+            }
+            
+            this.scene.add(this.model);
     }
 
-    hoverOut()
-    {
+    hoverOut() {
         gsap.to(this.model.position, {
             duration: 0.2,
-            z: this.model.position.z + 0.25,
-            ease: 'power3.inOut'
-        })
+            x: this.model.position.x + 0.25,
+            ease: "power3.inOut",
+        });
     }
 
-    hoverIn()
-    {
+    hoverIn() {
         gsap.to(this.model.position, {
             duration: 0.3,
-            z: this.model.position.z - 0.25,
-            ease: 'power3.inOut'
-        })
+            x: this.model.position.x - 0.25,
+            ease: "power3.inOut",
+        });
     }
 
-    clickOut()
-    {
+    clickOut() {
         gsap.to(this.model.position, {
             duration: 1,
-            z: this.model.position.z + 0.2,
-            ease: 'power3.inOut'
-        })
+            x: this.model.position.x - 0.35,
+            ease: "power3.inOut",
+        });
     }
 
-    clickIn()
-    {
+    clickIn() {
         gsap.to(this.model.position, {
             duration: 1,
-            z: this.model.position.z - 0.2,
-            ease: 'power3.inOut'
-        })
+            x: this.model.position.x + 0.35,
+            ease: "power3.inOut",
+        });
     }
 
-    addDebug()
-    {
-        
-    }
-
-    destroy()
-    {
-        this.model.dispose()
-        this.model = null
-        this.scene.remove(this.model)
+    destroy() {
+        this.model.dispose();
+        this.model = null;
+        this.scene.remove(this.model);
     }
 }

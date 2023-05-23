@@ -1,18 +1,18 @@
 export default [
     {
         id: 0,
-        name: 'Voyage'
-    },
-    {
-        id: 1,
-        name: 'Amour'
-    },
-    {
-        id: 2,
         name: 'Cocasse'
     },
     {
-        id: 3,
+        id: 1,
+        name: 'Voyage'
+    },
+    {
+        id: 2,
         name: 'Sensationnel'
+    },
+    {
+        id: 3,
+        name: 'Amour'
     },
 ]
