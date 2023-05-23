@@ -16,11 +16,12 @@ export default class BookPoint extends EventEmitter {
     this.el = null
     this.isClicked = false
     
+    this.books = this.experience.world.libraryRoom.books;
+    this.init();
+
     this.overlay.on('closeBook', () => {
       this.isClicked = false
     })
-
-    this.init();
   }
 
   init() {
@@ -51,12 +52,12 @@ export default class BookPoint extends EventEmitter {
 
   onPointEnter()
   {
-    this.experience.world.books[this.id].obj.hoverOut();
+    this.books[this.id].obj.hoverOut();
   }
 
   onPointLeave()
   {
-    this.experience.world.books[this.id].obj.hoverIn();
+    this.books[this.id].obj.hoverIn();
   }
 
   onPointClick() 
@@ -64,7 +65,7 @@ export default class BookPoint extends EventEmitter {
     if (this.isClicked) return
     
     // Open the new book
-    this.experience.world.books[this.id].obj.clickOut();
+    this.books[this.id].obj.clickOut();
     this.interface.currentBook = this.book.obj;
     this.isClicked = true
 

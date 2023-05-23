@@ -42,6 +42,7 @@ export default class DataManager {
         this.comments = comments.default
         this.users = users.default
         this.categories = categories.default
+        this.stories = stories.default
     }
 
     /**

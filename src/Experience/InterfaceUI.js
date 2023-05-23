@@ -35,6 +35,7 @@ export default class InterfaceUI {
 
         // Wait for resources
         this.resources.on("ready", () => {
+            this.books = this.experience.world.libraryRoom.books;
             this.init();
         });
     }
@@ -63,6 +64,7 @@ export default class InterfaceUI {
     }
 
     updatePoints() {
+        // TODO: Fix bounding box of book model 
         // Waiting for the scene to be ready - important
         if (this.experience.sceneReady) {
             // Go through each point

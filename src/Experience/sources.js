@@ -55,6 +55,6 @@ export default [
       {
         name: 'libraryRoom',
         type: 'gltfModel',
-        path: 'models/Library/glTF/Salle_2_03.gltf'
+        path: 'models/Library/glTF/Salle_2_03_LOW.gltf'
     } 
 ];
