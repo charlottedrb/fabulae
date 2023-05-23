@@ -24,11 +24,9 @@ export default class InterfaceUI {
         this.resources = this.experience.resources;
         this.dataManager = this.experience.dataManager;
 
-        
         /**
          * Book interface
         */
-       this.books = this.experience.world.books;
        this.currentBook = null;
        this.booksPoints = [];
        this.overlay = new Overlay();
@@ -37,6 +35,7 @@ export default class InterfaceUI {
        
        // Wait for resources
        this.resources.on("ready", () => {
+           this.books = this.experience.world.libraryRoom.books;
            this.navigation = new Navigation();
            this.init();
         });
@@ -66,6 +65,7 @@ export default class InterfaceUI {
     }
 
     updatePoints() {
+        // TODO: Fix bounding box of book model 
         // Waiting for the scene to be ready - important
         if (this.experience.sceneReady) {
             // Go through each point
