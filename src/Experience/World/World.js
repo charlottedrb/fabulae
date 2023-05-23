@@ -20,7 +20,6 @@ export default class World {
         this.resources.on("ready", () => {
             
             // Setup
-            this.floor = new Floor();
             this.environment = new Environment();
             this.libraryRoom = new LibraryRoom();
             this.stairsRoom = new StairsRoom();
