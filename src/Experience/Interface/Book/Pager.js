@@ -13,10 +13,7 @@ export default class Pager extends EventEmitter {
         this.init()
     }
 
-    bindMethods()
-    {
-        // this.onMouseMove = throttle(100, () => this.onMouseMove().bind(this))
-    }
+    bindMethods() { }
 
     init()
     {

@@ -1,6 +1,6 @@
 import Experience from "./Experience.js";
 import * as THREE from "three";
-import BookPoint from "./World/Book/BookPoint.js";
+import BookPoint from "./World/LibraryRoom/Book/BookPoint.js";
 import Overlay from "./Interface/Overlay.js";
 
 let interfaceUi = null;

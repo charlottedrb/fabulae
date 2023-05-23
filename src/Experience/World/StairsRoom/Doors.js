@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import Experience from '../Experience.js'
+import Experience from '../../Experience.js'
 
 export default class Doors
 {
@@ -23,22 +23,11 @@ export default class Doors
             clipAction.setLoop(THREE.LoopOnce)
             clipAction.clampWhenFinished = true;
         });
-
-        // this.setRaycastEvents()
     }
 
     openDoors() {
         this.playAnim(this.doorsAnimationClips[0])
         this.playAnim(this.doorsAnimationClips[1])
-    }
-
-    setRaycastEvents() {
-        this.doors.forEach(door => {
-            this.raycastHandler.addObjectToTest(door, () => {
-                this.playAnim(this.doorsAnimationClips[0])
-                this.playAnim(this.doorsAnimationClips[1])
-            }, 'click')
-        });
     }
 
     playAnim(clip) {

@@ -7,7 +7,7 @@ import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
-import DataManager from './Data/DataManager.js'
+import DataManager from '../Data/DataManager.js'
 import sources from './sources.js'
 import RaycasterHandler from './RaycastHandler.js'
 import InterfaceUI from './InterfaceUI.js'
@@ -115,9 +115,6 @@ export default class Experience
                 }
             }
         })
-
-        // this.camera.controls.dispose()
-        // this.renderer.instance.dispose()
 
         if(this.debug.active) {
             this.debug.ui.destroy()

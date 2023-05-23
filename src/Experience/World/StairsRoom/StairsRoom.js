@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import Experience from '../Experience.js'
+import Experience from '../../Experience.js'
 import Doors from './Doors.js'
 import Stair from './Stair.js'
 import gsap from "gsap";
@@ -23,7 +23,7 @@ export default class StairsRoom
         }
 
         this.onChoiceMadeBound = this.onChoiceMade.bind(this)
-        this.playCameraAnimationBound = this.playCameraAnimation.bind(this)
+        this.goToNextSceneBound = this.goToNextScene.bind(this)
 
         this.setModels()
         this.setCamera()
@@ -102,14 +102,21 @@ export default class StairsRoom
             this.raycastHandler.removeObjectToTest(door, 'click')
         });
 
-        // Get the position and rotation of the camera animation's first frame for smoother transition
-        const firstFrameAnimPosition = this.cameraAction.getClip().tracks[0].values.slice(0, 3)
-        const firstFrameAnimRotation = this.cameraAction.getClip().tracks[1].values.slice(0, 3)
+        // Rotate scene to face the chosen door
+        const tl = gsap.timeline({ onComplete: this.goToNextSceneBound})
+        tl.to(this.room.scene.rotation, { y: 0.645, duration: 1, ease: 'power1.easeOut' })
 
-        const tl = gsap.timeline({ onComplete: this.playCameraAnimationBound})
-        tl.to(this.room.scene.rotation, { y: 0.645, duration: 1 })
-        tl.to(this.camera.instance.position, { x: firstFrameAnimPosition[0], y: firstFrameAnimPosition[1], z: firstFrameAnimPosition[2], duration: 1, ease: 'power2.easeOut' })
-        tl.to(this.camera.instance.rotation, { x: firstFrameAnimRotation[0], y: firstFrameAnimRotation[1], z: firstFrameAnimRotation[2], duration: 1, ease: 'power2.easeOut' }, '<')
+        // Make camera to go through the chosen door manually
+        tl.to(this.camera.instance.position, { y: 1.058, z: -0.337, duration: 1.5, ease: 'power1.easeOut' })
+        tl.to(this.camera.instance.rotation, { x: 0.283, duration: 1, ease: 'power1.easeIn' }, '>-0.8')
+        tl.to(this.camera.instance.position, { y: 2.763, z: -4.057, duration: 3 }, '>-0.75')
+        tl.to(this.camera.instance.rotation, { x: -0.027, duration: 1 }, '>-0.80')
+
+        // Get the position and rotation of the camera animation's first frame for smoother transition
+        // const firstFrameAnimPosition = this.cameraAction.getClip().tracks[0].values.slice(0, 3)
+        // const firstFrameAnimRotation = this.cameraAction.getClip().tracks[1].values.slice(0, 3)
+        // tl.to(this.camera.instance.position, { x: firstFrameAnimPosition[0], y: firstFrameAnimPosition[1], z: firstFrameAnimPosition[2], duration: 1, ease: 'power2.easeOut' })
+        // tl.to(this.camera.instance.rotation, { x: firstFrameAnimRotation[0], y: firstFrameAnimRotation[1], z: firstFrameAnimRotation[2], duration: 1, ease: 'power2.easeOut' }, '<')
     }
 
     setCamera() {
@@ -127,13 +134,15 @@ export default class StairsRoom
         this.cameraAction.clampWhenFinished = true
     }
 
-    playCameraAnimation() {
+    goToNextScene() {
         // Open the chosen door
         this.doors.openDoors()
+        // Remove background to reveal next scene
+        this.backgroundMesh.visible = false
 
-        // Make the camera go through the chosen door
-        this.cameraAction.reset()
-        this.cameraAction.play()
+        // Make the camera go through the chosen door with an animation
+        // this.cameraAction.reset()
+        // this.cameraAction.play()
     }
 
     setVideo()
@@ -184,7 +193,7 @@ export default class StairsRoom
         this.debug = null
         this.debugFolder = null
         this.onChoiceMadeBound = null
-        this.playCameraAnimationBound = null
+        this.goToNextSceneBound = null
 
         this.room = null
         this.backgroundMesh.geometry.dispose()

@@ -1,7 +1,6 @@
-import * as THREE from "three";
-import Experience from "../../Experience";
-import gsap from "gsap";
-import LibraryRoom from "../LibraryRoom";
+import * as THREE from 'three'
+import Experience from '../../../Experience'
+import gsap from 'gsap'
 
 export default class Book {
     constructor(parent, position) {

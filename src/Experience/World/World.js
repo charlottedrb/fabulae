@@ -1,10 +1,11 @@
-import Floor from "./Floor.js";
-import LibraryRoom from "./LibraryRoom.js";
+import Floor from "./LibraryRoom/Floor.js";
+import LibraryRoom from "./LibraryRoom/LibraryRoom.js";
 import Experience from "../Experience.js";
-import Book from "./Book/Book.js";
+import Book from "./LibraryRoom/Book/Book.js";
 import Environment from "./Environment.js";
 import * as THREE from "three";
-import StairsRoom from "./StairsRoom.js";
+import StairsRoom from "./StairsRoom/StairsRoom.js";
+import VisualLoader from './VisualLoader.js'
 
 export default class World {
     constructor() {
@@ -12,18 +13,20 @@ export default class World {
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.books = [];
-
-        // this.visualLoader = new VisualLoader()
+      
+        this.visualLoader = new VisualLoader()
 
         // Wait for resources
         this.resources.on("ready", () => {
+            
             // Setup
+            this.floor = new Floor();
             this.environment = new Environment();
             this.libraryRoom = new LibraryRoom();
-            // this.stairsRoom = new StairsRoom();
+            this.stairsRoom = new StairsRoom();
             this.experience.sceneReady = true;
 
-            // this.visualLoader.disapear()
+            this.visualLoader.disapear()
         });
     }
 
@@ -57,5 +60,12 @@ export default class World {
             this.libraryRoom.destroy();
             this.libraryRoom = null;
         }
+
+        this.visualLoader.destroy()
+        this.visualLoader = null
+
+        this.experience = null
+        this.scene = null
+        this.resources = null
     }
 }

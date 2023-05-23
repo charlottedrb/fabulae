@@ -31,6 +31,15 @@ body {
     @apply fixed top-0 left-0 outline-none;
 }
 
+.loader {
+    font-size: 18px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 1s linear;
+}
+
 .svg-wrapper {
     svg {
         @apply w-full h-full;
