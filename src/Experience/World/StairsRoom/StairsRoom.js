@@ -33,27 +33,29 @@ export default class StairsRoom extends EventEmitter
 
         this.setModels()
         this.setCamera()
+        this.setVideoBackground()
         this.transitionShader = new TransitionShader()
     }
 
     setModels()
     {
         this.room = this.resources.items.stairsRoom
-
-        // Separate the background from the room
-        this.backgroundMesh = this.room.scene.getObjectByName('Fond_plane').clone()
+        // Remove useless mesh
         this.room.scene.remove(this.room.scene.getObjectByName('Fond_plane'))
 
         this.scene.add(this.room.scene)
-        this.scene.add(this.backgroundMesh)
-        
         this.setStairs()
-        this.setBackgroundSize()
     }
 
-    setBackgroundSize() {
-        // Make the background bigger to cover the whole scene
-        this.backgroundMesh.geometry.scale(1.3, 1.3, 1.3)
+    setCamera() {
+        this.camera.instance.position.set(0, 2.15, 4.55)
+        this.camera.instance.rotation.set(-0.08726649245206389, 0, 0)
+    }
+
+    setVideoBackground() {
+        this.backgroundVideo = new BackgroundVideo()
+        this.scene.background = this.backgroundVideo.texture
+        this.scene.background.flipY = true
     }
 
     setStairs() {
@@ -78,9 +80,6 @@ export default class StairsRoom extends EventEmitter
         const leftDoorAnim = THREE.AnimationClip.findByName(this.room.animations, 'PORTE gauche.002Action')
         const rightDoorAnim = THREE.AnimationClip.findByName(this.room.animations, 'PORTE droiteAction')
         this.setDoorsAnimation(knowledgeDoors, [leftDoorAnim, rightDoorAnim])
-
-        // Set video background after the models are officially set
-        this.backgroundVideo = new BackgroundVideo(this.backgroundMesh)
     }
 
     setDoorsAnimation(doors, animationClips) {
@@ -126,9 +125,6 @@ export default class StairsRoom extends EventEmitter
         // Start the transition shader
         this.transitionShader.start()
 
-        // Remove background to reveal next scene
-        this.backgroundMesh.visible = false
-
         // Make the camera go through the chosen door
         const tl = gsap.timeline({ delay: 2, onComplete: this.finishTransitionBound })
         tl.to(this.camera.instance.position, { z: -4.557, duration: 1, ease: 'power1.easeOut' })
@@ -138,11 +134,6 @@ export default class StairsRoom extends EventEmitter
         this.trigger('endTransition')
         this.transitionShader.end()
         this.disapear()
-    }
-
-    setCamera() {
-        this.camera.instance.position.set(0, 2.15, 4.55)
-        this.camera.instance.rotation.set(-0.08726649245206389, 0, 0)
     }
 
     update() {
@@ -189,8 +180,6 @@ export default class StairsRoom extends EventEmitter
         this.finishTransitionBound = null
 
         this.room = null
-        this.backgroundMesh.geometry.dispose()
-        this.backgroundMesh = null
         this.leftStair.destroy()
         this.leftStair = null
         this.rightStair.destroy()
