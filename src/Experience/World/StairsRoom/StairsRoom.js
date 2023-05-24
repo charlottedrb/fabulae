@@ -34,6 +34,7 @@ export default class StairsRoom extends EventEmitter
         this.setModels()
         this.setCamera()
         this.setVideoBackground()
+        this.setIndication()
         this.transitionShader = new TransitionShader()
     }
 
@@ -56,6 +57,11 @@ export default class StairsRoom extends EventEmitter
         this.backgroundVideo = new BackgroundVideo()
         this.scene.background = this.backgroundVideo.texture
         this.scene.background.flipY = true
+    }
+
+    setIndication() {
+        this.indication = document.querySelector('.choice-indication')
+        gsap.to(this.indication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut' })
     }
 
     setStairs() {
@@ -103,6 +109,9 @@ export default class StairsRoom extends EventEmitter
             this.raycastHandler.removeObjectToTest(door, 'enter')
             this.raycastHandler.removeObjectToTest(door, 'click')
         });
+
+        // Hide the indication
+        gsap.to(this.indication, { opacity: 0, duration: 1, delay: 0, ease: 'power1.easeInOut' })
 
         // Rotate scene to face the chosen door
         const tl = gsap.timeline({ onComplete: this.goToNextSceneBound})

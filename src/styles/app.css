@@ -100,3 +100,18 @@ body {
 {
     transform: scale(1, 1);
 }
+
+.choice-indication {
+    @apply bg-night-blue;
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 20px;
+    padding: 18px 24px;
+    border-radius: 20px;
+    pointer-events: none;
+    border: 1px solid #fff;
+    opacity: 0;
+}
