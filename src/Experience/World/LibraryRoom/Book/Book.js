@@ -9,6 +9,7 @@ export default class Book {
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.resource = this.resources.items.blueBookModel;
+        console.log(this.resources.items.redBookModel);
         this.debug = this.experience.debug;
 
         this.position = position || new THREE.Vector3(0, 0, 0);
