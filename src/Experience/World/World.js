@@ -1,4 +1,3 @@
-import Floor from "./LibraryRoom/Floor.js";
 import LibraryRoom from "./LibraryRoom/LibraryRoom.js";
 import Experience from "../Experience.js";
 import Book from "./LibraryRoom/Book/Book.js";

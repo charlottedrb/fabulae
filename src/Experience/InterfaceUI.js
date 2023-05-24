@@ -26,7 +26,6 @@ export default class InterfaceUI {
         /**
          * Book interface
          */
-        this.books = this.experience.world.books;
         this.currentBook = null;
         this.booksPoints = [];
         this.overlay = new Overlay();
@@ -78,6 +77,8 @@ export default class InterfaceUI {
                     screenPosition,
                     this.camera.instance
                 );
+
+                console.log(point.obj.book.obj.scene);
 
                 const intersects = this.raycaster.intersectObjects(
                     point.obj.book.obj.scene,
