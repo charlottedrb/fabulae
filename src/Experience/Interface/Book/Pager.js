@@ -48,9 +48,9 @@ export default class Pager extends EventEmitter {
 
     onClick()
     {
-        gsap.set(this.el, {
-            pointerEvents: 'none'
-        })
+        // gsap.set(this.el, {
+        //     pointerEvents: 'none'
+        // })
         if (this.status === null) return
 
         if (this.status === 'next') {
@@ -62,11 +62,11 @@ export default class Pager extends EventEmitter {
         }
         this.trigger('changePage', [this.status])
 
-        setTimeout(() => {
-            gsap.set(this.el, {
-                pointerEvents: 'none'
-            })
-        }, 10)
+        // setTimeout(() => {
+        //     gsap.set(this.el, {
+        //         pointerEvents: 'none'
+        //     })
+        // }, 10)
     }
 
     onMouseMove(e)

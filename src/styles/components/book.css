@@ -4,13 +4,25 @@
 
     &__title {
         @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full font-roystorie text-100 text-center text-night-blue leading-1;
+
+        &::before {
+            content: url('/images/svg/Book/ornement-titre-haut.svg');
+            margin: 0 auto;
+            @apply block w-300;
+        }
+
+        &::after {
+            content: url('/images/svg/Book/ornement-titre-bas.svg');
+            margin: 0 auto;
+            @apply block w-300;
+        }
     }
 
     &__starting-chapter {
-        @apply flex flex-col justify-end gap-y-40 w-full h-full;
+        @apply flex flex-col p-30 justify-end gap-y-40 w-full h-full;
 
         &__title {
-            @apply font-roystorie text-100 text-left text-night-blue leading-1;
+            @apply font-roystorie text-80 text-left text-night-blue leading-1;
         }
     }
     
