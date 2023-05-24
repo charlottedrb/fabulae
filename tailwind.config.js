@@ -16,6 +16,7 @@ export default {
       150: '15rem',
       100: '10rem',
       70: '7rem',
+      60: '6rem',
       50: '5rem',
       40: '4rem',
       35: '3.5rem',
@@ -56,6 +57,7 @@ export default {
         440: '44rem',
         240: '24rem',
         200: '20rem',
+        36: '3.6rem',
         screen: '100vw',
       }, 
       height: {
