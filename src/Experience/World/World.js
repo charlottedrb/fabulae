@@ -1,4 +1,3 @@
-import Floor from "./LibraryRoom/Floor.js";
 import LibraryRoom from "./LibraryRoom/LibraryRoom.js";
 import Experience from "../Experience.js";
 import Book from "./LibraryRoom/Book/Book.js";
@@ -20,7 +19,6 @@ export default class World {
         this.resources.on("ready", () => {
             
             // Setup
-            this.floor = new Floor();
             this.environment = new Environment();
             this.stairsRoom = new StairsRoom();
             this.experience.sceneReady = true;

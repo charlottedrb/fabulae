@@ -78,6 +78,8 @@ export default class InterfaceUI {
                     this.camera.instance
                 );
 
+                console.log(point.obj.book.obj.scene);
+
                 const intersects = this.raycaster.intersectObjects(
                     point.obj.book.obj.scene,
                     true
