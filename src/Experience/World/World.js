@@ -4,7 +4,8 @@ import Book from "./LibraryRoom/Book/Book.js";
 import Environment from "./Environment.js";
 import * as THREE from "three";
 import StairsRoom from "./StairsRoom/StairsRoom.js";
-import VisualLoader from './VisualLoader.js'
+import VisualLoader from "./VisualLoader.js";
+import InterfaceUI from "../InterfaceUI.js";
 
 export default class World {
     constructor() {
@@ -12,26 +13,26 @@ export default class World {
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.books = [];
-      
-        this.visualLoader = new VisualLoader()
+
+        this.visualLoader = new VisualLoader();
 
         // Wait for resources
         this.resources.on("ready", () => {
-            
             // Setup
             this.environment = new Environment();
             this.stairsRoom = new StairsRoom();
             this.experience.sceneReady = true;
 
-            this.visualLoader.disapear()
+            this.visualLoader.disapear();
 
-            this.stairsRoom.on('initLibrary', () => {
-                this.libraryRoom = new LibraryRoom()
-            })
+            this.stairsRoom.on("initLibrary", () => {
+                this.libraryRoom = new LibraryRoom();
+                this.experience.interface = new InterfaceUI();
+            });
 
-            this.stairsRoom.on('endTransition', () => {
-                this.libraryRoom.setCameraPosition()
-            })
+            this.stairsRoom.on("endTransition", () => {
+                this.libraryRoom.setCameraPosition();
+            });
         });
     }
 
@@ -66,11 +67,11 @@ export default class World {
             this.libraryRoom = null;
         }
 
-        this.visualLoader.destroy()
-        this.visualLoader = null
+        this.visualLoader.destroy();
+        this.visualLoader = null;
 
-        this.experience = null
-        this.scene = null
-        this.resources = null
+        this.experience = null;
+        this.scene = null;
+        this.resources = null;
     }
 }

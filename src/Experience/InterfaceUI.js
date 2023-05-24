@@ -22,6 +22,7 @@ export default class InterfaceUI {
         this.sizes = this.experience.sizes;
         this.resources = this.experience.resources;
         this.dataManager = this.experience.dataManager;
+        this.stairsRoom = this.experience.world.stairsRoom;
 
         /**
          * Book interface
@@ -33,10 +34,8 @@ export default class InterfaceUI {
         this.raycaster = null;
 
         // Wait for resources
-        this.resources.on("initLibrary", () => {
-            this.books = this.experience.world.libraryRoom.books;
-            this.init();
-        });
+        this.books = this.experience.world.libraryRoom.books;
+        this.init();
     }
 
     init() {
@@ -98,7 +97,7 @@ export default class InterfaceUI {
                     const pointDistance = point.position.distanceTo(
                         this.camera.instance.position
                     );
-                    
+
                     // Intersection is close than the point
                     if (intersectionDistance < pointDistance) {
                         // Hide
