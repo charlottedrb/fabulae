@@ -22,7 +22,6 @@ export default class LibraryRoom {
         this.shelves = []
         this.books = []
 
-        this.events()
         this.setModels()
         this.setShelves()
         this.setCameraAnimation()
