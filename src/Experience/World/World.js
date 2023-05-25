@@ -38,7 +38,9 @@ export default class World {
                 });
     
                 this.stairsRoom.on("endTransition", () => {
-                    this.libraryRoom.setCameraPosition();
+                  this.libraryRoom.setCameraPosition()
+                  this.environment.setSunLightBlue()
+                  this.libraryRoom.events()
                 });
             }
 
