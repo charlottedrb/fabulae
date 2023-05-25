@@ -14,27 +14,37 @@ export default class World {
         this.resources = this.experience.resources;
         this.books = [];
 
-        this.visualLoader = new VisualLoader();
+        // Debug
+        this.showLibraryOnly = false
+
+        !this.showLibraryOnly && (this.visualLoader = new VisualLoader());
 
         // Wait for resources
         this.resources.on("ready", () => {
             // Setup
             this.environment = new Environment();
-            this.stairsRoom = new StairsRoom();
-            this.experience.sceneReady = true;
-
-            this.visualLoader.disapear();
-
-            this.stairsRoom.on("initLibrary", () => {
+            
+            if (this.showLibraryOnly) {
                 this.libraryRoom = new LibraryRoom();
                 this.experience.interface = new InterfaceUI();
-            });
+                this.libraryRoom.setCameraPosition();
+            } else {
+                this.visualLoader.disapear()
+                this.stairsRoom = new StairsRoom()
 
-            this.stairsRoom.on("endTransition", () => {
-                this.libraryRoom.setCameraPosition()
-                this.environment.setSunLightBlue()
-                this.libraryRoom.events()
-            });
+                this.stairsRoom.on("initLibrary", () => {
+                    this.libraryRoom = new LibraryRoom();
+                    this.experience.interface = new InterfaceUI();
+                });
+    
+                this.stairsRoom.on("endTransition", () => {
+                  this.libraryRoom.setCameraPosition()
+                  this.environment.setSunLightBlue()
+                  this.libraryRoom.events()
+                });
+            }
+
+            this.experience.sceneReady = true;
         });
     }
 

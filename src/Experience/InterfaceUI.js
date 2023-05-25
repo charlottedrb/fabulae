@@ -33,6 +33,9 @@ export default class InterfaceUI {
 
         this.raycaster = null;
 
+        // Debug
+        this.showBookContent = false
+
         // Wait for resources
         this.books = this.experience.world.libraryRoom.books;
         this.init();
@@ -48,6 +51,7 @@ export default class InterfaceUI {
         });
 
         this.createPoints();
+        this.showBookContent && this.showBookContentOnDebug()
     }
 
     createPoints() {
@@ -76,8 +80,6 @@ export default class InterfaceUI {
                     screenPosition,
                     this.camera.instance
                 );
-
-                console.log(point.obj.book.obj.scene);
 
                 const intersects = this.raycaster.intersectObjects(
                     point.obj.book.obj.scene,
@@ -119,5 +121,10 @@ export default class InterfaceUI {
 
     update() {
         this.updatePoints();
+    }
+
+    showBookContentOnDebug()
+    {
+        this.booksPoints[0].obj.showOnDebug()
     }
 }
