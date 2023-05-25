@@ -14,25 +14,26 @@ export default class World {
         this.resources = this.experience.resources;
         this.books = [];
 
-        this.visualLoader = new VisualLoader();
+        // this.visualLoader = new VisualLoader();
 
         // Wait for resources
         this.resources.on("ready", () => {
             // Setup
             this.environment = new Environment();
-            this.stairsRoom = new StairsRoom();
+            // this.stairsRoom = new StairsRoom();
             this.experience.sceneReady = true;
+            this.book = new Book();
 
-            this.visualLoader.disapear();
+            // this.visualLoader.disapear();
 
-            this.stairsRoom.on("initLibrary", () => {
+            // this.stairsRoom.on("initLibrary", () => {
                 this.libraryRoom = new LibraryRoom();
-                this.experience.interface = new InterfaceUI();
-            });
+            //     this.experience.interface = new InterfaceUI();
+            // });
 
-            this.stairsRoom.on("endTransition", () => {
-                this.libraryRoom.setCameraPosition();
-            });
+            // this.stairsRoom.on("endTransition", () => {
+            //     this.libraryRoom.setCameraPosition();
+            // });
         });
     }
 
