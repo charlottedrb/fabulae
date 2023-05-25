@@ -15,7 +15,7 @@ export default class World {
         this.books = [];
 
         // Debug
-        this.showLibraryOnly = true
+        this.showLibraryOnly = false
 
         !this.showLibraryOnly && (this.visualLoader = new VisualLoader());
 

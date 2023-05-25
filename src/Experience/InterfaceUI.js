@@ -34,7 +34,7 @@ export default class InterfaceUI {
         this.raycaster = null;
 
         // Debug
-        this.showBookContent = true
+        this.showBookContent = false
 
         // Wait for resources
         this.books = this.experience.world.libraryRoom.books;
