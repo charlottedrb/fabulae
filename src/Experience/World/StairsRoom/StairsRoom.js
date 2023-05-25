@@ -43,6 +43,8 @@ export default class StairsRoom extends EventEmitter
         this.room = this.resources.items.stairsRoom
         // Remove useless mesh
         this.room.scene.remove(this.room.scene.getObjectByName('Fond_plane'))
+        // Optimize platform texture
+        this.room.scene.getObjectByName('plate-forme').material.map.minFilter = THREE.LinearFilter
 
         this.scene.add(this.room.scene)
         this.setStairs()
