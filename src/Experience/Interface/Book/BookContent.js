@@ -1,259 +1,330 @@
-import gsap from 'gsap'
-import InterfaceUI from '../../InterfaceUI'
-import Experience from '../../Experience'
+import gsap from "gsap";
+import InterfaceUI from "../../InterfaceUI";
+import Experience from "../../Experience";
 /**
  * @class BookContent
  * @description Handle the book content
  */
 export default class BookContent {
-    constructor(bookId)
-    {
-        this.id = bookId
-        this.init()
+    constructor(bookId) {
+        this.id = bookId;
+        this.init();
     }
 
     /**
      * Functional methods
      */
-
-    init()
-    {
+    init() {
         /**
          * Data management
          */
-        this.experience = new Experience()
-        this.dataManager = this.experience.dataManager
-        this.getBookContent()
+        this.experience = new Experience();
+        this.dataManager = this.experience.dataManager;
 
-        this.interface = new InterfaceUI()
-        this.pager = this.interface.overlay.pager
-        this.isBookOpen = false
-        this.isLastPage = false
-        this.pageIndex = -1
-        this.textOverflowing = false
-        this.textDiv = null
+        this.interface = new InterfaceUI();
+        this.pager = this.interface.overlay.pager;
+        this.isBookOpen = false;
+        this.isLastPage = false;
+        this.boardIndex = 0;
+        this.textOverflowing = false;
+        this.textDiv = null;
 
         /**
          * Images management
          */
-        this.images = []
-        this.imagesCount = 120
-        this.imagesKeyFrames = [41, 81, 99]
-        this.lastImageFrame = 1
+        this.images = [];
+        this.imagesCount = 120;
+        this.imagesKeyFrames = [41, 81, 99];
+        this.lastImageFrame = 1;
+        this.frameIndex = -1
+
+        /**
+         * Sound management
+         */
+        this.pageTurnSound = new Audio("/sounds/Book/page-turning.mp3");
 
         // Loops to handle the images
-        this.intervalNextPage = null
-        this.intervalPreviousPage = null
+        this.intervalNextPage = null;
+        this.intervalPreviousPage = null;
+        this.formattedPages = [];
+        this.boardHasStoryTitle = false;
 
-        this.animation = gsap.timeline()
+        this.animation = gsap.timeline();
 
         // Change to disable overflow scroll on content
-        this.overflowScroll = true
+        this.overflowScroll = true;
 
-        this.getImagesPath()
-        this.getElements()
-        this.getBookContent()
+        this.getImagesPath();
+        this.getElements();
+        this.getBookContent();
 
         // When the pager change page
-        this.pager.on('changePage', (status) => {
-            if (status === 'next') {
-                this.nextPage()
+        this.pager.on("changePage", (status) => {
+            if (status === "next") {
+                this.nextPage();
             } else {
-                this.previousPage()
+                this.previousPage();
             }
-        })
+        });
     }
 
-    getElements()
-    {
-        this.el = document.querySelector('.book__content')
-        this.image = document.querySelector('.book__image')
+    getElements() {
+        this.el = document.querySelector(".book__content");
+        this.image = document.querySelector(".book__image");
 
         /**
          * Left page
          */
-        this.leftPage = this.el.querySelector('.book__left-page')
-        this.leftPageContent = this.el.querySelector('.book__left-page__content')
-        this.leftPageBorder = this.leftPage.querySelector('.book__page-border')
+        this.leftPage = this.el.querySelector(".book__left-page");
+        this.leftPageContent = this.el.querySelector(
+            ".book__left-page__content"
+        );
+        this.leftPageBorderTitle = this.leftPage.querySelector(".book__page-border.border__style-title");
+        this.leftPageBorderText = this.leftPage.querySelector(".book__page-border.border__style-text");
 
         /**
          * Right page
          */
-        this.rightPage = this.el.querySelector('.book__right-page')
-        this.rightPageContent = this.el.querySelector('.book__right-page__content')
+        this.rightPage = this.el.querySelector(".book__right-page");
+        this.rightPageContent = this.el.querySelector(
+            ".book__right-page__content"
+        );
     }
 
-    getBookContent()
-    {
-        this.book = this.dataManager.getBookById(this.id)
-        this.stories = this.dataManager.getStoriesByBookId(this.id)
+    getBookContent() {
+        this.book = this.dataManager.getBookById(this.id);
+        this.stories = this.dataManager.getStoriesByBookId(this.id);
+        this.prepareContent();
     }
 
-    getImagesPath()
+    prepareContent() {
+        // Add author infos
+        this.formattedPages.push("");
+
+        // Add book title
+        this.formattedPages.push(this.book.title);
+
+        // Add stories' titles & content
+        this.stories.forEach((story) => {
+            this.formattedPages.push(story.title);
+            this.cutText(story.content);
+        });
+    }
+
+    cutText(text) {
+        // Max chars per page
+        const MAX_LENGTH = 530;
+        const words = text.split(" ");
+        let currentPage = "";
+
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i];
+
+            if (currentPage.length + word.length <= MAX_LENGTH) {
+                currentPage += (currentPage.length > 0 ? " " : "") + word;
+            } else {
+                // currentPage += "</p><p>";
+                this.formattedPages.push(currentPage);
+                currentPage = word;
+            }
+        }
+
+        if (currentPage.length > 0) {
+            this.formattedPages.push(currentPage);
+        }
+    }
+
+    showNextContent()
     {
+        let content = {
+            left: null,
+            right: null
+        }
+
+        for (let i = this.boardIndex; i < this.boardIndex + 2;  i++) {
+            const page = this.setPageElements(i);
+            i % 2 === 0 ? content.left = page : content.right = page
+        }
+
+        this.leftPageContent.innerHTML = content.left && content.left.outerHTML;
+        this.rightPageContent.innerHTML = content.right && content.right.outerHTML;
+        this.boardIndex += 2;
+        this.boardHasStoryTitle = false;
+    }
+
+    showPreviousContent()
+    {
+        let content = {
+            left: null,
+            right: null
+        }
+
+        this.boardIndex -= 2;
+        
+        for (let i = this.boardIndex - 1; i > this.boardIndex - 3;  i--) {
+            const page = this.setPageElements(i);
+            i % 2 === 0 ? content.left = page : content.right = page
+        }
+        
+        this.leftPageContent.innerHTML = content.left && content.left.outerHTML;
+        this.rightPageContent.innerHTML = content.right && content.right.outerHTML;
+        this.boardHasStoryTitle = false;
+    }
+
+    setPageElements(i) {
+        let content = null
+        const startingChapter = document.createElement("div");
+        
+        if (i === 0) {
+            content = document.createElement("div");
+            this.leftPageBorderTitle.style.opacity = '0'
+        } else if (i === 1) {
+            // Show book's title
+            this.leftPageBorderTitle.style.opacity = '0'
+            this.leftPageBorderText.style.opacity = '0'
+            const title = document.createElement("div");
+
+            startingChapter.classList.add("book__starting-chapter");
+
+            title.classList.add("book__starting-chapter__title");
+            title.innerHTML = this.formattedPages[i];
+
+            startingChapter.appendChild(title);
+            content = startingChapter;
+        } else if (this.formattedPages[i] && this.formattedPages[i].includes('<p>') || this.formattedPages[i].includes('</p>')) {
+            // Show story content
+            !this.boardHasStoryTitle && (this.leftPageBorderTitle.style.opacity = '0')
+            !this.boardHasStoryTitle && (this.leftPageBorderText.style.opacity = '1')
+            const text = document.createElement("div");
+
+            text.classList.add("book__text");
+            text.innerHTML = this.formattedPages[i];
+            content = text;
+        } else {
+            // Show story title
+            this.boardHasStoryTitle = true
+            
+            this.boardHasStoryTitle && (this.leftPageBorderTitle.style.opacity = '1')
+            this.boardHasStoryTitle && (this.leftPageBorderText.style.opacity = '0')
+            const title = document.createElement("div");
+
+            startingChapter.classList.add("book__starting-chapter");
+
+            title.classList.add("book__starting-chapter__title");
+            title.innerHTML = this.formattedPages[i];
+
+            startingChapter.appendChild(title);
+            content = startingChapter;
+        }
+
+        return content
+    }
+
+    getImagesPath() {
         for (let i = 1; i <= this.imagesCount; i++) {
-            let id = '0' + i
-            if (i < 10) id = '00' + i
-            if (i >= 100) id = i
-            this.images.push(`/images/book/Livre_30${id}.webp`)
+            let id = "0" + i;
+            if (i < 10) id = "00" + i;
+            if (i >= 100) id = i;
+            this.images.push(`/images/book/Livre_30${id}.webp`);
         }
     }
 
     destroy() {
-        this.pager.destroy()
+        this.pager.destroy();
 
-        this.isBookOpen = false
-        this.isLastPage = false
-        this.pageIndex = -1
-        this.image.src = this.images[0]
-        this.lastImageFrame = 1
+        this.isBookOpen = false;
+        this.isLastPage = false;
+        this.boardIndex = 0;
+        this.image.src = this.images[0];
+        this.lastImageFrame = 1;
 
-        this.leftPageContent.innerHTML = ''
-        this.rightPageContent.innerHTML = ''
-        gsap.to([this.leftPageBorder, this.rightPageBorder], { alpha: 0 })
+        this.leftPageContent.innerHTML = "";
+        this.rightPageContent.innerHTML = "";
+        gsap.to([this.leftPageBorderTitle, this.leftPageBorderText, this.rightPageBorder], { alpha: 0 });
 
-        clearInterval(this.intervalNextPage)
-        clearInterval(this.intervalPreviousPage)
+        clearInterval(this.intervalNextPage);
+        clearInterval(this.intervalPreviousPage);
     }
 
     /**
      * Page management and events
      */
 
-    /** Show empty or story title */
-    showLeftPageContent()
-    {
-        if (this.pager.currentPage === 1 || this.pager.currentPage === 0) {
-            this.leftPageContent.innerHTML = ''
-            gsap.to(this.leftPageBorder, { alpha: 0 })
-            return
-        } 
-
-        // Creating necessary HTML elements
-
-        if (!this.overflowScroll && this.textOverflowing) {
-            const text = document.createElement('div')
-            text.classList.add('book__text')
-            text.innerHTML = this.textDiv.innerHTML
-            text.style.marginTop = -this.rightPageContent.clientHeight + 'px'
-
-            this.leftPageContent.innerHTML = text.outerHTML
-            gsap.to(this.leftPageBorder, { alpha: 1 })
-
-            // Get freshly created div in DOM to check if it's overflowing
-            this.textDiv = this.leftPageContent.querySelector('.book__text')
-            this.checkOverflowing(this.leftPageContent)
-            return
-        } else {
-            // If not overflowing, we add the next chapter title
-            const startingChapter = document.createElement('div')
-            const title = document.createElement('div')
-            
-            startingChapter.classList.add('book__starting-chapter')
-            
-            title.classList.add('book__starting-chapter__title')
-            title.innerHTML = this.stories[this.pager.currentPage - 2].title
-            
-            startingChapter.appendChild(title)
-
-            this.leftPageContent.innerHTML = startingChapter.outerHTML
-            gsap.to(this.leftPageBorder, { alpha: 1 })
-        }
-    }
-
-    /** Show book title or story content */
-    showRightPageContent()
-    {
-        // If the book is closed
-        if (this.pager.currentPage === 0) {
-            this.rightPageContent.innerHTML = ''
-            return 
-
-        // If it's the first page
-        } else if (this.pager.currentPage === 1) {
-            const title = document.createElement('div')
-            title.classList.add('book__title')
-            title.innerHTML = this.book.title
-            this.rightPageContent.innerHTML = title.outerHTML
-
-        // Classic content page
-        } else {
-            const text = document.createElement('div')
-            text.classList.add('book__text')
-            // this.pager.currentPage === 2 && text.classList.add('after-starting-chapter')
-            text.innerHTML = this.stories[this.pager.currentPage - 2].content
-            this.rightPageContent.innerHTML = text.outerHTML
-
-            // Get freshly created div in DOM to check if it's overflowing
-            this.textDiv = this.rightPageContent.querySelector('.book__text')
-
-            !this.overflowScroll && this.checkOverflowing(this.rightPageContent)
-        }
-    }
-
-    nextPage()
-    {   
+    /**
+     * Page animation when click on next
+     */
+    nextPage() {
         // If first opening of the book
-        if (!this.isBookOpen) this.isBookOpen = true
-        
-        this.pageIndex++ 
+        if (!this.isBookOpen) this.isBookOpen = true;
+        if (this.formattedPages.length - 2 === this.boardIndex) this.pager.disable()
 
-        this.fadeOut()
+        this.frameIndex++;
+        this.pageTurnSound.play()
+
+        this.fadeOut('next');
 
         // If last image showed was the last animation available
-        if(this.lastImageFrame >= this.imagesKeyFrames[this.imagesKeyFrames.length - 1]) {
-            this.pageIndex = this.imagesKeyFrames.length - 1
-            this.lastImageFrame = 81
+        if (
+            this.lastImageFrame >=
+            this.imagesKeyFrames[this.imagesKeyFrames.length - 1]
+        ) {
+            this.frameIndex = this.imagesKeyFrames.length - 1;
+            this.lastImageFrame = 81;
         }
 
         // Loop to show images sequence
-        clearInterval(this.intervalNextPage)
+        clearInterval(this.intervalNextPage);
         this.intervalNextPage = setInterval(() => {
-            if (this.lastImageFrame === this.imagesKeyFrames[this.pageIndex]) clearInterval(this.intervalNextPage)
-            this.image.src = this.images[this.lastImageFrame]
-            this.lastImageFrame++
+            if (this.lastImageFrame === this.imagesKeyFrames[this.frameIndex])
+                clearInterval(this.intervalNextPage);
+            this.image.src = this.images[this.lastImageFrame];
+            this.lastImageFrame++;
         }, 24);
 
         // Show the content
         setTimeout(() => {
-            this.fadeIn()
+            this.fadeIn();
         }, 0);
     }
 
-    previousPage()
-    {     
-        if (this.isBookOpen) { 
-            this.pageIndex--
+    /**
+     * Page animation when click on previous
+     */
+    previousPage() {
+        if (this.isBookOpen) {
+            this.frameIndex--;
+            this.pageTurnSound.play()
 
-            this.fadeOut()
+            if (this.pager.disabled) this.pager.enable()
 
-            clearInterval(this.intervalPreviousPage)
+            this.fadeOut('previous');
+            
+            if (this.boardIndex >= 6) {
+                this.frameIndex = this.imagesKeyFrames.length - 2;
+                this.lastImageFrame = 99;
+            }
+
+            clearInterval(this.intervalPreviousPage);
             this.intervalPreviousPage = setInterval(() => {
-                if (this.lastImageFrame === 1) clearInterval(this.intervalPreviousPage)
-                if (this.lastImageFrame === this.imagesKeyFrames[this.pageIndex]) clearInterval(this.intervalPreviousPage)
-                this.lastImageFrame--
-                this.image.src = this.images[this.lastImageFrame]
+                if (this.lastImageFrame === 1)
+                    clearInterval(this.intervalPreviousPage);
+                if (this.lastImageFrame === this.imagesKeyFrames[this.frameIndex])
+                    clearInterval(this.intervalPreviousPage);
+                    
+                this.lastImageFrame--;
+                this.image.src = this.images[this.lastImageFrame];
             }, 24);
 
             // If first page was open, we close the book
             if (this.lastImageFrame === 1 || this.pager.currentPage === 0) {
-                this.isBookOpen = false
-                return
+                this.isBookOpen = false;
+                return;
             }
 
             // Show the content
             setTimeout(() => {
-                this.fadeIn()
+                this.fadeIn();
             }, 0);
-        }
-    }
-
-    checkOverflowing(container)
-    {
-        if (this.textDiv.scrollHeight > container.clientHeight) {
-            this.textOverflowing = true
-        } else {
-            this.textOverflowing = false
         }
     }
 
@@ -263,20 +334,23 @@ export default class BookContent {
     fadeIn() {
         this.animation.to([this.leftPage, this.rightPage], {
             alpha: 1,
-            duration: 0.5,
-            ease: 'power2.in'
-        })
+            duration: 0.3,
+            ease: "power2.in",
+        });
     }
 
-    fadeOut() {
+    fadeOut(status) {
         this.animation.to([this.leftPage, this.rightPage], {
             alpha: 0,
-            duration: 0.7,
-            ease: 'expo.out',
+            duration: 0.5,
+            ease: "expo.out",
             onComplete: () => {
-                this.showLeftPageContent()
-                this.showRightPageContent()
-            }  
-        })
+                if (status === 'next') {
+                    this.showNextContent()
+                } else {
+                    this.showPreviousContent()
+                }
+            },
+        });
     }
 }

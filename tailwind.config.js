@@ -16,10 +16,13 @@ export default {
       150: '15rem',
       100: '10rem',
       70: '7rem',
+      60: '6rem',
       50: '5rem',
       40: '4rem',
       35: '3.5rem',
+      30: '3rem',
       25: '2.5rem',
+      15: '1.5rem',
       10: '1rem',
       0: 0,
       container: '5rem'
@@ -27,9 +30,11 @@ export default {
     fontSize: {
       150: '15rem',
       100: '10rem',
+      80: '8rem',
       60: '6rem',
       45: '4.5rem',
       30: '3rem',
+      26: '2.6rem',
       22: '2.2rem',
       18: '1.8rem',
       15: '1.5rem',
@@ -51,6 +56,9 @@ export default {
     extend: {
       width: {
         440: '44rem',
+        240: '24rem',
+        200: '20rem',
+        36: '3.6rem',
         screen: '100vw',
       }, 
       height: {
