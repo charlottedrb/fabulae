@@ -166,9 +166,10 @@ export default class BookContent {
     setPageElements(i) {
         let content = null
         const startingChapter = document.createElement("div");
-
+        
         if (i === 0) {
             content = document.createElement("div");
+            this.leftPageBorder.style.opacity = '0'
         } else if (i === 1) {
             // Show book's title
             const title = document.createElement("div");
@@ -180,7 +181,7 @@ export default class BookContent {
 
             startingChapter.appendChild(title);
             content = startingChapter;
-        } else if (this.formattedPages[i].includes('<p>') || this.formattedPages[i].includes('</p>')) {
+        } else if (this.formattedPages[i] && this.formattedPages[i].includes('<p>') || this.formattedPages[i].includes('</p>')) {
             // Show story content
             const text = document.createElement("div");
 
@@ -189,6 +190,7 @@ export default class BookContent {
             content = text;
         } else {
             // Show story title
+            this.leftPageBorder.style.opacity = '1'
             const title = document.createElement("div");
 
             startingChapter.classList.add("book__starting-chapter");
