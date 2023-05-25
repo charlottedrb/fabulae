@@ -27,7 +27,11 @@
     }
     
     &__text {
-        @apply font-dubai text-22 text-night-blue; 
+        @apply font-dubai text-26 text-night-blue;
+        
+        p {
+            @apply mb-15;
+        }
     }
 
     &__right-page, &__left-page {
