@@ -18,12 +18,11 @@ export default class Environment
 
         this.setAmbientLight()
         this.setSunLight()
-        this.setAmbientLight()
     }
 
     setSunLight()
     {
-        this.sunLight = new THREE.DirectionalLight('#0000FF', 4)
+        this.sunLight = new THREE.DirectionalLight('#fff', 2)
         this.sunLight.castShadow = true
         this.sunLight.shadow.camera.far = 15
         this.sunLight.shadow.mapSize.set(1024, 1024)
@@ -66,6 +65,11 @@ export default class Environment
                 .max(5)
                 .step(0.001)
         }
+    }
+
+    setSunLightBlue() {
+        this.sunLight.color.set('#0000ff')
+        this.sunLight.intensity = 4
     }
 
     setAmbientLight()
