@@ -252,6 +252,7 @@ export default class BookContent {
     nextPage() {
         // If first opening of the book
         if (!this.isBookOpen) this.isBookOpen = true;
+        if (this.formattedPages.length - 2 === this.boardIndex) this.pager.disable()
 
         this.frameIndex++;
 
@@ -287,6 +288,7 @@ export default class BookContent {
     previousPage() {
         if (this.isBookOpen) {
             this.frameIndex--;
+            if (this.pager.disabled) this.pager.enable()
 
             this.fadeOut('previous');
             

@@ -25,6 +25,7 @@ export default class Pager extends EventEmitter {
 
         this.currentPage = 0
         this.status = null
+        this.disabled = false
 
         this.getElements()
         this.bindMethods()
@@ -48,12 +49,10 @@ export default class Pager extends EventEmitter {
 
     onClick()
     {
-        // gsap.set(this.el, {
-        //     pointerEvents: 'none'
-        // })
         if (this.status === null) return
 
         if (this.status === 'next') {
+            if (this.disabled) return
             this.next.innerHTML = this.currentPage > 0 ? 'Suivante' : 'Ouvrir'
             this.currentPage++ 
         } else {
@@ -61,12 +60,6 @@ export default class Pager extends EventEmitter {
             this.currentPage--
         }
         this.trigger('changePage', [this.status])
-
-        // setTimeout(() => {
-        //     gsap.set(this.el, {
-        //         pointerEvents: 'none'
-        //     })
-        // }, 10)
     }
 
     onMouseMove(e)
@@ -77,6 +70,7 @@ export default class Pager extends EventEmitter {
         if (this.mouse.x > 0.30 || this.mouse.x < -0.30)  return 
         
         if (this.mouse.x > 0.20) {
+            if (this.disabled) return
             gsap.to(this.next, { alpha: 1 })
             this.status = 'next'
             this.next.innerHTML = this.currentPage > 0 ? 'Suivante' : 'Ouvrir'
@@ -99,6 +93,28 @@ export default class Pager extends EventEmitter {
         gsap.to(this.line, {
             rotate: 90 + rotation,
         })
+    }
+
+    disable()
+    {
+        gsap.set(this.el, {
+            pointerEvents: 'none'
+        })
+
+        gsap.to(this.next, { alpha: 0 })
+
+        this.next.innerHTML = ''
+        this.disabled = true
+    }
+
+    enable()
+    {
+        gsap.set(this.el, {
+            pointerEvents: 'auto'
+        })
+
+        this.next.innerHTML = this.currentPage > 0 ? 'Suivante' : 'Ouvrir'
+        this.disabled = false
     }
 
     destroy()
