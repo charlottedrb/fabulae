@@ -14,7 +14,6 @@ export default class BookContent {
     /**
      * Functional methods
      */
-
     init() {
         /**
          * Data management
@@ -38,6 +37,11 @@ export default class BookContent {
         this.imagesKeyFrames = [41, 81, 99];
         this.lastImageFrame = 1;
         this.frameIndex = -1
+
+        /**
+         * Sound management
+         */
+        this.pageTurnSound = new Audio("/sounds/Book/page-turning.mp3");
 
         // Loops to handle the images
         this.intervalNextPage = null;
@@ -255,6 +259,7 @@ export default class BookContent {
         if (this.formattedPages.length - 2 === this.boardIndex) this.pager.disable()
 
         this.frameIndex++;
+        this.pageTurnSound.play()
 
         this.fadeOut('next');
 
@@ -288,6 +293,8 @@ export default class BookContent {
     previousPage() {
         if (this.isBookOpen) {
             this.frameIndex--;
+            this.pageTurnSound.play()
+
             if (this.pager.disabled) this.pager.enable()
 
             this.fadeOut('previous');
@@ -327,7 +334,7 @@ export default class BookContent {
     fadeIn() {
         this.animation.to([this.leftPage, this.rightPage], {
             alpha: 1,
-            duration: 0.5,
+            duration: 0.3,
             ease: "power2.in",
         });
     }
@@ -335,7 +342,7 @@ export default class BookContent {
     fadeOut(status) {
         this.animation.to([this.leftPage, this.rightPage], {
             alpha: 0,
-            duration: 0.7,
+            duration: 0.5,
             ease: "expo.out",
             onComplete: () => {
                 if (status === 'next') {
