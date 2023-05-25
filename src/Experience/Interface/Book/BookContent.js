@@ -43,6 +43,7 @@ export default class BookContent {
         this.intervalNextPage = null;
         this.intervalPreviousPage = null;
         this.formattedPages = [];
+        this.boardHasStoryTitle = false;
 
         this.animation = gsap.timeline();
 
@@ -74,7 +75,8 @@ export default class BookContent {
         this.leftPageContent = this.el.querySelector(
             ".book__left-page__content"
         );
-        this.leftPageBorder = this.leftPage.querySelector(".book__page-border");
+        this.leftPageBorderTitle = this.leftPage.querySelector(".book__page-border.border__style-title");
+        this.leftPageBorderText = this.leftPage.querySelector(".book__page-border.border__style-text");
 
         /**
          * Right page
@@ -143,6 +145,7 @@ export default class BookContent {
         this.leftPageContent.innerHTML = content.left && content.left.outerHTML;
         this.rightPageContent.innerHTML = content.right && content.right.outerHTML;
         this.boardIndex += 2;
+        this.boardHasStoryTitle = false;
     }
 
     showPreviousContent()
@@ -161,6 +164,7 @@ export default class BookContent {
         
         this.leftPageContent.innerHTML = content.left && content.left.outerHTML;
         this.rightPageContent.innerHTML = content.right && content.right.outerHTML;
+        this.boardHasStoryTitle = false;
     }
 
     setPageElements(i) {
@@ -169,9 +173,11 @@ export default class BookContent {
         
         if (i === 0) {
             content = document.createElement("div");
-            this.leftPageBorder.style.opacity = '0'
+            this.leftPageBorderTitle.style.opacity = '0'
         } else if (i === 1) {
             // Show book's title
+            this.leftPageBorderTitle.style.opacity = '0'
+            this.leftPageBorderText.style.opacity = '0'
             const title = document.createElement("div");
 
             startingChapter.classList.add("book__starting-chapter");
@@ -183,6 +189,8 @@ export default class BookContent {
             content = startingChapter;
         } else if (this.formattedPages[i] && this.formattedPages[i].includes('<p>') || this.formattedPages[i].includes('</p>')) {
             // Show story content
+            !this.boardHasStoryTitle && (this.leftPageBorderTitle.style.opacity = '0')
+            !this.boardHasStoryTitle && (this.leftPageBorderText.style.opacity = '1')
             const text = document.createElement("div");
 
             text.classList.add("book__text");
@@ -190,7 +198,10 @@ export default class BookContent {
             content = text;
         } else {
             // Show story title
-            this.leftPageBorder.style.opacity = '1'
+            this.boardHasStoryTitle = true
+            
+            this.boardHasStoryTitle && (this.leftPageBorderTitle.style.opacity = '1')
+            this.boardHasStoryTitle && (this.leftPageBorderText.style.opacity = '0')
             const title = document.createElement("div");
 
             startingChapter.classList.add("book__starting-chapter");
@@ -225,7 +236,7 @@ export default class BookContent {
 
         this.leftPageContent.innerHTML = "";
         this.rightPageContent.innerHTML = "";
-        gsap.to([this.leftPageBorder, this.rightPageBorder], { alpha: 0 });
+        gsap.to([this.leftPageBorderTitle, this.leftPageBorderText, this.rightPageBorder], { alpha: 0 });
 
         clearInterval(this.intervalNextPage);
         clearInterval(this.intervalPreviousPage);
