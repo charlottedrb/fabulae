@@ -59,6 +59,7 @@ export default class StairsRoom extends EventEmitter
         this.backgroundVideo = new BackgroundVideo()
         this.scene.background = this.backgroundVideo.texture
         this.scene.background.flipY = true
+        this.scene.background.encoding = THREE.sRGBEncoding
     }
 
     setIndication() {
