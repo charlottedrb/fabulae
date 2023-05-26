@@ -24,7 +24,6 @@ export default class LibraryRoom extends EventEmitter {
         this.shelves = []
         this.books = []
 
-        this.events()
         this.setModels()
         this.setShelves()
         this.setCameraAnimation()
@@ -127,7 +126,7 @@ export default class LibraryRoom extends EventEmitter {
                     initialPosition.z - 1
                 );
     
-                const bookObj = new Book(shelf, position);
+                const bookObj = new Book(shelf, position, i);
     
                 this.books.push({
                     position: position,

@@ -3,7 +3,7 @@ import Experience from "../../../Experience";
 import gsap from "gsap";
 
 export default class Book {
-    constructor(parent, position) {
+    constructor(parent, position, id) {
         this.experience = new Experience();
         this.parent = parent;
         this.scene = this.experience.scene;
@@ -13,9 +13,10 @@ export default class Book {
         this.raycastHandler = this.experience.raycastHandler;
 
         this.position = position || new THREE.Vector3(0, 0, 0);
+        this.id = id;
 
         this.onBookClickBound = this.onBookClick.bind(this);
-        
+
         this.setModel();
         this.setRaycastEvents();
 
