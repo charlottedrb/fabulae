@@ -30,7 +30,7 @@ export default class LibraryRoom {
 
     events()
     {
-        // window.addEventListener('wheel', this.onScrollBound)
+        window.addEventListener('wheel', this.onScrollBound)
     }
 
     setCameraPosition() {

@@ -10,10 +10,12 @@ export default class Book {
         this.resources = this.experience.resources;
         this.resource = this.resources.items.blueBookModel;
         this.debug = this.experience.debug;
+        this.raycastHandler = this.experience.raycastHandler
 
         this.position = position || new THREE.Vector3(0, 0, 0);
 
         this.setModel();
+        this.setRaycastEvents()
     }
 
     setModel() {
@@ -26,6 +28,9 @@ export default class Book {
             this.position.y,
             this.position.z
         );
+        console.log(this.model);
+
+        this.cover = this.model.getObjectByName("Plane001");
 
         if (this.debug.active) {
             this.debug.ui.addFolder("Book");
@@ -73,6 +78,13 @@ export default class Book {
             }
             
             this.scene.add(this.model);
+    }
+
+    setRaycastEvents()
+    {
+        this.raycastHandler.addObjectToTest(this.cover, () => {
+            console.log('click click');
+        }, 'click')
     }
 
     hoverOut() {
