@@ -22,13 +22,12 @@ export default class World {
             this.environment = new Environment();
             this.stairsRoom = new StairsRoom();
             this.experience.sceneReady = true;
-            this.book = new Book();
-
+            
             // this.visualLoader.disapear();
-
+            
             this.stairsRoom.on("initLibrary", () => {
-                this.libraryRoom = new LibraryRoom();
                 this.experience.interface = new InterfaceUI();
+                this.libraryRoom = new LibraryRoom();
             });
 
             this.stairsRoom.on("endTransition", () => {

@@ -1,12 +1,13 @@
 import Experience from "./Experience.js";
-import * as THREE from "three";
-import BookPoint from "./World/LibraryRoom/Book/BookPoint.js";
 import Overlay from "./Interface/Overlay.js";
+import EventEmitter from "./Utils/EventEmitter.js";
 
 let interfaceUi = null;
 
-export default class InterfaceUI {
+export default class InterfaceUI extends EventEmitter {
     constructor() {
+        super()
+
         // Singleton
         if (interfaceUi) {
             return interfaceUi;
@@ -27,18 +28,14 @@ export default class InterfaceUI {
         /**
          * Book interface
          */
-        this.currentBook = null;
-        this.booksPoints = [];
         this.overlay = new Overlay();
 
         // Wait for resources
-        this.books = this.experience.world.libraryRoom.books;
         this.init();
     }
 
     init() {
         this.overlay.on("closeBook", () => {
-            this.currentBook.clickIn();
             this.overlay.bookContent.destroy();
             this.overlay.pager.destroy();
         });

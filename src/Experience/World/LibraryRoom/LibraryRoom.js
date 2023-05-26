@@ -3,10 +3,12 @@ import * as THREE from "three";
 import gsap from 'gsap';
 import { throttle } from 'throttle-debounce';
 import Book from './Book/Book'
+import EventEmitter from "../../Utils/EventEmitter";
 
-export default class LibraryRoom {
+export default class LibraryRoom extends EventEmitter {
     constructor()
     {
+        super()
         this.experience = new Experience()
         this.camera = this.experience.camera
         this.scene = this.experience.scene
