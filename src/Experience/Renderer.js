@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Experience from './Experience.js'
+import BloomEffect from './BloomEffect.js'
 
 export default class Renderer
 {
@@ -12,6 +13,7 @@ export default class Renderer
         this.camera = this.experience.camera
 
         this.setInstance()
+        this.bloom = new BloomEffect(this.instance)
     }
 
     setInstance()
@@ -35,16 +37,21 @@ export default class Renderer
     {
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2))
+
+        this.bloom.resize()
     }
 
     update()
     {
-        this.instance.render(this.scene, this.camera.instance)
+        // this.instance.render(this.scene, this.camera.instance)
+        this.bloom.update()
     }
 
     destroy() {
         this.instance.dispose()
         this.instance = null
+        this.bloom.destroy()
+        this.bloom = null
 
         this.experience = null
         this.canvas = null

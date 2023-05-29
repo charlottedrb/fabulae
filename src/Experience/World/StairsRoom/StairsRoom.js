@@ -60,6 +60,7 @@ export default class StairsRoom extends EventEmitter
         this.scene.background = this.backgroundVideo.texture
         this.scene.background.flipY = true
         this.scene.background.encoding = THREE.sRGBEncoding
+        // this.scene.background = new THREE.Color( "#000" )
     }
 
     setIndication() {
@@ -81,11 +82,19 @@ export default class StairsRoom extends EventEmitter
         const storyLeftDoor = this.room.scene.getObjectByName('PORTE_SOUVENIR_gauche')
         const storyRightDoor = this.room.scene.getObjectByName('PORTE_SOUVENIR_droite')
         storyDoors.push(storyLeftDoor, storyRightDoor)
+        // Add doors to bloom layer to make them glow
+        storyDoors.forEach((door) => {
+            door.layers.enable(1)
+        })
 
         const knowledgeDoors = []
         const knowledgeLeftDoor = this.room.scene.getObjectByName('PORTE_SAVOIR_gauche')
         const knowledgeRightDoor = this.room.scene.getObjectByName('PORTE_SAVOIR_droite')
         knowledgeDoors.push(knowledgeLeftDoor, knowledgeRightDoor)
+        // Add doors to bloom layer to make them glow
+        knowledgeDoors.forEach((door) => {
+            door.layers.enable(1)
+        })
 
         this.leftStair = new Stair(leftStairMesh, leftStairAnim, storyDoors)
         this.rightStair = new Stair(rightStairMesh, rightStairAnim, knowledgeDoors)
