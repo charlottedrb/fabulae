@@ -23,15 +23,5 @@ export default [
         name: "libraryRoom",
         type: "gltfModel",
         path: "models/Library/glTF/Salle_2_03_LOW.gltf",
-    },
-    {
-        name: "stairsCamera",
-        type: "gltfModel",
-        path: "models/Stairs/glTF/stairs_camera.gltf",
-    },
-      {
-        name: 'libraryRoom',
-        type: 'gltfModel',
-        path: 'models/Library/glTF/Salle_2_03_LOW.gltf'
-    } 
+    }
 ];
