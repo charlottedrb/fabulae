@@ -6,7 +6,7 @@ let interfaceUi = null;
 
 export default class InterfaceUI extends EventEmitter {
     constructor() {
-        super()
+        super();
 
         // Singleton
         if (interfaceUi) {
@@ -35,11 +35,13 @@ export default class InterfaceUI extends EventEmitter {
     }
 
     init() {
-        this.overlay.on("closeBook", () => {
-            this.overlay.bookContent.destroy();
-            this.overlay.pager.destroy();
+        this.overlay.on("closeBook", (bookContent) => {
+            if (this.overlay.bookContent === bookContent) {
+                this.overlay.bookContent.destroy();
+                this.overlay.pager.destroy();
+            }
         });
     }
 
-    update() { }
+    update() {}
 }

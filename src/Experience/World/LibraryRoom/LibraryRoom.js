@@ -22,7 +22,6 @@ export default class LibraryRoom extends EventEmitter {
         this.onScrollBound = throttle(5, this.onScroll.bind(this))
 
         this.shelves = []
-        this.books = []
 
         this.setModels()
         this.setShelves()
@@ -126,13 +125,7 @@ export default class LibraryRoom extends EventEmitter {
                     initialPosition.z - 1
                 );
     
-                const bookObj = new Book(shelf, position, i);
-    
-                this.books.push({
-                    position: position,
-                    author: book.authorId,
-                    obj: bookObj,
-                });
+                new Book(shelf, position, book.id);
             })
         }
     }

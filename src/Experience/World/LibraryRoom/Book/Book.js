@@ -21,8 +21,10 @@ export default class Book {
         this.setRaycastEvents();
 
         this.overlay = this.experience.interface.overlay;
-        this.overlay.on("closeBook", () => {
-            this.clickIn();
+        this.overlay.on("closeBook", (bookContent) => {
+            if (this.id === bookContent.id) {
+                this.clickIn();
+            }
         });
     }
 
@@ -102,6 +104,7 @@ export default class Book {
         this.overlay.show();
         this.overlay.initPager();
         this.overlay.initBookContent(this.id);
+        this.clickOut();
     }
 
     hoverOut() {

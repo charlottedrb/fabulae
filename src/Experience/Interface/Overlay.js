@@ -56,7 +56,7 @@ export default class Overlay extends EventEmitter {
 
     onCloseClick()
     {
-        this.trigger('closeBook')
+        this.trigger('closeBook', [this.bookContent])
         gsap.to(this.el, {
             alpha: 0,
             pointerEvents: 'none'
