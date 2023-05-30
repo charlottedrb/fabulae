@@ -32,7 +32,12 @@ export default class Book {
         this.model = this.resource.scene.clone();
         this.model.scale.set(3, 4.7, 3);
         this.model.rotation.z = -Math.PI * 0.5;
-        this.model.rotation.y = -Math.PI * 0.5;
+
+        if (this.parent.position.x < 0) {
+            this.model.rotation.y = Math.PI * 0.5;
+        } else {
+            this.model.rotation.y = -Math.PI * 0.5;
+        }
         this.model.position.set(
             this.position.x,
             this.position.y,

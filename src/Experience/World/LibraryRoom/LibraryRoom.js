@@ -111,13 +111,14 @@ export default class LibraryRoom extends EventEmitter {
     }
 
     setBooks(shelf, categoryId) {
+        console.log(shelf, categoryId);
         const books = this.experience.dataManager.books.filter(book => book.categoryId === categoryId);
         
         if (books.length > 0) {
             const bookDistance = 0.05;
             let initialPosition = shelf.position.clone();
             initialPosition.x -= shelf.geometry.boundingBox.max.x - shelf.geometry.boundingBox.min.x;
-    
+            
             books.forEach((book, i) => {
                 const position = new THREE.Vector3(
                     initialPosition.x + bookDistance * i,
