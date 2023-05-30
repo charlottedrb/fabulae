@@ -3,7 +3,8 @@ import Experience from "../Experience.js";
 import Environment from "./Environment.js";
 import * as THREE from "three";
 import StairsRoom from "./StairsRoom/StairsRoom.js";
-import VisualLoader from './VisualLoader.js'
+import VisualLoader from "./VisualLoader.js";
+import InterfaceUI from "../InterfaceUI.js";
 
 export default class World {
     constructor() {
@@ -11,19 +12,38 @@ export default class World {
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.books = [];
-      
-        // this.visualLoader = new VisualLoader()
+
+        // Debug
+        this.showLibraryOnly = false
+
+        !this.showLibraryOnly && (this.visualLoader = new VisualLoader());
 
         // Wait for resources
         this.resources.on("ready", () => {
-            
             // Setup
             this.environment = new Environment();
-            this.libraryRoom = new LibraryRoom();
-            // this.stairsRoom = new StairsRoom();
-            this.experience.sceneReady = true;
+            
+            if (this.showLibraryOnly) {
+                this.libraryRoom = new LibraryRoom();
+                this.experience.interface = new InterfaceUI();
+                this.libraryRoom.setCameraPosition();
+            } else {
+                this.visualLoader.disapear()
+                this.stairsRoom = new StairsRoom()
 
-            // this.visualLoader.disapear()
+                this.stairsRoom.on("initLibrary", () => {
+                    this.libraryRoom = new LibraryRoom();
+                    this.experience.interface = new InterfaceUI();
+                });
+    
+                this.stairsRoom.on("endTransition", () => {
+                  this.libraryRoom.setCameraPosition()
+                  this.environment.setSunLightBlue()
+                  this.libraryRoom.events()
+                });
+            }
+
+            this.experience.sceneReady = true;
         });
     }
 
@@ -53,11 +73,16 @@ export default class World {
             this.stairsRoom = null;
         }
 
-        this.visualLoader.destroy()
-        this.visualLoader = null
+        if (this.libraryRoom) {
+            this.libraryRoom.destroy();
+            this.libraryRoom = null;
+        }
 
-        this.experience = null
-        this.scene = null
-        this.resources = null
+        this.visualLoader.destroy();
+        this.visualLoader = null;
+
+        this.experience = null;
+        this.scene = null;
+        this.resources = null;
     }
 }

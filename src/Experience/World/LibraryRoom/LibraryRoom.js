@@ -2,7 +2,7 @@ import Experience from "../../Experience";
 import * as THREE from "three";
 import gsap from 'gsap';
 import { throttle } from 'throttle-debounce';
-import Book from '../LibraryRoom/Book/Book'
+import Book from './Book/Book'
 
 export default class LibraryRoom {
     constructor()
@@ -22,15 +22,19 @@ export default class LibraryRoom {
         this.shelves = []
         this.books = []
 
-        this.events()
         this.setModels()
         this.setShelves()
-        this.setCamera()
+        this.setCameraAnimation()
     }
 
     events()
     {
         window.addEventListener('wheel', this.onScrollBound)
+    }
+
+    setCameraPosition() {
+        this.camera.instance.position.set(this.roomCamera.position.x, this.roomCamera.position.y, this.roomCamera.position.z)
+        this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
     }
 
     onScroll(e) 
@@ -62,8 +66,6 @@ export default class LibraryRoom {
         this.humorShelf = this.room.scene.getObjectByName('Position_Livre_Cocasse')
         this.tripShelf = this.room.scene.getObjectByName('Position_Livre_Humour')
         this.excitingShelf = this.room.scene.getObjectByName('Position_Livre_Sensationnel')
-
-        console.log(this.loveShelf.position, this.humorShelf.position, this.tripShelf.position, this.excitingShelf.position);
     }
 
     setShelves()
@@ -72,13 +74,6 @@ export default class LibraryRoom {
         this.setBooks(this.tripShelf, this.experience.dataManager.categories.filter(category => category.name === 'Voyage')[0].id)
         this.setBooks(this.excitingShelf, this.experience.dataManager.categories.filter(category => category.name === 'Sensationnel')[0].id)
         this.setBooks(this.loveShelf, this.experience.dataManager.categories.filter(category => category.name === 'Amour')[0].id)
-    }
-    
-    setCamera()
-    {
-        this.setCameraAnimation()
-        this.camera.instance.position.set(this.roomCamera.position.x, this.roomCamera.position.y, this.roomCamera.position.z)
-        this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
     }
 
     setCameraAnimation()
@@ -116,7 +111,7 @@ export default class LibraryRoom {
 
     setBooks(shelf, categoryId) {
         const books = this.experience.dataManager.books.filter(book => book.categoryId === categoryId);
-        console.log(shelf);
+        
         if (books.length > 0) {
             const bookDistance = 0.05;
             let initialPosition = shelf.position.clone();
@@ -146,9 +141,12 @@ export default class LibraryRoom {
         this.scene = null
         this.resources = null
         this.camera = null
+        this.timer = null
         this.playCameraAnimationBound = null
 
         this.room = null
+        this.roomCamera.dispose()
+        this.roomCamera = null
         
         window.removeEventListener('scroll', this.onScrollBound)
         this.onScrollBound = null

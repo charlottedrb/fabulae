@@ -10,7 +10,6 @@ import Resources from './Utils/Resources.js'
 import DataManager from '../Data/DataManager.js'
 import sources from './sources.js'
 import RaycasterHandler from './RaycastHandler.js'
-import InterfaceUI from './InterfaceUI.js'
 
 let experience = null
 
@@ -60,7 +59,7 @@ export default class Experience
         this.renderer = new Renderer()
         this.world = new World()
         this.raycastHandler = new RaycasterHandler()
-        this.interface = new InterfaceUI()
+        this.interface = null
 
         this.sceneReady = false
 
@@ -82,11 +81,12 @@ export default class Experience
         this.camera.update()
         this.world.update()
         this.renderer.update()
+        this.debug.update()
 
         if (this.raycastHandler) {
             this.raycastHandler.update()
         }
-        this.sceneReady && this.interface.update()
+       (this.sceneReady && this.interface) && this.interface.update()
     }
 
     destroy()

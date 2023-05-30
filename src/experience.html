@@ -18,23 +18,38 @@
             <canvas class="webgl"></canvas>
             <video id="video" playsinline webkit-playsinline muted loop autoplay width="320" height="240" src="/videos/background.mp4" style="display: none;"></video>
             <p class="loader"><span class="rate">0</span><span>%</span></p>
-            <div class="overlay relative w-screen h-screen grid grid-cols-12 opacity-0 z-1 pointer-events-none">
-                <div class="col-span-full bg-night-blue/50 backdrop-blur-md overlay__content">
+            <div class="choice-indication">
+                <p>Veuillez cliquer sur la bibliothèque de votre choix.</p>
+            </div>
+            <div class="overlay relative w-screen h-screen grid grid-cols-12 opacity-0 z-[1] pointer-events-none">
+                <div class="col-span-full bg-night-blue/50 overlay__content">
                     <!-- Book content -->
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full book__content">
                         <img src="/images/book/Livre_30001.webp" class="object-cover h-full select-none book__image" />
-                        <div class="absolute top-[8rem] left-[18.5rem] w-[55rem] h-[83.5vh] px-40 py-[4.5rem] opacity-0 svg-wrapper book__left-page">
+                        <div class="absolute top-[8rem] left-[18.5rem] w-[55rem] h-[83.5vh] px-70 py-60 opacity-0 svg-wrapper book__left-page">
                             <div class="w-full h-full select-none overflow-auto book__left-page__content"></div>
-                            <img src="/images/page-border.svg" class="absolute top-0 left-0 p-25 w-full h-full select-none pointer-events-none book__page-border"/>
+                            <div class="absolute top-0 left-0 p-25 w-full h-full select-none pointer-events-none border__style-title book__page-border">
+                                <img class="absolute top-15 left-15 w-240 rotate-180" src="/images/svg/Book/ornement-page.svg" alt="" srcset="">
+                                <img class="absolute top-15 right-15 w-240 -rotate-90" src="/images/svg/Book/ornement-page.svg" alt="" srcset="">
+                                <img class="absolute bottom-15 left-15 w-240 rotate-90" src="/images/svg/Book/ornement-page.svg" alt="" srcset="">
+                                <img class="absolute bottom-15 right-15 w-240" src="/images/svg/Book/ornement-page.svg" alt="" srcset="">
+                            </div>
+                            <div class="absolute top-0 left-0 p-25 w-full h-full select-none pointer-events-none border__style-text book__page-border">
+                                <img class="absolute top-15 left-15 w-full px-30" src="/images/svg/Book/ornement-page-haut.svg" alt="" srcset="">
+                                <img class="absolute bottom-15 left-15 w-full px-30" src="/images/svg/Book/ornement-page-bas.svg" alt="" srcset="">
+                            </div>
                         </div>
-                        <div class="absolute top-[8rem] right-[17rem] w-[55rem] h-[83.5vh] p-40 py-[4.5rem] opacity-0 svg-wrapper book__right-page">
+                        <div class="absolute top-[8rem] right-[17rem] w-[55rem] h-[83.5vh] px-70 py-60 opacity-0 svg-wrapper book__right-page">
                             <div class="w-full h-full select-none overflow-auto book__right-page__content"></div>
-                            <img src="/images/page-border.svg" class="absolute top-0 right-0 p-25 w-full h-full select-none pointer-events-none book__page-border"/>
+                            <div class="absolute top-0 left-0 p-25 w-full h-full select-none pointer-events-none book__page-border">
+                                <img class="absolute top-15 left-15 w-full px-30" src="/images/svg/Book/ornement-page-haut.svg" alt="" srcset="">
+                                <img class="absolute bottom-15 left-15 w-full px-30" src="/images/svg/Book/ornement-page-bas.svg" alt="" srcset="">
+                            </div>
                         </div>
                     </div>
         
                     <!-- Pager -->
-                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 pager">
+                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 pager z-1">
                         <div class="absolute bottom-10 -translate-x-full left-0 text-white font-roystorie text-30 pr-25 opacity-0 cursor-pointer pager__previous">Précédente</div>
                         <div class="absolute bottom-10 translate-x-full right-0 text-white font-roystorie text-30 pl-25 opacity-0 cursor-pointer pager__next">Suivante</div>
                         <!-- Board -->

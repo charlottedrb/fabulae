@@ -23,22 +23,24 @@ export default class InterfaceUI {
         this.sizes = this.experience.sizes;
         this.resources = this.experience.resources;
         this.dataManager = this.experience.dataManager;
+        this.stairsRoom = this.experience.world.stairsRoom;
 
         /**
          * Book interface
-        */
-       this.currentBook = null;
-       this.booksPoints = [];
-       this.overlay = new Overlay();
-       
-       this.raycaster = null;
-       
-       // Wait for resources
-       this.resources.on("ready", () => {
-           this.books = this.experience.world.libraryRoom.books;
-           this.navigation = new Navigation();
-           this.init();
-        });
+         */
+        this.currentBook = null;
+        this.booksPoints = [];
+        this.overlay = new Overlay();
+
+        this.raycaster = null;
+
+        // Debug
+        this.showBookContent = false
+
+        // Wait for resources
+        this.books = this.experience.world.libraryRoom.books;
+        this.navigation = new Navigation();
+        this.init();
     }
 
     init() {
@@ -51,6 +53,7 @@ export default class InterfaceUI {
         });
 
         this.createPoints();
+        this.showBookContent && this.showBookContentOnDebug()
     }
 
     createPoints() {
@@ -98,7 +101,7 @@ export default class InterfaceUI {
                     const pointDistance = point.position.distanceTo(
                         this.camera.instance.position
                     );
-                    
+
                     // Intersection is close than the point
                     if (intersectionDistance < pointDistance) {
                         // Hide
@@ -120,5 +123,10 @@ export default class InterfaceUI {
 
     update() {
         this.updatePoints();
+    }
+
+    showBookContentOnDebug()
+    {
+        this.booksPoints[0].obj.showOnDebug()
     }
 }
