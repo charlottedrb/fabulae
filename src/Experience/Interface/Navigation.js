@@ -28,12 +28,13 @@ export default class Navigation {
     }
 
     onLinkClick(i) {
-        console.log(i, this.previousIndex);
         clearInterval(this.clickInterval);
         if (this.previousIndex === i) return;
 
+        if (this.previousIndex !== -1) this.links[this.previousIndex].querySelector('span').classList.remove("active");
+        this.links[i].querySelector('span').classList.add("active");
+
         this.clickInterval = setInterval(() => {
-            console.log(this.libraryRoom.cameraAction.time, this.keyframes[i]);
             if (this.previousIndex > i) {
                 this.libraryRoom.cameraAction.time += 0.01;
                 this.libraryRoom.cameraAction.timeScale = -2
