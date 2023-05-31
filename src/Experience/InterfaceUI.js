@@ -24,15 +24,13 @@ export default class InterfaceUI extends EventEmitter {
         this.sizes = this.experience.sizes;
         this.resources = this.experience.resources;
         this.dataManager = this.experience.dataManager;
-        this.stairsRoom = this.experience.world.stairsRoom;
+        this.navigation = null
 
         /**
          * Book interface
          */
         this.overlay = new Overlay();
-
-        // Wait for resources
-        this.navigation = new Navigation();
+        
         this.init();
     }
 
@@ -43,6 +41,10 @@ export default class InterfaceUI extends EventEmitter {
                 this.overlay.pager.destroy();
             }
         });
+    }
+
+    initNavigation() {
+        this.navigation = new Navigation();
     }
 
     update() {}

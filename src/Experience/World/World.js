@@ -24,8 +24,8 @@ export default class World {
             this.environment = new Environment();
             
             if (this.showLibraryOnly) {
-                this.libraryRoom = new LibraryRoom();
                 this.experience.interface = new InterfaceUI();
+                this.libraryRoom = new LibraryRoom();
                 this.libraryRoom.setCameraPosition();
             } else {
                 this.visualLoader.disapear()

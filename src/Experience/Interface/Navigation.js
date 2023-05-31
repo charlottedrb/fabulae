@@ -4,7 +4,7 @@ import gsap from "gsap";
 export default class Navigation {
     constructor() {
         this.experience = new Experience();
-        this.libraryRoom = this.experience.world.libraryRoom;
+        this.libraryRoom = null
 
         // Methods binding
         this.onLinkClickBound = (i) => this.onLinkClick.bind(this, i);
@@ -39,6 +39,7 @@ export default class Navigation {
     }
 
     onLinkClick(i) {
+        if (this.libraryRoom === null) this.libraryRoom = this.experience.world.libraryRoom;
         clearInterval(this.clickInterval);
         if (this.previousIndex === i) return;
 

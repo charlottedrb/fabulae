@@ -26,6 +26,8 @@ export default class LibraryRoom extends EventEmitter {
         this.setModels()
         this.setShelves()
         this.setCameraAnimation()
+
+        this.experience.interface.initNavigation()
     }
 
     events()
