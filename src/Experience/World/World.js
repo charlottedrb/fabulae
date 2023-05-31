@@ -35,11 +35,12 @@ export default class World {
                     this.libraryRoom = new LibraryRoom();
                     this.experience.interface = new InterfaceUI();
                 });
-    
+                
                 this.stairsRoom.on("endTransition", () => {
-                  this.libraryRoom.setCameraPosition()
-                  this.environment.setSunLightBlue()
-                  this.libraryRoom.events()
+                    this.libraryRoom.setCameraPosition()
+                    this.environment.setSunLightBlue()
+                    this.libraryRoom.events()
+                    this.experience.interface.navigation.show();
                 });
             }
 

@@ -1,4 +1,5 @@
 import Experience from "../Experience";
+import gsap from "gsap";
 
 export default class Navigation {
     constructor() {
@@ -24,6 +25,16 @@ export default class Navigation {
     events() {
         this.links.forEach((link, i) => {
             link.addEventListener("click", this.onLinkClickBound(i));
+        });
+    }
+
+    show() {
+        gsap.to(this.el, {
+            alpha: 1,
+            duration: 1, 
+            ease: "power2.out",
+            pointerEvents: "auto",
+            delay: 1.5
         });
     }
 
