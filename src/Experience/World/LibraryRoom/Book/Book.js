@@ -3,29 +3,48 @@ import Experience from "../../../Experience";
 import gsap from "gsap";
 
 export default class Book {
-    constructor(parent, position) {
+    constructor(parent, position, id) {
         this.experience = new Experience();
         this.parent = parent;
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
         this.resource = this.resources.items.blueBookModel;
         this.debug = this.experience.debug;
+        this.raycastHandler = this.experience.raycastHandler;
 
         this.position = position || new THREE.Vector3(0, 0, 0);
+        this.id = id;
+
+        this.onBookClickBound = this.onBookClick.bind(this);
 
         this.setModel();
+        this.setRaycastEvents();
+
+        this.overlay = this.experience.interface.overlay;
+        this.overlay.on("closeBook", (bookContent) => {
+            if (this.id === bookContent.id) {
+                this.clickIn();
+            }
+        });
     }
 
     setModel() {
         this.model = this.resource.scene.clone();
-        this.model.scale.set(3, 4.7, 3)
+        this.model.scale.set(3, 4.7, 3);
         this.model.rotation.z = -Math.PI * 0.5;
-        this.model.rotation.y = -Math.PI * 0.5;
+
+        if (this.parent.position.x < 0) {
+            this.model.rotation.y = Math.PI * 0.5;
+        } else {
+            this.model.rotation.y = -Math.PI * 0.5;
+        }
         this.model.position.set(
             this.position.x,
             this.position.y,
             this.position.z
         );
+
+        this.cover = this.model.getObjectByName("Plane001");
 
         if (this.debug.active) {
             this.debug.ui.addFolder("Book");
@@ -70,9 +89,27 @@ export default class Book {
                 .max(10)
                 .step(0.01)
                 .name("Book Scale Z");
-            }
-            
-            this.scene.add(this.model);
+        }
+
+        this.scene.add(this.model);
+    }
+
+    setRaycastEvents() {
+        this.raycastHandler.addObjectToTest(
+            this.cover,
+            () => {
+                this.onBookClickBound();
+            },
+            "click"
+        );
+    }
+
+    onBookClick() {
+        // Show the overlay
+        this.overlay.show();
+        this.overlay.initPager();
+        this.overlay.initBookContent(this.id);
+        this.clickOut();
     }
 
     hoverOut() {
@@ -110,6 +147,9 @@ export default class Book {
     destroy() {
         this.model.dispose();
         this.model = null;
+        this.cover.dispose();
+        this.cover = null;
         this.scene.remove(this.model);
+        this.onBookClickBound = null;
     }
 }

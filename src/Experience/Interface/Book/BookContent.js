@@ -51,9 +51,6 @@ export default class BookContent {
 
         this.animation = gsap.timeline();
 
-        // Change to disable overflow scroll on content
-        this.overflowScroll = true;
-
         this.getImagesPath();
         this.getElements();
         this.getBookContent();
@@ -143,7 +140,7 @@ export default class BookContent {
 
         for (let i = this.boardIndex; i < this.boardIndex + 2;  i++) {
             const page = this.setPageElements(i);
-            i % 2 === 0 ? content.left = page : content.right = page
+            if (page) i % 2 === 0 ? content.left = page : content.right = page
         }
 
         this.leftPageContent.innerHTML = content.left && content.left.outerHTML;
@@ -172,7 +169,7 @@ export default class BookContent {
     }
 
     setPageElements(i) {
-        let content = null
+        let content = ''
         const startingChapter = document.createElement("div");
         
         if (i === 0) {
@@ -191,7 +188,7 @@ export default class BookContent {
 
             startingChapter.appendChild(title);
             content = startingChapter;
-        } else if (this.formattedPages[i] && this.formattedPages[i].includes('<p>') || this.formattedPages[i].includes('</p>')) {
+        } else if (this.formattedPages[i] && (this.formattedPages[i].includes('<p>') || this.formattedPages[i].includes('</p>'))) {
             // Show story content
             !this.boardHasStoryTitle && (this.leftPageBorderTitle.style.opacity = '0')
             !this.boardHasStoryTitle && (this.leftPageBorderText.style.opacity = '1')
@@ -200,6 +197,9 @@ export default class BookContent {
             text.classList.add("book__text");
             text.innerHTML = this.formattedPages[i];
             content = text;
+        } else if (typeof this.formattedPages[i] === 'undefined') {
+            // Show nothing
+            return
         } else {
             // Show story title
             this.boardHasStoryTitle = true
@@ -232,18 +232,37 @@ export default class BookContent {
     destroy() {
         this.pager.destroy();
 
+        this.experience = null;
+        this.dataManager = null;
+        this.interface = null;
+        this.pager = null;
         this.isBookOpen = false;
         this.isLastPage = false;
         this.boardIndex = 0;
+        this.textOverflowing = false;
+        this.textDiv = null;
+
+        /**
+         * Images management
+         */
         this.image.src = this.images[0];
         this.lastImageFrame = 1;
+        this.frameIndex = -1
+
+        // Loops to handle the images
+        clearInterval(this.intervalNextPage);
+        clearInterval(this.intervalPreviousPage);
+        this.intervalNextPage = null;
+        this.intervalPreviousPage = null;
+        this.formattedPages = [];
+        this.boardHasStoryTitle = false;
+
+        this.animation = gsap.timeline();
 
         this.leftPageContent.innerHTML = "";
         this.rightPageContent.innerHTML = "";
-        gsap.to([this.leftPageBorderTitle, this.leftPageBorderText, this.rightPageBorder], { alpha: 0 });
+        gsap.to([this.leftPageBorderTitle, this.leftPageBorderText, this.rightPage], { alpha: 0 });
 
-        clearInterval(this.intervalNextPage);
-        clearInterval(this.intervalPreviousPage);
     }
 
     /**
@@ -256,8 +275,10 @@ export default class BookContent {
     nextPage() {
         // If first opening of the book
         if (!this.isBookOpen) this.isBookOpen = true;
-        if (this.formattedPages.length - 2 === this.boardIndex) this.pager.disable()
-
+        
+        if (this.formattedPages.length - 2 <= this.boardIndex) {
+            this.pager.disable()
+        }
         this.frameIndex++;
         this.pageTurnSound.play()
 

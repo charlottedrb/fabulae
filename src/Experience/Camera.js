@@ -31,6 +31,7 @@ export default class Camera
 
         if(this.debug.active)
         {   
+            this.setControls()
             this.debugFolder
                 .add(this.instance.position, 'x')
                 .name('cameraX')
@@ -87,7 +88,11 @@ export default class Camera
         this.instance.updateProjectionMatrix()
     }
 
-    update() { }
+    update() {
+        if (this.debug.active) {
+            this.controls.update()
+        }
+    }
 
     destroy() {
         this.scene.remove(this.instance)

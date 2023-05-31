@@ -67,6 +67,10 @@ export default class StairsRoom extends EventEmitter
         gsap.to(this.indication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut' })
     }
 
+    hideIndication() {
+        gsap.to(this.indication, { opacity: 0, duration: 1, delay: 0, ease: 'power1.easeInOut' })
+    }
+
     setStairs() {
         const leftStairMesh = this.room.scene.getObjectByName('ESCALIER_GAUCHE_MDD')
         const rightStairMesh = this.room.scene.getObjectByName('ESCALIER_DROIT_MDD')
@@ -114,7 +118,7 @@ export default class StairsRoom extends EventEmitter
         });
 
         // Hide the indication
-        gsap.to(this.indication, { opacity: 0, duration: 1, delay: 0, ease: 'power1.easeInOut' })
+        this.hideIndication()
 
         // Rotate scene to face the chosen door
         const tl = gsap.timeline({ onComplete: this.goToNextSceneBound})
@@ -134,6 +138,9 @@ export default class StairsRoom extends EventEmitter
         // Open the chosen door
         this.doors.openDoors()
 
+        // Make sure the indication is hidden
+        this.hideIndication()
+
         // Start the transition shader
         this.transitionShader.start()
 
@@ -143,6 +150,7 @@ export default class StairsRoom extends EventEmitter
     }
 
     finishTransition() {
+        this.hideIndication()
         this.trigger('endTransition')
         this.transitionShader.end()
         this.disapear()
