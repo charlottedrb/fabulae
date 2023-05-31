@@ -33,8 +33,8 @@ export default class World {
                 this.stairsRoom = new StairsRoom()
 
                 this.stairsRoom.on("initLibrary", () => {
-                    this.libraryRoom = new LibraryRoom();
                     this.experience.interface = new InterfaceUI();
+                    this.libraryRoom = new LibraryRoom();
                 });
     
                 this.stairsRoom.on("endTransition", () => {

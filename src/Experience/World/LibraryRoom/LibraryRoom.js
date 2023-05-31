@@ -3,10 +3,12 @@ import * as THREE from "three";
 import gsap from 'gsap';
 import { throttle } from 'throttle-debounce';
 import Book from './Book/Book'
+import EventEmitter from "../../Utils/EventEmitter";
 
-export default class LibraryRoom {
+export default class LibraryRoom extends EventEmitter {
     constructor()
     {
+        super()
         this.experience = new Experience()
         this.camera = this.experience.camera
         this.scene = this.experience.scene
@@ -20,7 +22,6 @@ export default class LibraryRoom {
         this.onScrollBound = throttle(5, this.onScroll.bind(this))
 
         this.shelves = []
-        this.books = []
 
         this.setModels()
         this.setShelves()
@@ -113,24 +114,20 @@ export default class LibraryRoom {
         const books = this.experience.dataManager.books.filter(book => book.categoryId === categoryId);
         
         if (books.length > 0) {
-            const bookDistance = 0.05;
+            const bookDistance = 0.25;
             let initialPosition = shelf.position.clone();
             initialPosition.x -= shelf.geometry.boundingBox.max.x - shelf.geometry.boundingBox.min.x;
-    
+            
             books.forEach((book, i) => {
                 const position = new THREE.Vector3(
-                    initialPosition.x + bookDistance * i,
+                    initialPosition.x,
                     initialPosition.y + shelf.geometry.boundingSphere.radius / 2 - 0.1,
-                    initialPosition.z - 1
+                    initialPosition.z - 1 + (bookDistance * i)
                 );
+
+                console.log(position);
     
-                const bookObj = new Book(shelf, position);
-    
-                this.books.push({
-                    position: position,
-                    author: book.authorId,
-                    obj: bookObj,
-                });
+                new Book(shelf, position, book.id);
             })
         }
     }
