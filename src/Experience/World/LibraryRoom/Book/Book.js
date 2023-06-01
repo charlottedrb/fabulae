@@ -11,15 +11,16 @@ export default class Book {
         this.resource = this.resources.items.blueBookModel;
         this.debug = this.experience.debug;
         this.raycastHandler = this.experience.raycastHandler;
-
+        
         this.position = position || new THREE.Vector3(0, 0, 0);
         this.id = id;
-
+        
         this.onBookClickBound = this.onBookClick.bind(this);
-
+        
         this.setModel();
         this.setRaycastEvents();
-
+        // this.postProcessing = this.experience.postProcessing;
+        
         this.overlay = this.experience.interface.overlay;
         this.overlay.on("closeBook", (bookContent) => {
             if (this.id === bookContent.id) {
@@ -102,6 +103,13 @@ export default class Book {
             },
             "click"
         );
+        // this.raycastHandler.addObjectToTest(
+        //     this.cover,
+        //     () => {
+        //         // this.postProcessing.outlineObject(this.cover)
+        //     },
+        //     "enter"
+        // );
     }
 
     onBookClick() {

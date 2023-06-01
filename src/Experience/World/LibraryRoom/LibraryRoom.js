@@ -19,15 +19,15 @@ export default class LibraryRoom extends EventEmitter {
         this.playCameraAnimationBound = this.playCameraAnimation.bind(this)
         this.resetCameraAnimationBound = this.resetCameraAnimation.bind(this)
         this.pauseCameraAnimationBound = this.pauseCameraAnimation.bind(this)
-        this.onScrollBound = throttle(5, this.onScroll.bind(this))
-
+        
         this.shelves = []
-
+        
         this.setModels()
         this.setShelves()
         this.setCameraAnimation()
 
         this.experience.interface.initNavigation()
+        this.onScrollBound = throttle(5, this.onScroll.bind(this))
     }
 
     events()
@@ -42,21 +42,24 @@ export default class LibraryRoom extends EventEmitter {
 
     onScroll(e) 
     {
+        // TODO: fix bug on scroll
         if(this.timer !== null) {
             clearTimeout(this.timer);        
         }
         
-        if (e.deltaY < 0) {
-            this.cameraAction.timeScale = -1 * -(e.deltaY / 100)
-            this.playCameraAnimationBound()
-        } else {
-            this.cameraAction.timeScale = 1 * e.deltaY / 100
-            this.playCameraAnimationBound()
+        if (this.cameraAction) {
+            if (e.deltaY < 0) {
+                this.cameraAction.timeScale = -1 * -(e.deltaY / 100)
+                this.playCameraAnimationBound()
+            } else {
+                this.cameraAction.timeScale = 1 * e.deltaY / 100
+                this.playCameraAnimationBound()
+            }
+    
+            this.timer = setTimeout(() => {
+                this.pauseCameraAnimationBound()
+            }, 150);
         }
-
-        this.timer = setTimeout(() => {
-            this.pauseCameraAnimationBound()
-        }, 150);
     }
 
     setModels()
@@ -126,8 +129,6 @@ export default class LibraryRoom extends EventEmitter {
                     initialPosition.y + shelf.geometry.boundingSphere.radius / 2 - 0.1,
                     initialPosition.z - 1 + (bookDistance * i)
                 );
-
-                console.log(position);
     
                 new Book(shelf, position, book.id);
             })
