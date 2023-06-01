@@ -15,12 +15,12 @@ export default class Renderer {
     setInstance() {
         this.instance = new THREE.WebGLRenderer({
             canvas: this.canvas,
-            antialias: true,
+            // antialias: true,
             // For post-processing
-            // powerPreference: "high-performance",
-            // antialias: false,
-            // stencil: false,
-            // depth: false,
+            powerPreference: "high-performance",
+            antialias: false,
+            stencil: false,
+            depth: false,
         });
         this.instance.physicallyCorrectLights = true;
         this.instance.outputEncoding = THREE.sRGBEncoding;

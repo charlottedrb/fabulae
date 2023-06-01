@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import Experience from "../../../Experience";
 import gsap from "gsap";
+import PostProcessing from "../../../PostProcessing";
 
 export default class Book {
     constructor(parent, position, id) {
@@ -19,7 +20,6 @@ export default class Book {
         
         this.setModel();
         this.setRaycastEvents();
-        // this.postProcessing = this.experience.postProcessing;
         
         this.overlay = this.experience.interface.overlay;
         this.overlay.on("closeBook", (bookContent) => {
@@ -93,6 +93,7 @@ export default class Book {
         }
 
         this.scene.add(this.model);
+        this.experience.postProcessing = new PostProcessing(this.model)
     }
 
     setRaycastEvents() {
@@ -103,13 +104,20 @@ export default class Book {
             },
             "click"
         );
-        // this.raycastHandler.addObjectToTest(
-        //     this.cover,
-        //     () => {
-        //         // this.postProcessing.outlineObject(this.cover)
-        //     },
-        //     "enter"
-        // );
+        this.raycastHandler.addObjectToTest(
+            this.cover,
+            () => {
+                this.experience.postProcessing.addOutlineObject(this.model)
+            },
+            "enter"
+        );
+        this.raycastHandler.addObjectToTest(
+            this.cover,
+            () => {
+                this.experience.postProcessing.removeOutlineObject()
+            },
+            "leave"
+        );
     }
 
     onBookClick() {

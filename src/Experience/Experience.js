@@ -10,7 +10,7 @@ import Resources from './Utils/Resources.js'
 import DataManager from '../Data/DataManager.js'
 import sources from './sources.js'
 import RaycasterHandler from './RaycastHandler.js'
-// import PostProcessing from './PostProcessing.js'
+import PostProcessing from './PostProcessing.js'
 
 let experience = null
 
@@ -41,7 +41,6 @@ export default class Experience
         this.renderer = null
         this.world = null
         this.raycastHandler = null
-        this.postProcessing = null
 
         this.resizeBound = this.resize.bind(this)
         this.updateBound = this.update.bind(this)
@@ -61,7 +60,7 @@ export default class Experience
         this.renderer = new Renderer()
         this.world = new World()
         this.raycastHandler = new RaycasterHandler()
-        // this.postProcessing = new PostProcessing()
+        this.postProcessing = null
         this.interface = null
 
         this.sceneReady = false
@@ -85,11 +84,15 @@ export default class Experience
         this.world.update()
         this.renderer.update()
         this.debug.update()
-        // this.postProcessing.update()
 
         if (this.raycastHandler) {
             this.raycastHandler.update()
         }
+
+        if (this.postProcessing) {
+           this.postProcessing.update()
+        }
+
        (this.sceneReady && this.interface) && this.interface.update()
     }
 
