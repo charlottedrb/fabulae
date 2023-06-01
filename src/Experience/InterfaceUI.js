@@ -1,5 +1,6 @@
 import Experience from "./Experience.js";
 import Overlay from "./Interface/Overlay.js";
+import Navigation from "./Interface/Navigation.js";
 import EventEmitter from "./Utils/EventEmitter.js";
 
 let interfaceUi = null;
@@ -23,14 +24,13 @@ export default class InterfaceUI extends EventEmitter {
         this.sizes = this.experience.sizes;
         this.resources = this.experience.resources;
         this.dataManager = this.experience.dataManager;
-        this.stairsRoom = this.experience.world.stairsRoom;
+        this.navigation = null
 
         /**
          * Book interface
          */
         this.overlay = new Overlay();
-
-        // Wait for resources
+        
         this.init();
     }
 
@@ -41,6 +41,10 @@ export default class InterfaceUI extends EventEmitter {
                 this.overlay.pager.destroy();
             }
         });
+    }
+
+    initNavigation() {
+        this.navigation = new Navigation();
     }
 
     update() {}

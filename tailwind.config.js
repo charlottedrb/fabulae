@@ -64,6 +64,9 @@ export default {
       height: {
         screen: '100vh',
       },
+      zIndex: {
+        1: 1
+      }
     },
   },
   plugins: [],

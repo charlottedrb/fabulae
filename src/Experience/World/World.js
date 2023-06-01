@@ -1,6 +1,5 @@
 import LibraryRoom from "./LibraryRoom/LibraryRoom.js";
 import Experience from "../Experience.js";
-import Book from "./LibraryRoom/Book/Book.js";
 import Environment from "./Environment.js";
 import * as THREE from "three";
 import StairsRoom from "./StairsRoom/StairsRoom.js";
@@ -25,8 +24,8 @@ export default class World {
             this.environment = new Environment();
             
             if (this.showLibraryOnly) {
-                this.libraryRoom = new LibraryRoom();
                 this.experience.interface = new InterfaceUI();
+                this.libraryRoom = new LibraryRoom();
                 this.libraryRoom.setCameraPosition();
             } else {
                 this.visualLoader.disapear()
@@ -36,11 +35,12 @@ export default class World {
                     this.experience.interface = new InterfaceUI();
                     this.libraryRoom = new LibraryRoom();
                 });
-    
+                
                 this.stairsRoom.on("endTransition", () => {
-                  this.libraryRoom.setCameraPosition()
-                  this.environment.setSunLightBlue()
-                  this.libraryRoom.events()
+                    this.libraryRoom.setCameraPosition()
+                    this.environment.setSunLightBlue()
+                    this.libraryRoom.events()
+                    this.experience.interface.navigation.show();
                 });
             }
 
