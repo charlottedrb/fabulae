@@ -254,7 +254,6 @@ export default class BookContent {
         clearInterval(this.intervalPreviousPage);
         this.intervalNextPage = null;
         this.intervalPreviousPage = null;
-        this.formattedPages = [];
         this.boardHasStoryTitle = false;
 
         this.animation = gsap.timeline();
