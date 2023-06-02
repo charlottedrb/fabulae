@@ -23,6 +23,7 @@ export default class Book {
         this.overlay = this.experience.interface.overlay;
         this.overlay.on("closeBook", (bookContent) => {
             if (this.id === bookContent.id) {
+                this.raycastHandler.raycaster.layers.enableAll()
                 this.clickIn();
             }
         });
@@ -110,6 +111,7 @@ export default class Book {
         this.overlay.initPager();
         this.overlay.initBookContent(this.id);
         this.clickOut();
+        this.raycastHandler.raycaster.layers.disableAll()
     }
 
     hoverOut() {
