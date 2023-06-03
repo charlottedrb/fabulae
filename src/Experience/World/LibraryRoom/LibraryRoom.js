@@ -38,6 +38,8 @@ export default class LibraryRoom extends EventEmitter {
     setCameraPosition() {
         this.camera.instance.position.set(this.roomCamera.position.x, this.roomCamera.position.y, this.roomCamera.position.z)
         this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
+        this.camera.instance.near = 1
+        this.camera.instance.updateProjectionMatrix()
     }
 
     onScroll(e) 
