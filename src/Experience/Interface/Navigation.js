@@ -33,16 +33,16 @@ export default class Navigation {
             },
             {
                 el: Splitting({
-                    target: document.querySelector(
-                        ".category__name-Sensationnel"
-                    ),
+                    target: document.querySelector(".category__name-Voyage"),
                     by: "chars",
                 })[0],
                 showing: false,
             },
             {
                 el: Splitting({
-                    target: document.querySelector(".category__name-Voyage"),
+                    target: document.querySelector(
+                        ".category__name-Sensationnel"
+                    ),
                     by: "chars",
                 })[0],
                 showing: false,
