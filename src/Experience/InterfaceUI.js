@@ -47,5 +47,9 @@ export default class InterfaceUI extends EventEmitter {
         this.navigation = new Navigation();
     }
 
-    update() {}
+    update() {
+        if (this.navigation) {
+            this.navigation.update();
+        }
+    }
 }

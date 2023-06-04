@@ -33,6 +33,7 @@ export default class BookContent {
          * Images management
          */
         this.images = [];
+        this.storiesVideos = [];
         this.imagesCount = 120;
         this.imagesKeyFrames = [41, 81, 99];
         this.lastImageFrame = 1;
@@ -105,6 +106,7 @@ export default class BookContent {
         this.stories.forEach((story) => {
             this.formattedPages.push(story.title);
             this.cutText(story.content);
+            this.formattedPages.push(story.visual)
         });
     }
 
@@ -173,6 +175,7 @@ export default class BookContent {
         const startingChapter = document.createElement("div");
         
         if (i === 0) {
+            // Second cover
             content = document.createElement("div");
             this.leftPageBorderTitle.style.opacity = '0'
         } else if (i === 1) {
@@ -200,6 +203,18 @@ export default class BookContent {
         } else if (typeof this.formattedPages[i] === 'undefined') {
             // Show nothing
             return
+        } else if (this.formattedPages[i].includes('/videos/stories/')) {
+            // Show generated animated image 
+            const video = document.createElement("video");
+
+            video.classList.add("book__video");
+            video.setAttribute("autoplay", true);
+            video.setAttribute("loop", true);
+            video.setAttribute("muted", true);
+            video.setAttribute("playsinline", true);
+            video.setAttribute("src", this.formattedPages[i]);
+
+            content = video
         } else {
             // Show story title
             this.boardHasStoryTitle = true
@@ -254,7 +269,6 @@ export default class BookContent {
         clearInterval(this.intervalPreviousPage);
         this.intervalNextPage = null;
         this.intervalPreviousPage = null;
-        this.formattedPages = [];
         this.boardHasStoryTitle = false;
 
         this.animation = gsap.timeline();

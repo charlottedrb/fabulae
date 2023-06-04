@@ -37,4 +37,8 @@
     &__right-page, &__left-page {
         @apply overflow-hidden;
     }
+
+    &__video {
+        @apply w-full h-full;
+    }
 }

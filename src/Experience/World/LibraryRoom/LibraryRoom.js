@@ -126,8 +126,6 @@ export default class LibraryRoom extends EventEmitter {
                     initialPosition.y + shelf.geometry.boundingSphere.radius / 2 - 0.1,
                     initialPosition.z - 1 + (bookDistance * i)
                 );
-
-                console.log(position);
     
                 new Book(shelf, position, book.id);
             })
