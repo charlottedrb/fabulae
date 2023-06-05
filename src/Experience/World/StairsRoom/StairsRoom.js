@@ -20,6 +20,7 @@ export default class StairsRoom extends EventEmitter
         this.raycastHandler = this.experience.raycastHandler
         this.time = this.experience.time
         this.debug = this.experience.debug
+        this.isChoiceMade = false
         
         // Debug
         if(this.debug.active)
@@ -64,7 +65,13 @@ export default class StairsRoom extends EventEmitter
 
     setIndication() {
         this.indication = document.querySelector('#stairs-indication')
-        gsap.to(this.indication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut' })
+        this.indication.animation = gsap.to(this.indication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut', onStart: this.showIndication.bind(this) })
+    }
+
+    showIndication() {
+        if (this.isChoiceMade) {
+            this.indication.animation.pause()
+        }
     }
 
     hideIndication() {
@@ -113,6 +120,9 @@ export default class StairsRoom extends EventEmitter
     }
 
     onChoiceMade() {
+        this.isChoiceMade = true
+
+        // stop stairs animations
         this.leftStair.freezeCurrentAnimation()
         this.rightStair.freezeCurrentAnimation()
 
@@ -196,7 +206,6 @@ export default class StairsRoom extends EventEmitter
                 }
             }
         })
-        // this.destroy()
     }
 
     destroy() {
@@ -226,5 +235,7 @@ export default class StairsRoom extends EventEmitter
         this.transitionShader = null
         this.backgroundVideo.destroy()
         this.backgroundVideo = null
+        this.isChoiceMade = null
+        this.indication = null
     }
 }
