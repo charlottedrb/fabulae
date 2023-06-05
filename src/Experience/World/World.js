@@ -38,7 +38,6 @@ export default class World {
                 
                 this.stairsRoom.on("endTransition", () => {
                     this.libraryRoom.setCameraPosition()
-                    this.environment.setSunLightBlue()
                     this.libraryRoom.events()
                     this.experience.interface.navigation.show();
                     this.libraryRoom.setScrollIndication()

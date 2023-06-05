@@ -60,7 +60,6 @@ export default class Experience
         this.renderer = new Renderer()
         this.world = new World()
         this.raycastHandler = new RaycasterHandler()
-        this.postProcessing = null
         this.interface = null
 
         this.sceneReady = false
@@ -87,10 +86,6 @@ export default class Experience
 
         if (this.raycastHandler) {
             this.raycastHandler.update()
-        }
-
-        if (this.postProcessing) {
-           this.postProcessing.update()
         }
 
        (this.sceneReady && this.interface) && this.interface.update()

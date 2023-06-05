@@ -28,7 +28,7 @@ export default class Navigation {
         this.categoryNames = [
             {
                 el: Splitting({
-                    target: document.querySelector(".category__name-Cocasse"),
+                    target: document.querySelector(".category__name-Amour"),
                     by: "chars",
                 })[0],
                 showing: false,
@@ -42,16 +42,16 @@ export default class Navigation {
             },
             {
                 el: Splitting({
-                    target: document.querySelector(
-                        ".category__name-Sensationnel"
-                    ),
+                    target: document.querySelector(".category__name-Cocasse"),
                     by: "chars",
                 })[0],
                 showing: false,
             },
             {
                 el: Splitting({
-                    target: document.querySelector(".category__name-Amour"),
+                    target: document.querySelector(
+                        ".category__name-Sensationnel"
+                    ),
                     by: "chars",
                 })[0],
                 showing: false,

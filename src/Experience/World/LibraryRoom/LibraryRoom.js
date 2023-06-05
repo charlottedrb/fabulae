@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { throttle } from 'throttle-debounce';
 import Book from './Book/Book'
 import EventEmitter from "../../Utils/EventEmitter";
+import { VertexNormalsHelper } from 'three/addons/helpers/VertexNormalsHelper.js';
 
 export default class LibraryRoom extends EventEmitter {
     constructor()
@@ -74,20 +75,27 @@ export default class LibraryRoom extends EventEmitter {
     {
         this.room = this.resources.items.libraryRoom
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
+        console.log(this.room.scene);
+        const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+        this.room.scene.traverse((obj) => {
+            if (obj.isMesh) {
+                obj.material.transparent = false
+            }
+        })
         this.scene.add(this.room.scene)
 
         this.loveShelf = this.room.scene.getObjectByName('Position_Livre_Amour')
+        this.tripShelf = this.room.scene.getObjectByName('Position_Livre_Voyage')
         this.humorShelf = this.room.scene.getObjectByName('Position_Livre_Cocasse')
-        this.tripShelf = this.room.scene.getObjectByName('Position_Livre_Humour')
         this.excitingShelf = this.room.scene.getObjectByName('Position_Livre_Sensationnel')
     }
 
     setShelves()
     {
-        this.setBooks(this.humorShelf, this.experience.dataManager.categories.filter(category => category.name === 'Cocasse')[0].id)
-        this.setBooks(this.tripShelf, this.experience.dataManager.categories.filter(category => category.name === 'Voyage')[0].id)
-        this.setBooks(this.excitingShelf, this.experience.dataManager.categories.filter(category => category.name === 'Sensationnel')[0].id)
         this.setBooks(this.loveShelf, this.experience.dataManager.categories.filter(category => category.name === 'Amour')[0].id)
+        this.setBooks(this.tripShelf, this.experience.dataManager.categories.filter(category => category.name === 'Voyage')[0].id)
+        this.setBooks(this.humorShelf, this.experience.dataManager.categories.filter(category => category.name === 'Cocasse')[0].id)
+        this.setBooks(this.excitingShelf, this.experience.dataManager.categories.filter(category => category.name === 'Sensationnel')[0].id)
     }
 
     setCameraAnimation()
