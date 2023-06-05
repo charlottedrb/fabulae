@@ -36,7 +36,7 @@ export default class PostProcessing {
 
         this.fxaaPass = new ShaderPass(FXAAShader);
         this.fxaaPass.uniforms['resolution'].value.x = 1 / (this.experience.sizes.width * renderer.getPixelRatio());
-        this.composer.addPass(this.fxaaPass);
+        // this.composer.addPass(this.fxaaPass);
 
         this.copyPass = new ShaderPass(CopyShader);
         this.composer.addPass(this.copyPass);
