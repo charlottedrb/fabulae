@@ -11,6 +11,7 @@ export default class VisualLoader
         this.resources = this.experience.resources
 
         this.loadingRate = document.querySelector('.rate')
+        this.loadingCircle = document.querySelector('.loader-circle')
         this.resources.on('progress', (progressRatio) => {
             this.updateLoadingRate(progressRatio)
         })
@@ -44,7 +45,7 @@ export default class VisualLoader
         
                 void main()
                 {
-                    gl_FragColor = vec4(1.0, 1.0, 1.0, uAlpha);
+                    gl_FragColor = vec4(0.007, 0.04, 0.165, uAlpha);
                 }
             `
         })
@@ -57,12 +58,16 @@ export default class VisualLoader
     }
 
     disapear() {
-        gsap.to(this.material.uniforms.uAlpha, { duration: 2, value: 0, delay: 1 })
-        document.querySelector('.loader').style.opacity = 0
+        const tl = gsap.timeline({ delay: 1 })
+        tl.to(this.material.uniforms.uAlpha, { duration: 0.25, value: 0 })
+        tl.to(document.querySelector('.loader'), { duration: 0.25, opacity: 0 }, "<")
+        tl.to(document.querySelector('.loader-gif'), { duration: 0.25, opacity: 0 }, "<")
+        tl.to(document.querySelector('.loader-circle'), { duration: 0.25, opacity: 0 }, "<")
     }
 
     updateLoadingRate(progressRatio) {
         this.loadingRate.innerHTML = Math.round(progressRatio * 100)
+        this.loadingCircle.style.strokeDashoffset = 2140 - (2140 * progressRatio)
     }
 
     destroy() {
