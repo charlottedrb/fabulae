@@ -40,6 +40,12 @@ export default class LibraryRoom extends EventEmitter {
         this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
     }
 
+    setScrollIndication() {
+        const scrollIndication = document.querySelector('#scroll-indication')
+        gsap.to(scrollIndication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut' })
+        gsap.to(scrollIndication, { opacity: 0, duration: 1, delay: 7, ease: 'power1.easeInOut' })
+    }
+
     onScroll(e) 
     {
         if(this.timer !== null) {
