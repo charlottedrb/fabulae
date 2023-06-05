@@ -21,12 +21,31 @@
                 <div class="overflow-hidden category__name-Sensationnel">Sensationnel</div>
                 <div class="overflow-hidden category__name-Amour">Amour</div>
             </div>
+
             <canvas class="webgl"></canvas>
             <video id="video" playsinline webkit-playsinline muted loop autoplay width="320" height="240" src="/videos/background.mp4" style="display: none;"></video>
-            <p class="loader"><span class="rate">0</span><span>%</span></p>
+
             <img class="indication" id="stairs-indication" src="/images/notices/stairs.png" alt="">
             <img class="indication" id="scroll-indication" src="/images/notices/scroll.png" alt="">
             <img class="indication" id="book-indication" src="/images/notices/book.png" alt="">
+
+            <div>
+                <p class="loader"><span class="rate">0</span><span>%</span></p>
+                <img class="loader-gif" src="/images/loader/loader.gif" alt="">
+                <svg class="loader-circle" version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 693.9 693.9" style="enable-background:new 0 0 693.9 693.9;" xml:space="preserve">
+                    <style type="text/css">
+                        .st0{fill:none;stroke:url(#SVGID_1_);stroke-width:5;stroke-miterlimit:10;}
+                        .st1{fill:url(#SVGID_00000093858657821584767640000001542609506717549751_);}
+                    </style>
+                    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="3.7441" y1="346.9606" x2="690.1771" y2="346.9606">
+                        <stop  offset="0" style="stop-color:#7F5B21"/>
+                        <stop  offset="0.4673" style="stop-color:#FFEDB7"/>
+                        <stop  offset="1" style="stop-color:#7E571F"/>
+                    </linearGradient>
+                    <circle class="st0" cx="347" cy="347" r="340.7"/>
+                </svg>
+            </div>
+
             <div class="overlay relative w-screen h-screen grid grid-cols-12 opacity-0 z-[1] pointer-events-none">
                 <div class="col-span-full bg-night-blue/50 overlay__content">
                     <!-- Book content -->
