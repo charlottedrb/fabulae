@@ -11,7 +11,6 @@ export default class Renderer {
         this.camera = this.experience.camera;
     
         this.setInstance();
-        this.setPostProcessing();
     }
 
     setInstance() {
@@ -30,6 +29,8 @@ export default class Renderer {
         this.instance.setClearColor("#211d20");
         this.instance.setSize(this.sizes.width, this.sizes.height);
         this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
+
+        this.setPostProcessing();
     }
 
     setPostProcessing() {
@@ -39,6 +40,8 @@ export default class Renderer {
     resize() {
         this.instance.setSize(this.sizes.width, this.sizes.height);
         this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
+        this.postProcessing.composer.setSize(this.sizes.width, this.sizes.height);
+        this.postProcessing.composer.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
     }
 
     update() {
