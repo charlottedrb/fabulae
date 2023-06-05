@@ -87,6 +87,12 @@ export default class StairsRoom extends EventEmitter
         const knowledgeRightDoor = this.room.scene.getObjectByName('PORTE_SAVOIR_droite')
         knowledgeDoors.push(knowledgeLeftDoor, knowledgeRightDoor)
 
+        // Set emissive intensity for all doors
+        const alldoors = [storyLeftDoor, storyRightDoor, knowledgeLeftDoor, knowledgeRightDoor]
+        alldoors.forEach((door) => {
+            door.material.emissiveIntensity = 0.75
+        })
+
         this.leftStair = new Stair(leftStairMesh, leftStairAnim, storyDoors)
         this.rightStair = new Stair(rightStairMesh, rightStairAnim, knowledgeDoors)
 
