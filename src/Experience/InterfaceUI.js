@@ -39,6 +39,8 @@ export default class InterfaceUI extends EventEmitter {
             if (this.overlay.bookContent === bookContent) {
                 this.overlay.bookContent.destroy();
                 this.overlay.pager.destroy();
+                this.overlay.bookContent = null;
+                this.overlay.pager = null;
             }
         });
     }

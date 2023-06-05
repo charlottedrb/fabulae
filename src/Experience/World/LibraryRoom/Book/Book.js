@@ -27,6 +27,7 @@ export default class Book {
             if (this.id === bookContent.id) {
                 this.raycastHandler.raycaster.layers.enableAll()
                 this.clickIn();
+                document.querySelector('.book__author-infos').style.opacity = 0
             }
         });
     }

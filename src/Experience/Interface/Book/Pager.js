@@ -126,5 +126,6 @@ export default class Pager extends EventEmitter {
             y: null
         }
         this.status = null
+        this.off('changePage')
     }
 }

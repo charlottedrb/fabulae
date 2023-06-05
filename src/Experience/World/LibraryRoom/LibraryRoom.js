@@ -73,7 +73,6 @@ export default class LibraryRoom extends EventEmitter {
     {
         this.room = this.resources.items.libraryRoom
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
-        console.log(this.room);
         
         this.room.scene.traverse((obj) => {
             if (obj.isMesh) {

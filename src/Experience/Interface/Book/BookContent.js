@@ -70,6 +70,7 @@ export default class BookContent {
     getElements() {
         this.el = document.querySelector(".book__content");
         this.image = document.querySelector(".book__image");
+        if (this.color !== 'blue') this.image.src = this.images[0];
 
         /**
          * Left page
@@ -93,6 +94,7 @@ export default class BookContent {
     getBookContent() {
         this.book = this.dataManager.getBookById(this.id);
         this.stories = this.dataManager.getStoriesByBookId(this.id);
+        this.author = this.dataManager.getAuthorById(this.book.authorId);
         this.prepareContent();
     }
 
@@ -175,9 +177,12 @@ export default class BookContent {
         let content = ''
         const startingChapter = document.createElement("div");
         
+        
         if (i === 0) {
             // Second cover
-            content = document.createElement("div");
+            document.querySelector('.book__author-infos__name').innerHTML = `${this.author.firstName} ${this.author.lastName}`
+            document.querySelector('.book__author-infos').style.opacity = 1
+            content = document.querySelector('.book__author-infos').outerHTML;
             this.leftPageBorderTitle.style.opacity = '0'
         } else if (i === 1) {
             // Show book's title
@@ -233,6 +238,9 @@ export default class BookContent {
             content = startingChapter;
         }
 
+        // Remove author infos if not on first board
+        if (i !== 0 && i !== 1) { document.querySelector('.book__author-infos').style.opacity = 0 }
+
         return content
     }
 
@@ -246,8 +254,6 @@ export default class BookContent {
     }
 
     destroy() {
-        this.pager.destroy();
-
         this.experience = null;
         this.dataManager = null;
         this.interface = null;
@@ -277,7 +283,6 @@ export default class BookContent {
         this.leftPageContent.innerHTML = "";
         this.rightPageContent.innerHTML = "";
         gsap.to([this.leftPageBorderTitle, this.leftPageBorderText, this.rightPage], { alpha: 0 });
-
     }
 
     /**
@@ -292,7 +297,7 @@ export default class BookContent {
         if (!this.isBookOpen) this.isBookOpen = true;
         
         if (this.formattedPages.length - 2 <= this.boardIndex) {
-            this.pager.disable()
+            if (this.pager) this.pager.disable()
         }
         this.frameIndex++;
         this.pageTurnSound.play()
@@ -331,7 +336,7 @@ export default class BookContent {
             this.frameIndex--;
             this.pageTurnSound.play()
 
-            if (this.pager.disabled) this.pager.enable()
+            if (this.pager && this.pager.disabled) this.pager.enable()
 
             this.fadeOut('previous');
             
