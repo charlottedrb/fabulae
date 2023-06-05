@@ -94,7 +94,6 @@ export default class Book {
         }
 
         this.scene.add(this.model);
-        this.experience.postProcessing = new PostProcessing(this.model)
     }
 
     setRaycastEvents() {
@@ -108,14 +107,14 @@ export default class Book {
         this.raycastHandler.addObjectToTest(
             this.cover,
             () => {
-                this.experience.postProcessing.addOutlineObject(this.model)
+                this.experience.renderer.postProcessing.addOutlineObject(this.model)
             },
             "enter"
         );
         this.raycastHandler.addObjectToTest(
             this.cover,
             () => {
-                this.experience.postProcessing.removeOutlineObject()
+                this.experience.renderer.postProcessing.removeOutlineObject()
             },
             "leave"
         );
