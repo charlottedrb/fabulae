@@ -63,7 +63,7 @@ export default class StairsRoom extends EventEmitter
     }
 
     setIndication() {
-        this.indication = document.querySelector('.choice-indication')
+        this.indication = document.querySelector('#stairs-indication')
         gsap.to(this.indication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut' })
     }
 
