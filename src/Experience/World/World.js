@@ -14,7 +14,7 @@ export default class World {
         this.books = [];
 
         // Debug
-        this.showLibraryOnly = false
+        this.showLibraryOnly = false;
 
         !this.showLibraryOnly && (this.visualLoader = new VisualLoader());
 
@@ -22,14 +22,14 @@ export default class World {
         this.resources.on("ready", () => {
             // Setup
             this.environment = new Environment();
-            
+
             if (this.showLibraryOnly) {
                 this.experience.interface = new InterfaceUI();
                 this.libraryRoom = new LibraryRoom();
                 this.libraryRoom.setCameraPosition();
             } else {
-                this.visualLoader.disapear()
-                this.stairsRoom = new StairsRoom()
+                this.visualLoader.disapear();
+                this.stairsRoom = new StairsRoom();
 
                 this.stairsRoom.on("initLibrary", () => {
                     this.experience.interface = new InterfaceUI();
