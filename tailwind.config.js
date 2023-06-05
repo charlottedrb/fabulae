@@ -38,6 +38,7 @@ export default {
       22: '2.2rem',
       18: '1.8rem',
       15: '1.5rem',
+      12: '1.2rem',
     },
     lineHeight: {
       '1.6' : '160%',
@@ -56,6 +57,7 @@ export default {
     extend: {
       width: {
         440: '44rem',
+        350: '35rem',
         240: '24rem',
         200: '20rem',
         36: '3.6rem',
