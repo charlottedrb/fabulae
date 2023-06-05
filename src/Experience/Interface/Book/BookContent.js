@@ -112,22 +112,24 @@ export default class BookContent {
 
     cutText(text) {
         // Max chars per page
-        const MAX_LENGTH = 530;
+        const MAX_LENGTH = 550;
         const words = text.split(" ");
         let currentPage = "";
 
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
 
+            // If the current page + the current word is less than the max length, we add content to the page
             if (currentPage.length + word.length <= MAX_LENGTH) {
                 currentPage += (currentPage.length > 0 ? " " : "") + word;
+            // Else, we add the current page to the formatted pages and we start a new page with the current word
             } else {
-                // currentPage += "</p><p>";
                 this.formattedPages.push(currentPage);
-                currentPage = word;
+                currentPage = '<p>' + word;
             }
         }
 
+        // If there is still content in the current page, we add it to the formatted pages
         if (currentPage.length > 0) {
             this.formattedPages.push(currentPage);
         }

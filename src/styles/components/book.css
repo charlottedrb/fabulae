@@ -30,7 +30,7 @@
         @apply font-dubai text-26 text-night-blue;
         
         p {
-            @apply mb-15;
+            @apply mb-15 leading-[125%];
         }
     }
 
