@@ -17,7 +17,7 @@ export default class Environment
         }
 
         this.setAmbientLight()
-        this.setSunLight()
+        // this.setSunLight()
     }
 
     setSunLight()
@@ -74,7 +74,7 @@ export default class Environment
 
     setAmbientLight()
     {
-        this.ambientLight = new THREE.AmbientLight('#ffffff', 1)
+        this.ambientLight = new THREE.AmbientLight('#b0b1ff', 5)
         this.scene.add(this.ambientLight)
     }
 

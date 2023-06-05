@@ -21,8 +21,6 @@ export default class LibraryRoom extends EventEmitter {
         this.resetCameraAnimationBound = this.resetCameraAnimation.bind(this)
         this.pauseCameraAnimationBound = this.pauseCameraAnimation.bind(this)
         
-        this.shelves = []
-        
         this.setModels()
         this.setShelves()
         this.setCameraAnimation()
@@ -75,8 +73,8 @@ export default class LibraryRoom extends EventEmitter {
     {
         this.room = this.resources.items.libraryRoom
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
-        console.log(this.room.scene);
-        const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+        console.log(this.room);
+        
         this.room.scene.traverse((obj) => {
             if (obj.isMesh) {
                 obj.material.transparent = false
@@ -92,10 +90,10 @@ export default class LibraryRoom extends EventEmitter {
 
     setShelves()
     {
-        this.setBooks(this.loveShelf, this.experience.dataManager.categories.filter(category => category.name === 'Amour')[0].id)
-        this.setBooks(this.tripShelf, this.experience.dataManager.categories.filter(category => category.name === 'Voyage')[0].id)
-        this.setBooks(this.humorShelf, this.experience.dataManager.categories.filter(category => category.name === 'Cocasse')[0].id)
-        this.setBooks(this.excitingShelf, this.experience.dataManager.categories.filter(category => category.name === 'Sensationnel')[0].id)
+        this.setBooks(this.loveShelf, this.experience.dataManager.categories.filter(category => category.name === 'Amour')[0].id, 'red')
+        this.setBooks(this.tripShelf, this.experience.dataManager.categories.filter(category => category.name === 'Voyage')[0].id, 'blue')
+        this.setBooks(this.humorShelf, this.experience.dataManager.categories.filter(category => category.name === 'Cocasse')[0].id, 'green')
+        this.setBooks(this.excitingShelf, this.experience.dataManager.categories.filter(category => category.name === 'Sensationnel')[0].id, 'purple')
     }
 
     setCameraAnimation()
@@ -131,7 +129,7 @@ export default class LibraryRoom extends EventEmitter {
         this.animMixer.update(this.time.delta / 1000)
     }
 
-    setBooks(shelf, categoryId) {
+    setBooks(shelf, categoryId, color) {
         const books = this.experience.dataManager.books.filter(book => book.categoryId === categoryId);
         
         if (books.length > 0) {
@@ -141,12 +139,12 @@ export default class LibraryRoom extends EventEmitter {
             
             books.forEach((book, i) => {
                 const position = new THREE.Vector3(
-                    initialPosition.x,
-                    initialPosition.y + shelf.geometry.boundingSphere.radius / 2 - 0.1,
+                    initialPosition.x - 0.18,
+                    initialPosition.y + shelf.geometry.boundingSphere.radius / 2 - 0.08,
                     initialPosition.z - 1 + (bookDistance * i)
                 );
-    
-                new Book(shelf, position, book.id);
+                console.log(color + 'BookModel');
+                new Book(shelf, position, book.id, color);
             })
         }
     }

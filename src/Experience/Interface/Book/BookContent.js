@@ -6,8 +6,9 @@ import Experience from "../../Experience";
  * @description Handle the book content
  */
 export default class BookContent {
-    constructor(bookId) {
+    constructor(bookId, bookColor) {
         this.id = bookId;
+        this.color = bookColor;
         this.init();
     }
 
@@ -240,7 +241,7 @@ export default class BookContent {
             let id = "0" + i;
             if (i < 10) id = "00" + i;
             if (i >= 100) id = i;
-            this.images.push(`/images/book/Livre_30${id}.webp`);
+            this.images.push(`/images/book/${this.color}/Livre_Rouge0${id}.webp`);
         }
     }
 

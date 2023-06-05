@@ -34,11 +34,11 @@ export default class Overlay extends EventEmitter {
         this.pager = new Pager()
     }
 
-    initBookContent(bookId)
+    initBookContent(bookId, bookColor)
     {
         // Reset book content on init
         this.bookContent = null
-        this.bookContent = new BookContent(bookId)
+        this.bookContent = new BookContent(bookId, bookColor)
     }
     
     events()

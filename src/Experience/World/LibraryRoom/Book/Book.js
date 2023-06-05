@@ -4,17 +4,18 @@ import gsap from "gsap";
 import PostProcessing from "../../../PostProcessing";
 
 export default class Book {
-    constructor(parent, position, id) {
+    constructor(parent, position, id, color) {
         this.experience = new Experience();
         this.parent = parent;
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
-        this.resource = this.resources.items.blueBookModel;
+        this.resource = this.resources.items[`${color}BookModel`];
         this.debug = this.experience.debug;
         this.raycastHandler = this.experience.raycastHandler;
         
         this.position = position || new THREE.Vector3(0, 0, 0);
         this.id = id;
+        this.color = color
         
         this.onBookClickBound = this.onBookClick.bind(this);
         
@@ -32,7 +33,7 @@ export default class Book {
 
     setModel() {
         this.model = this.resource.scene.clone();
-        this.model.scale.set(3, 4.7, 3);
+        this.model.scale.set(2.6, 4.3, 2.6);
         this.model.rotation.z = -Math.PI * 0.5;
 
         if (this.parent.position.x < 0) {
@@ -46,7 +47,7 @@ export default class Book {
             this.position.z
         );
 
-        this.cover = this.model.getObjectByName("Plane001");
+        this.cover = this.model.getObjectByName("Plane001") || this.model.getObjectByName("Plane003");
 
         if (this.debug.active) {
             this.debug.ui.addFolder("Book");
@@ -124,7 +125,7 @@ export default class Book {
         // Show the overlay
         this.overlay.show();
         this.overlay.initPager();
-        this.overlay.initBookContent(this.id);
+        this.overlay.initBookContent(this.id, this.color);
         this.clickOut();
         this.raycastHandler.raycaster.layers.disableAll()
     }
@@ -148,7 +149,7 @@ export default class Book {
     clickOut() {
         gsap.to(this.model.position, {
             duration: 1,
-            x: this.model.position.x - 0.35,
+            x: this.parent.position.x < 0 ? this.model.position.x + 0.35 : this.model.position.x - 0.35,
             ease: "power3.inOut",
         });
     }
@@ -156,7 +157,7 @@ export default class Book {
     clickIn() {
         gsap.to(this.model.position, {
             duration: 1,
-            x: this.model.position.x + 0.35,
+            x: this.parent.position.x < 0 ? this.model.position.x - 0.35 : this.model.position.x + 0.35,
             ease: "power3.inOut",
         });
     }
