@@ -79,10 +79,10 @@ export default class StairsRoom extends EventEmitter
     }
 
     setStairs() {
-        const leftStairMesh = this.room.scene.getObjectByName('ESCALIER_GAUCHE_MDD')
-        const rightStairMesh = this.room.scene.getObjectByName('ESCALIER_DROIT_MDD')
-        const leftStairAnim = THREE.AnimationClip.findByName(this.room.animations, 'Key.003Action')
-        const rightStairAnim = THREE.AnimationClip.findByName(this.room.animations, 'Key.004Action')
+        const leftStairMesh = this.room.scene.getObjectByName('ESCALIER_G001')
+        const rightStairMesh = this.room.scene.getObjectByName('ESCALIER_D001')
+        const leftStairAnim = THREE.AnimationClip.findByName(this.room.animations, 'KeyAction')
+        const rightStairAnim = THREE.AnimationClip.findByName(this.room.animations, 'Key.001Action')
 
         const storyDoors = []
         const storyLeftDoor = this.room.scene.getObjectByName('PORTE_SOUVENIR_gauche')
