@@ -163,9 +163,15 @@ export default class StairsRoom extends EventEmitter
     }
 
     update() {
-        this.leftStair.update()
-        this.rightStair.update()
-        this.doors.update()
+        if (this.leftStair) {
+            this.leftStair.update()
+        }
+        if (this.rightStair) {
+            this.rightStair.update()
+        }
+        if (this.doors) {
+            this.doors.update()
+        }
     }
 
     disapear() {
@@ -190,6 +196,7 @@ export default class StairsRoom extends EventEmitter
                 }
             }
         })
+        // this.destroy()
     }
 
     destroy() {
@@ -213,9 +220,7 @@ export default class StairsRoom extends EventEmitter
         this.doors.destroy()
         this.doors = null
         this.video = null
-        this.texture.dispose()
         this.texture = null
-        this.material.dispose()
         this.material = null
         this.transitionShader.destroy()
         this.transitionShader = null
