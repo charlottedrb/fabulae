@@ -41,6 +41,7 @@ export default class World {
                     this.environment.setSunLightBlue()
                     this.libraryRoom.events()
                     this.experience.interface.navigation.show();
+                    this.libraryRoom.setScrollIndication()
                 });
             }
 

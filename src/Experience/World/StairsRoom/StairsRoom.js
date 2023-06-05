@@ -20,6 +20,7 @@ export default class StairsRoom extends EventEmitter
         this.raycastHandler = this.experience.raycastHandler
         this.time = this.experience.time
         this.debug = this.experience.debug
+        this.isChoiceMade = false
         
         // Debug
         if(this.debug.active)
@@ -63,8 +64,14 @@ export default class StairsRoom extends EventEmitter
     }
 
     setIndication() {
-        this.indication = document.querySelector('.choice-indication')
-        gsap.to(this.indication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut' })
+        this.indication = document.querySelector('#stairs-indication')
+        this.indication.animation = gsap.to(this.indication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut', onStart: this.showIndication.bind(this) })
+    }
+
+    showIndication() {
+        if (this.isChoiceMade) {
+            this.indication.animation.pause()
+        }
     }
 
     hideIndication() {
@@ -87,6 +94,12 @@ export default class StairsRoom extends EventEmitter
         const knowledgeRightDoor = this.room.scene.getObjectByName('PORTE_SAVOIR_droite')
         knowledgeDoors.push(knowledgeLeftDoor, knowledgeRightDoor)
 
+        // Set emissive intensity for all doors
+        const alldoors = [storyLeftDoor, storyRightDoor, knowledgeLeftDoor, knowledgeRightDoor]
+        alldoors.forEach((door) => {
+            door.material.emissiveIntensity = 0.75
+        })
+
         this.leftStair = new Stair(leftStairMesh, leftStairAnim, storyDoors)
         this.rightStair = new Stair(rightStairMesh, rightStairAnim, knowledgeDoors)
 
@@ -107,6 +120,9 @@ export default class StairsRoom extends EventEmitter
     }
 
     onChoiceMade() {
+        this.isChoiceMade = true
+
+        // stop stairs animations
         this.leftStair.freezeCurrentAnimation()
         this.rightStair.freezeCurrentAnimation()
 
@@ -157,9 +173,15 @@ export default class StairsRoom extends EventEmitter
     }
 
     update() {
-        this.leftStair.update()
-        this.rightStair.update()
-        this.doors.update()
+        if (this.leftStair) {
+            this.leftStair.update()
+        }
+        if (this.rightStair) {
+            this.rightStair.update()
+        }
+        if (this.doors) {
+            this.doors.update()
+        }
     }
 
     disapear() {
@@ -207,13 +229,13 @@ export default class StairsRoom extends EventEmitter
         this.doors.destroy()
         this.doors = null
         this.video = null
-        this.texture.dispose()
         this.texture = null
-        this.material.dispose()
         this.material = null
         this.transitionShader.destroy()
         this.transitionShader = null
         this.backgroundVideo.destroy()
         this.backgroundVideo = null
+        this.isChoiceMade = null
+        this.indication = null
     }
 }

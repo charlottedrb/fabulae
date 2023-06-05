@@ -15,6 +15,8 @@ export default class Navigation {
         this.previousIndex = -1;
         this.animation = gsap.timeline();
 
+        this.hasShowIndication = false;
+
         this.getElements();
         this.prepareAnimation()
         this.events();
@@ -63,6 +65,12 @@ export default class Navigation {
                 y: "100%",
             });
         });
+    }
+
+    setIndication() {
+        const indication = document.querySelector('#book-indication')
+        gsap.to(indication, { opacity: 1, duration: 1, delay: 0, ease: 'power1.easeInOut' })
+        gsap.to(indication, { opacity: 0, duration: 1, delay: 4, ease: 'power1.easeInOut' })
     }
 
     events() {
@@ -143,6 +151,11 @@ export default class Navigation {
                             ease: "power2.out",
                             stagger: 0.05,
                         });
+
+                    if (i === 0 && !this.hasShowIndication) {
+                        this.hasShowIndication = true
+                        this.setIndication()
+                    }
                 } else {
                     if (!this.categoryNames[i].showing) return;
                     this.categoryNames[i].showing = false;
@@ -166,6 +179,7 @@ export default class Navigation {
         this.experience = null;
         this.libraryRoom = null;
         this.onLinkClickBound = null;
+        this.hasShowIndication = null;
 
         this.links.forEach((link) => {
             link.removeEventListener("click", this.onLinkClickBound);

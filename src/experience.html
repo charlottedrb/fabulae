@@ -24,10 +24,9 @@
             <canvas class="webgl"></canvas>
             <video id="video" playsinline webkit-playsinline muted loop autoplay width="320" height="240" src="/videos/background.mp4" style="display: none;"></video>
             <p class="loader"><span class="rate">0</span><span>%</span></p>
-            <!-- <div class="choice-indication">
-                <p>Veuillez cliquer sur la bibliothèque de votre choix.</p>
-            </div> -->
-            <img class="choice-indication" src="/images/notice.png" alt="">
+            <img class="indication" id="stairs-indication" src="/images/notices/stairs.png" alt="">
+            <img class="indication" id="scroll-indication" src="/images/notices/scroll.png" alt="">
+            <img class="indication" id="book-indication" src="/images/notices/book.png" alt="">
             <div class="overlay relative w-screen h-screen grid grid-cols-12 opacity-0 z-[1] pointer-events-none">
                 <div class="col-span-full bg-night-blue/50 overlay__content">
                     <!-- Book content -->
