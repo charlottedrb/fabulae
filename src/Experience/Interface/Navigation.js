@@ -90,7 +90,6 @@ export default class Navigation {
     }
 
     onLinkClick(i) {
-        console.log(i);
         if (this.libraryRoom === null)
             this.libraryRoom = this.experience.world.libraryRoom;
         clearInterval(this.clickInterval);

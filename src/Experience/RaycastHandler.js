@@ -78,7 +78,7 @@ export default class RaycasterHandler
     update() {
         this.raycaster.setFromCamera(this.mouse, this.camera.instance)
         const intersects = this.raycaster.intersectObjects(this.objectsToTest)
-
+        
         if(intersects.length)
         {
             if(!this.currentIntersect)

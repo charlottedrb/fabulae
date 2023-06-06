@@ -42,7 +42,7 @@
             <img class="indication" id="scroll-indication" src="/images/notices/scroll.png" alt="">
             <img class="indication" id="book-indication" src="/images/notices/book.png" alt="">
 
-            <div>
+            <!-- <div>
                 <p class="loader"><span class="rate">0</span><span>%</span></p>
                 <img class="loader-gif" src="/images/loader/loader.gif" alt="">
                 <svg class="loader-circle" version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 693.9 693.9" style="enable-background:new 0 0 693.9 693.9;" xml:space="preserve">
@@ -57,7 +57,7 @@
                     </linearGradient>
                     <circle class="st0" cx="347" cy="347" r="340.7"/>
                 </svg>
-            </div>
+            </div> -->
 
             <div class="overlay relative w-screen h-screen grid grid-cols-12 opacity-0 z-[1] pointer-events-none">
                 <div class="col-span-full bg-night-blue/50 overlay__content">
@@ -66,13 +66,17 @@
                         <img src="/images/book/blue/Livre_0001.webp" class="object-cover h-full select-none book__image" />
                         <div class="absolute top-[8rem] left-[18.5rem] w-[55rem] h-[83.5vh] px-70 py-60 opacity-0 svg-wrapper book__left-page">
                             <div class="w-full h-full select-none overflow-auto book__left-page__content"></div>
-                            <div class="book__author-infos absolute top-50 left-0 h-full w-full opacity-0">
-                                <div class="flex flex-col h-full w-full items-center justify-center">
+                            <div class="book__author-infos absolute top-0 -left-40 h-full w-full opacity-0">
+                                <div class="flex flex-col gap-y-25 h-full w-full items-center justify-center">
                                     <div class="relative pb-[55%] w-240 rounded-[999px]  overflow-hidden">
                                         <img src="/images/authors/old-woman.jpg" class="absolute top-0 left-0 w-full h-full object-cover book__author-infos__image" />
                                     </div>
                                     <div class="font-roystorie text-white text-60 book__author-infos__name"></div>
-                                    <button class="py-10 px-25 font-roystorie text-white text-18 border-px border-white rounded-10 group-hover:shadow-[0_0_15px_var('--color-pale-blue')] group-hover:shadow-pale-blue transition-shadow ease-expo-out duration-500">Envoyer un e-mail</button>
+                                    <div class="font-roystorie text-white text-18 flex items-center gap-x-10">
+                                        <div class="svg-wrapper w-15 pb-[0.5rem]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="M11.5.5c.5.25 1.5 1.9 1.5 3S12.33 5 11.5 5S10 4.85 10 3.75S11 2 11.5.5m7 8.5C21 9 23 11 23 13.5c0 1.56-.79 2.93-2 3.74V23H3v-5.76c-1.21-.81-2-2.18-2-3.74C1 11 3 9 5.5 9H10V6h3v3h5.5M12 16a2.5 2.5 0 0 0 2.5-2.5H16a2.5 2.5 0 0 0 2.5 2.5a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-2.5-2.5h-13A2.5 2.5 0 0 0 3 13.5A2.5 2.5 0 0 0 5.5 16A2.5 2.5 0 0 0 8 13.5h1.5A2.5 2.5 0 0 0 12 16Z"/></svg></div>
+                                        <div class="book__author-infos__birthdate"></div>
+                                    </div>
+                                    <button class="py-10 px-25 font-roystorie text-white cursor-none text-18 border-px border-white rounded-10">Envoyer un e-mail</button>
                                 </div>
                             </div>
                             <div class="absolute top-0 left-0 p-25 w-full h-full select-none pointer-events-none border__style-title book__page-border">

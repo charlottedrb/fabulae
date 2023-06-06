@@ -27,6 +27,21 @@ export default [
     {
         name: "libraryRoom",
         type: "gltfModel",
-        path: "models/Library/glTF/Salle_2_L_2.gltf",
-    }
+        path: "models/Library/glTF/Salle_2_L_3.gltf",
+    },
+    {
+        name: 'metalnessGround', 
+        type: 'texture', 
+        path: 'textures/library/metalness/sol.jpg'
+    },
+    {
+        name: 'metalnessDoor', 
+        type: 'texture', 
+        path: 'textures/library/metalness/porte.jpg'
+    },
+    {
+        name: 'metalnessPoutre', 
+        type: 'texture', 
+        path: 'textures/library/metalness/poutre.jpg'
+    },
 ];

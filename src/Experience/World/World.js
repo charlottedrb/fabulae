@@ -14,8 +14,13 @@ export default class World {
         this.resources = this.experience.resources;
         this.books = [];
 
+        if (this.experience.debug.active) {
+            this.worldDebugFolder = this.experience.debug.ui.addFolder("world");
+            this.booksDebugFolder = this.worldDebugFolder.addFolder("books").close();
+        }
+
         // Debug
-        this.showLibraryOnly = false;
+        this.showLibraryOnly = true;
 
         !this.showLibraryOnly && (this.visualLoader = new VisualLoader());
 
@@ -28,6 +33,9 @@ export default class World {
                 this.experience.interface = new InterfaceUI();
                 this.libraryRoom = new LibraryRoom();
                 this.libraryRoom.setCameraPosition();
+                this.libraryRoom.events()
+                this.experience.interface.navigation.show();
+                    this.libraryRoom.setScrollIndication()
             } else {
                 this.visualLoader.disapear();
                 this.stairsRoom = new StairsRoom();

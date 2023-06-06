@@ -16,10 +16,15 @@ export default class LibraryRoom extends EventEmitter {
         this.resources = this.experience.resources
         this.time = this.experience.time
         this.timer = null
+        this.debug = this.experience.debug
 
         this.playCameraAnimationBound = this.playCameraAnimation.bind(this)
         this.resetCameraAnimationBound = this.resetCameraAnimation.bind(this)
         this.pauseCameraAnimationBound = this.pauseCameraAnimation.bind(this)
+
+        if (this.debug.active) {
+            this.libraryRoomDebugFolder = this.experience.world.worldDebugFolder.addFolder("libraryRoom");
+        }
         
         this.setModels()
         this.setShelves()
@@ -27,6 +32,7 @@ export default class LibraryRoom extends EventEmitter {
 
         this.experience.interface.initNavigation()
         this.onScrollBound = throttle(5, this.onScroll.bind(this))
+
     }
 
     events()
@@ -39,6 +45,7 @@ export default class LibraryRoom extends EventEmitter {
         this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
         this.camera.instance.near = 1
         this.camera.instance.updateProjectionMatrix()
+        console.log(this.camera.instance, this.roomCamera);
     }
 
     setSound() {
@@ -81,10 +88,25 @@ export default class LibraryRoom extends EventEmitter {
     {
         this.room = this.resources.items.libraryRoom
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
-        // this.cloison = this.room.scene.getObjectByName('Cloison_Baked_Baked')
-        // this.cloison.material.emissiveIntensity = 0.5
-        // this.ground = this.room.scene.getObjectByName('Sol_Baked')
-        // this.ground.material.emissiveIntensity = 0.5
+
+        /** Cloison */
+        this.cloison = this.room.scene.getObjectByName('Cloison_Baked_Baked')
+        this.cloison.material.emissiveIntensity = 0.5
+
+        /** Ground */
+        this.ground = this.room.scene.getObjectByName('Sol_Baked_Baked')
+        this.ground.material.metalness = 1
+        this.ground.material.roughness = 0.1
+        this.ground.material.metalnessMap = this.resources.items.metalnessGround
+        this.ground.material.emissiveIntensity = 0.5
+
+        if (this.debug.active) {
+            this.libraryRoomDebugFolder.add(this.ground.material, 'metalness', 0, 1, 0.01)
+            this.libraryRoomDebugFolder.add(this.ground.material, 'roughness', 0, 1, 0.01)
+            this.libraryRoomDebugFolder.add(this.ground.material, 'emissiveIntensity', 0, 1, 0.01)
+            this.libraryRoomDebugFolder.add(this.ground.material, 'envMapIntensity', 0, 1, 0.01)
+        }
+
         this.room.scene.traverse((obj) => {
             if (obj.isMesh) {
                 obj.material.transparent = false

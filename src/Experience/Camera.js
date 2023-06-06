@@ -15,7 +15,7 @@ export default class Camera
         // Debug
         if(this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder('camera')
+            this.debugFolder = this.debug.ui.addFolder('camera').close()
         }
 
         this.setInstance()
@@ -34,7 +34,7 @@ export default class Camera
                 .add(this.instance.position, 'x')
                 .name('cameraX')
                 .min(-15)
-                .max(15)
+                .max(40)
                 .step(0.001)
             
             this.debugFolder
@@ -76,8 +76,8 @@ export default class Camera
 
     setControls()
     {
-        this.controls = new OrbitControls(this.instance, this.canvas)
-        this.controls.enableDamping = true
+        // this.controls = new OrbitControls(this.instance, this.canvas)
+        // this.controls.enableDamping = true
     }
 
     resize()
@@ -88,7 +88,7 @@ export default class Camera
 
     update() {
         if (this.debug.active) {
-            this.controls.update()
+            //this.controls.update()
         }
     }
 

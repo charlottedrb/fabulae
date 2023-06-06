@@ -181,7 +181,9 @@ export default class BookContent {
         if (i === 0) {
             // Second cover
             document.querySelector('.book__author-infos__name').innerHTML = `${this.author.firstName} ${this.author.lastName}`
+            document.querySelector('.book__author-infos__birthdate').innerHTML = this.author.birthdate
             document.querySelector('.book__author-infos').style.opacity = 1
+            document.querySelector('.book__author-infos__image').src = `/images/authors/${this.author.imagePath}`
             content = document.querySelector('.book__author-infos').outerHTML;
             this.leftPageBorderTitle.style.opacity = '0'
         } else if (i === 1) {

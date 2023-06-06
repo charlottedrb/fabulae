@@ -20,7 +20,7 @@ export default [
     {
         id: 2,
         title: "Histoire d'amour", 
-        authorId: 0,
+        authorId: 1,
         categoryId: 3,
         imagePath: '',
         comments: [],
@@ -38,7 +38,7 @@ export default [
     {
         id: 4,
         title: "Rencontre avec une star", 
-        authorId: 0,
+        authorId: 1,
         categoryId: 2,
         imagePath: '',
         comments: [],
