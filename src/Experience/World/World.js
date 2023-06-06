@@ -5,6 +5,7 @@ import * as THREE from "three";
 import StairsRoom from "./StairsRoom/StairsRoom.js";
 import VisualLoader from "./VisualLoader.js";
 import InterfaceUI from "../InterfaceUI.js";
+import Fireflies from "./Fireflies.js";
 
 export default class World {
     constructor() {
@@ -44,6 +45,7 @@ export default class World {
                 });
             }
 
+            this.fireflies = new Fireflies()
             this.experience.sceneReady = true;
         });
     }
@@ -55,6 +57,10 @@ export default class World {
 
         if (this.libraryRoom) {
             this.libraryRoom.update();
+        }
+
+        if (this.fireflies) {
+            this.fireflies.update()
         }
     }
 
@@ -77,6 +83,11 @@ export default class World {
         if (this.libraryRoom) {
             this.libraryRoom.destroy();
             this.libraryRoom = null;
+        }
+
+        if (this.fireflies) {
+            this.fireflies.destroy()
+            this.fireflies = null
         }
 
         this.visualLoader.destroy();
