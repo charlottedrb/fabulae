@@ -21,14 +21,14 @@ export default class Fireflies
     setGeometry()
     {
         this.geometry = new THREE.BufferGeometry()
-        const firefliesCount = 150
+        const firefliesCount = 500
         const positionArray = new Float32Array(firefliesCount * 3)
         const scaleArray = new Float32Array(firefliesCount)
         for(let i = 0; i < firefliesCount; i++)
         {
-            positionArray[i * 3 + 0] = (Math.random() - 0.5) * 5
-            positionArray[i * 3 + 1] = Math.random() * 3.5
-            positionArray[i * 3 + 2] = (Math.random() - 0.5) * 4
+            positionArray[i * 3 + 0] = (Math.random() - 0.5) * 6
+            positionArray[i * 3 + 1] = Math.random() * 4
+            positionArray[i * 3 + 2] = (Math.random() - 0.5) * 8
             scaleArray[i] = Math.random()
         }
 
@@ -46,7 +46,7 @@ export default class Fireflies
             uniforms:
             {
                 uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-                uSize: { value: 100 },
+                uSize: { value: 80 },
                 uTime: { value: 0 },
             },
             vertexShader: `
@@ -91,7 +91,7 @@ export default class Fireflies
     }
 
     update() {
-        this.material.uniforms.uTime.value = (this.time.elapsed / 1500)
+        this.material.uniforms.uTime.value = (this.time.elapsed / 5000)
     }
 
     destroy() {
