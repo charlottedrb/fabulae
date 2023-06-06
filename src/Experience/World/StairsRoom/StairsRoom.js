@@ -37,6 +37,21 @@ export default class StairsRoom extends EventEmitter
         this.setVideoBackground()
         this.setIndication()
         this.transitionShader = new TransitionShader()
+        this.setSound()
+    }
+
+    setSound() {
+        this.musicSound = new Audio("/sounds/StairsRoom/music.mp3")
+        this.musicSound.loop = true
+        this.musicSound.volume = 0.5
+        this.musicSound.play();
+
+        this.doorSound = new Audio("/sounds/StairsRoom/door.mp3")
+    }
+
+    stopSound() {
+        const tl = gsap.timeline({ onComplete: () => { this.musicSound.pause() } })
+        tl.to(this.musicSound, { volume: 0, duration: 2 })
     }
 
     setModels()
@@ -156,6 +171,7 @@ export default class StairsRoom extends EventEmitter
         setTimeout(() => {
             // Open the chosen door
             this.doors.openDoors()
+            this.doorSound.play()
     
             // Make sure the indication is hidden
             this.hideIndication()
@@ -173,6 +189,7 @@ export default class StairsRoom extends EventEmitter
     finishTransition() {
         this.hideIndication()
         this.trigger('endTransition')
+        this.stopSound()
         this.transitionShader.end()
         this.disapear()
     }
