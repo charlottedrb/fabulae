@@ -10,12 +10,24 @@ export default class Fireflies
         this.scene = this.experience.scene
         this.time = this.experience.time
         this.sizes = this.experience.sizes
+        this.mouse = {
+            x: 500, 
+            y: 500
+        }
 
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
 
         this.sizes.on('resize', this.resize.bind(this))
+        this.onMouseMoveBound = this.onMouseMove.bind(this)
+        window.addEventListener('mousemove', this.onMouseMoveBound)
+    }
+
+    onMouseMove(event)
+    {
+        this.mouse.x = event.clientX
+        this.mouse.y = event.clientY
     }
 
     setGeometry()
@@ -58,7 +70,8 @@ export default class Fireflies
                 void main()
                 {
                     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-                    modelPosition.y += sin(uTime + modelPosition.x * 100.0) * aScale * 0.2;
+                    modelPosition.y += sin(uTime + modelPosition.y * 100.0) * aScale * 0.2;
+                    modelPosition.x += sin(uTime + modelPosition.x * 100.0) * aScale * 0.2;
                     vec4 viewPosition = viewMatrix * modelPosition;
                     vec4 projectionPosition = projectionMatrix * viewPosition;
                 
@@ -91,10 +104,11 @@ export default class Fireflies
     }
 
     update() {
-        this.material.uniforms.uTime.value = (this.time.elapsed / 5000)
+        this.material.uniforms.uTime.value = (this.mouse.y * 0.001) * (this.mouse.x * 0.001) * (this.time.elapsed / 2500)
     }
 
     destroy() {
+        window.removeEventListener('mousemove', this.onMouseMoveBound)
         this.geometry.dispose()
         this.geometry = null
         this.material.dispose()
