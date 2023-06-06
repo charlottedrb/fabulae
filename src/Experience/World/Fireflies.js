@@ -11,8 +11,8 @@ export default class Fireflies
         this.time = this.experience.time
         this.sizes = this.experience.sizes
         this.mouse = {
-            x: 500, 
-            y: 500
+            x: null, 
+            y: null
         }
 
         this.setGeometry()
@@ -26,8 +26,8 @@ export default class Fireflies
 
     onMouseMove(event)
     {
-        this.mouse.x = event.clientX
-        this.mouse.y = event.clientY
+        this.mouse.x = event.clientX / this.sizes.width - 0.5
+        this.mouse.y = event.clientY / this.sizes.height - 0.5
     }
 
     setGeometry()
@@ -69,8 +69,8 @@ export default class Fireflies
                 void main()
                 {
                     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-                    modelPosition.y += sin(uTime + modelPosition.y * 100.0) * aScale * 0.2;
-                    modelPosition.x += sin(uTime + modelPosition.x * 100.0) * aScale * 0.2;
+                    modelPosition.y += (uTime + modelPosition.y) * aScale * 0.2;
+                    modelPosition.x += (uTime + modelPosition.x) * aScale * 0.2;
                     vec4 viewPosition = viewMatrix * modelPosition;
                     vec4 projectionPosition = projectionMatrix * viewPosition;
                 
@@ -97,7 +97,6 @@ export default class Fireflies
     {
         this.mesh = new THREE.Points(this.geometry, this.material)
         this.mesh.scale.set(10, 10, 10)
-        this.mesh.position.y += -10
         this.scene.add(this.mesh)
     }
 
@@ -113,8 +112,10 @@ export default class Fireflies
 
     update() {
         if (this.material && this.time) {
-            this.material.uniforms.uTime.value = (this.mouse.y * 0.001) * (this.mouse.x * 0.001) * (this.time.elapsed / 2500)
+            this.material.uniforms.uTime.value = this.time.elapsed / 1000
         }
+        this.mesh.position.x = (this.mouse.x / 8)
+        this.mesh.position.y = (- this.mouse.y / 8) - 15
     }
 
     destroy() {
@@ -124,6 +125,7 @@ export default class Fireflies
         this.material.dispose()
         this.material = null
         this.mesh = null
+        this.mouse = null
 
         this.experience = null
         this.scene = null
