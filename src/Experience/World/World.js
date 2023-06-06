@@ -43,6 +43,7 @@ export default class World {
                     this.experience.interface.navigation.show();
                     this.libraryRoom.setScrollIndication()
                     this.fireflies.updateFirefliesSize()
+                    this.libraryRoom.setSound()
                 });
             }
 

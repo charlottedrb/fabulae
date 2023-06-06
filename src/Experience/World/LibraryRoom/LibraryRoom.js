@@ -43,6 +43,14 @@ export default class LibraryRoom extends EventEmitter {
         this.camera.instance.updateProjectionMatrix()
     }
 
+    setSound() {
+        this.musicSound = new Audio("/sounds/LibraryRoom/music.mp3")
+        this.musicSound.loop = true
+        this.musicSound.volume = 0
+        this.musicSound.play();
+        gsap.to(this.musicSound, { volume: 0.5, duration: 2, delay: 1 })
+    }
+
     setScrollIndication() {
         const scrollIndication = document.querySelector('#scroll-indication')
         gsap.to(scrollIndication, { opacity: 1, duration: 1, delay: 3, ease: 'power1.easeInOut' })
@@ -162,7 +170,7 @@ export default class LibraryRoom extends EventEmitter {
         this.roomCamera.dispose()
         this.roomCamera = null
         
-        window.removeEventListener('scroll', this.onScrollBound)
+        window.removeEventListener('wheel', this.onScrollBound)
         this.onScrollBound = null
     }
 }

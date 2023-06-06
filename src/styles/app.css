@@ -45,6 +45,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
+    pointer-events: none;
 
     &-gif {
         position: absolute;
@@ -54,6 +55,7 @@ body {
         height: 100%;
         object-fit: cover;
         transition: opacity 1s linear;
+        pointer-events: none;
     }
 
     &-circle {
@@ -65,6 +67,7 @@ body {
         transition: all 1s ease-out;
         stroke-dasharray: 2140;
         stroke-dashoffset: 2140;
+        pointer-events: none;
     }
 }
 
