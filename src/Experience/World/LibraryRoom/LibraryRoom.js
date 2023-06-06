@@ -75,8 +75,6 @@ export default class LibraryRoom extends EventEmitter {
     {
         this.room = this.resources.items.libraryRoom
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
-        console.log(this.room.scene);
-        const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
         this.room.scene.traverse((obj) => {
             if (obj.isMesh) {
                 obj.material.transparent = false
