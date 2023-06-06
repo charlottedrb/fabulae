@@ -69,12 +69,10 @@ export default class Overlay extends EventEmitter {
     }
 
     onCloseEnter() {
-        console.log('enter');
         this.experience.cursor.onCursorEnterBound()
     }
 
     onCloseLeave() {
-        console.log('leave');
         this.experience.cursor.onCursorLeaveBound()
     }
 }

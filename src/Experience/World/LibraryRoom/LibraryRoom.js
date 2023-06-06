@@ -45,7 +45,6 @@ export default class LibraryRoom extends EventEmitter {
         this.camera.instance.rotation.set(this.roomCamera.rotation.x, this.roomCamera.rotation.y, this.roomCamera.rotation.z)
         this.camera.instance.near = 1
         this.camera.instance.updateProjectionMatrix()
-        console.log(this.camera.instance, this.roomCamera);
     }
 
     setSound() {
@@ -89,6 +88,18 @@ export default class LibraryRoom extends EventEmitter {
         this.room = this.resources.items.libraryRoom
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
 
+        /** Tree */
+        this.tree = this.resources.items.libraryTree
+        this.tree.scene.position.set(0.16, 0.8, 11.26)
+        this.tree.scene.rotation.set(0, 0, 0)
+        this.tree.scene.traverse((obj) => {
+            if (obj.isMesh) {
+                obj.material.side = THREE.DoubleSide
+            }
+        })
+
+        this.scene.add(this.tree.scene)
+
         /** Cloison */
         this.cloison = this.room.scene.getObjectByName('Cloison_Baked_Baked')
         this.cloison.material.emissiveIntensity = 0.5
@@ -105,6 +116,15 @@ export default class LibraryRoom extends EventEmitter {
             this.libraryRoomDebugFolder.add(this.ground.material, 'roughness', 0, 1, 0.01)
             this.libraryRoomDebugFolder.add(this.ground.material, 'emissiveIntensity', 0, 1, 0.01)
             this.libraryRoomDebugFolder.add(this.ground.material, 'envMapIntensity', 0, 1, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scene.position, 'x', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scene.position, 'y', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scene.position, 'z', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scene.scale, 'x', 0, 10, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scene.scale, 'y', 0, 10, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scene.scale, 'z', 0, 10, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scene.rotation, 'x', 0, 100, 0.1)
+            this.libraryRoomDebugFolder.add(this.tree.scene.rotation, 'y', 0, 100, 0.1)
+            this.libraryRoomDebugFolder.add(this.tree.scene.rotation, 'z', 0, 100, 0.1)
         }
 
         this.room.scene.traverse((obj) => {
@@ -158,6 +178,7 @@ export default class LibraryRoom extends EventEmitter {
 
     update()
     {
+        // this.tree.scene.quaternion.copy(this.camera.instance.quaternion)
         this.animMixer.update(this.time.delta / 1000)
     }
 
@@ -175,7 +196,6 @@ export default class LibraryRoom extends EventEmitter {
                     initialPosition.y + shelf.geometry.boundingSphere.radius / 2 - 0.08,
                     initialPosition.z - 1 + (bookDistance * i)
                 );
-                console.log(color + 'BookModel');
                 new Book(shelf, position, book.id, color);
             })
         }

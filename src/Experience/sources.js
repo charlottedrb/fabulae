@@ -30,6 +30,11 @@ export default [
         path: "models/Library/glTF/Salle_2_L_3.gltf",
     },
     {
+        name: "libraryTree",
+        type: "gltfModel",
+        path: "models/Library/Tree/glTF/Arbre_or.gltf",
+    },
+    {
         name: 'metalnessGround', 
         type: 'texture', 
         path: 'textures/library/metalness/sol.jpg'
