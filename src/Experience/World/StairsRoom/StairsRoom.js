@@ -94,10 +94,12 @@ export default class StairsRoom extends EventEmitter
         const knowledgeRightDoor = this.room.scene.getObjectByName('PORTE_SAVOIR_droite')
         knowledgeDoors.push(knowledgeLeftDoor, knowledgeRightDoor)
 
-        // Set emissive intensity for all doors
+        // Set material and emissive intensity for all doors
         const alldoors = [storyLeftDoor, storyRightDoor, knowledgeLeftDoor, knowledgeRightDoor]
         alldoors.forEach((door) => {
-            door.material.emissiveIntensity = 0.75
+            const lambertMaterial = new THREE.MeshBasicMaterial().copy(door.material)
+            door.material = lambertMaterial
+            // door.material.emissiveIntensity = 0
         })
 
         this.leftStair = new Stair(leftStairMesh, leftStairAnim, storyDoors)
@@ -138,7 +140,7 @@ export default class StairsRoom extends EventEmitter
 
         // Rotate scene to face the chosen door
         const tl = gsap.timeline({ onComplete: this.goToNextSceneBound})
-        tl.to(this.room.scene.rotation, { y: 0.645, duration: 1, ease: 'power1.easeOut' })
+        tl.to(this.room.scene.rotation, { y: 0.65, duration: 1, ease: 'power1.easeOut' })
 
         // Make camera go to the chosen door manually
         tl.to(this.camera.instance.position, { y: 1.058, z: -0.337, duration: 1.5, ease: 'power1.easeOut' })
@@ -151,18 +153,21 @@ export default class StairsRoom extends EventEmitter
         // Instanciate the next scene
         this.trigger('initLibrary')
 
-        // Open the chosen door
-        this.doors.openDoors()
+        setTimeout(() => {
+            // Open the chosen door
+            this.doors.openDoors()
+    
+            // Make sure the indication is hidden
+            this.hideIndication()
+    
+            // Start the transition shader
+            this.transitionShader.start()
+    
+            // Make the camera go through the chosen door
+            const tl = gsap.timeline({ delay: 2, onComplete: this.finishTransitionBound })
+            tl.to(this.camera.instance.position, { z: -4.557, duration: 1, ease: 'power1.easeOut' })
+        }, 100);
 
-        // Make sure the indication is hidden
-        this.hideIndication()
-
-        // Start the transition shader
-        this.transitionShader.start()
-
-        // Make the camera go through the chosen door
-        const tl = gsap.timeline({ delay: 2, onComplete: this.finishTransitionBound })
-        tl.to(this.camera.instance.position, { z: -4.557, duration: 1, ease: 'power1.easeOut' })
     }
 
     finishTransition() {
