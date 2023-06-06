@@ -164,7 +164,7 @@ export default class LibraryRoom extends EventEmitter {
         this.roomCamera.dispose()
         this.roomCamera = null
         
-        window.removeEventListener('scroll', this.onScrollBound)
+        window.removeEventListener('wheel', this.onScrollBound)
         this.onScrollBound = null
     }
 }
