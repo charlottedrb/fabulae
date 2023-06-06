@@ -249,7 +249,7 @@ export default class BookContent {
             let id = "0" + i;
             if (i < 10) id = "00" + i;
             if (i >= 100) id = i;
-            this.images.push(`/images/book/${this.color}/Livre_Rouge0${id}.webp`);
+            this.images.push(`/images/book/${this.color}/Livre_0${id}.webp`);
         }
     }
 

@@ -48,7 +48,7 @@ export default class Book {
             this.position.z
         );
 
-        this.cover = this.model.getObjectByName("Plane001") || this.model.getObjectByName("Plane003");
+        this.cover = this.model.getObjectByName("Cover");
 
         if (this.debug.active) {
             this.debug.ui.addFolder("Book");

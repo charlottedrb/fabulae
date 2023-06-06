@@ -81,10 +81,14 @@ export default class LibraryRoom extends EventEmitter {
     {
         this.room = this.resources.items.libraryRoom
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
-        
+        // this.cloison = this.room.scene.getObjectByName('Cloison_Baked_Baked')
+        // this.cloison.material.emissiveIntensity = 0.5
+        // this.ground = this.room.scene.getObjectByName('Sol_Baked')
+        // this.ground.material.emissiveIntensity = 0.5
         this.room.scene.traverse((obj) => {
             if (obj.isMesh) {
                 obj.material.transparent = false
+                obj.material.depthWrite = true
             }
         })
         this.scene.add(this.room.scene)
@@ -107,8 +111,7 @@ export default class LibraryRoom extends EventEmitter {
     {
         this.animMixer = new THREE.AnimationMixer(this.camera.instance)
         this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.room.animations, 'CameraAction.002'))
-        this.cameraAction.setLoop(THREE.LoopOnce)
-        this.cameraAction.clampWhenFinished = true
+        this.cameraAction.setLoop(THREE.LoopRepeat)
 
         setTimeout(() => {
             this.resetCameraAnimationBound()

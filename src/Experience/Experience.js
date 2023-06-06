@@ -11,6 +11,7 @@ import DataManager from '../Data/DataManager.js'
 import sources from './sources.js'
 import RaycasterHandler from './RaycastHandler.js'
 import PostProcessing from './PostProcessing.js'
+import Cursor from './Utils/Cursor.js'
 
 let experience = null
 
@@ -41,6 +42,7 @@ export default class Experience
         this.renderer = null
         this.world = null
         this.raycastHandler = null
+        this.cursor = null
 
         this.resizeBound = this.resize.bind(this)
         this.updateBound = this.update.bind(this)
@@ -60,6 +62,7 @@ export default class Experience
         this.renderer = new Renderer()
         this.world = new World()
         this.raycastHandler = new RaycasterHandler()
+        this.cursor = new Cursor()
         this.interface = null
 
         this.sceneReady = false
@@ -88,7 +91,10 @@ export default class Experience
             this.raycastHandler.update()
         }
 
-       (this.sceneReady && this.interface) && this.interface.update()
+       if (this.sceneReady && this.interface) {
+        this.interface.update()
+        this.cursor.update()
+       }
     }
 
     destroy()
@@ -137,6 +143,8 @@ export default class Experience
         this.world = null
         this.raycastHandler.destroy()
         this.raycastHandler = null
+        this.cursor.destroy()
+        this.cursor = null
 
         this.resizeBound = null
         this.updateBound = null

@@ -21,6 +21,7 @@
 html {
     font-size: calc(10 * (100vw / var(--size)));
     --width: 500px;
+    cursor: none;
 }
 
 html,

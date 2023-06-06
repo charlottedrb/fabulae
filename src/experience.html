@@ -9,6 +9,19 @@
 <body>
     <main data-taxi>
         <div data-taxi-view>
+            <div class="absolute top-0 left-0 cursor pointer-events-none z-50">
+                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1155_2)">
+                <path d="M25 14C25 20.105 29.895 25 36 25C29.895 25 25 29.95 25 36C25 29.895 20.05 25 14 25C20.05 25 25 20.105 25 14Z" fill="#F4FAFC"/>
+                <circle class="origin-center" cx="25" cy="25" r="24.5" stroke="#F4FAFC"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_1155_2">
+                <rect width="50" height="50" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+            </div>
             <div class="absolute top-0 h-screen flex flex-col justify-center gap-y-40 ml-container border-l-white border-l-px z-1 opacity-0 pointer-events-none navigation">
                 <div class="group navigation__link"><div class="svg-wrapper w-25 inline-block -ml-[1.25rem] navigation__link-icon"><img class="w-full" src="/images/logo-icon.svg"></div> <span>Amour</span></div>
                 <div class="group navigation__link"><div class="svg-wrapper w-25 inline-block -ml-[1.25rem] navigation__link-icon"><img class="w-full" src="/images/logo-icon.svg"></div> <span>Voyage</span></div>
@@ -50,7 +63,7 @@
                 <div class="col-span-full bg-night-blue/50 overlay__content">
                     <!-- Book content -->
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full book__content">
-                        <img src="/images/book/blue/Livre_30001.webp" class="object-cover h-full select-none book__image" />
+                        <img src="/images/book/blue/Livre_0001.webp" class="object-cover h-full select-none book__image" />
                         <div class="absolute top-[8rem] left-[18.5rem] w-[55rem] h-[83.5vh] px-70 py-60 opacity-0 svg-wrapper book__left-page">
                             <div class="w-full h-full select-none overflow-auto book__left-page__content"></div>
                             <div class="book__author-infos absolute top-50 left-0 h-full w-full opacity-0">
@@ -84,8 +97,8 @@
         
                     <!-- Pager -->
                     <div class="absolute bottom-0 left-1/2 -translate-x-1/2 pager z-1">
-                        <div class="absolute bottom-10 -translate-x-full left-0 text-white font-roystorie text-30 pr-25 opacity-0 cursor-pointer pager__previous">Précédente</div>
-                        <div class="absolute bottom-10 translate-x-full right-0 text-white font-roystorie text-30 pl-25 opacity-0 cursor-pointer pager__next">Suivante</div>
+                        <div class="absolute bottom-10 -translate-x-full left-0 text-white font-roystorie text-30 pr-25 opacity-0 pager__previous">Précédente</div>
+                        <div class="absolute bottom-10 translate-x-full right-0 text-white font-roystorie text-30 pl-25 opacity-0 pager__next">Suivante</div>
                         <!-- Board -->
                         <div class="svg-wrapper w-300">
                             <img class="pager__board" src="/images/page-board.svg" alt="page-board">
@@ -109,7 +122,7 @@
                 </div>
         
                 <!-- Close button -->
-                <div class="absolute top-50 right-50 w-[2.5rem] h-[2.5rem] cursor-pointer overlay-close">
+                <div class="absolute top-50 right-50 w-[2.5rem] h-[2.5rem] overlay-close">
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-white w-full h-[1px] rotate-45"></div>
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-white w-full h-[1px] -rotate-45"></div>
                 </div>

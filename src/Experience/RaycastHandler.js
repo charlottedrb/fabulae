@@ -84,6 +84,7 @@ export default class RaycasterHandler
             if(!this.currentIntersect)
             {
                 this.currentIntersect = intersects[0]
+                this.experience.interface && this.experience.cursor.onCursorEnter()
                 let uniqueID = null
                 this.indexes[this.currentIntersect.object.uuid].forEach(element => {
                     const timing = element.split('_')[1]
@@ -94,6 +95,7 @@ export default class RaycasterHandler
                 if (this.callbacks[uniqueID] && (this.timings[uniqueID] == 'enter') || (this.timings[uniqueID] == 'both')) {
                     this.callbacks[uniqueID]()
                 }
+
             }
         }
         else
@@ -113,6 +115,7 @@ export default class RaycasterHandler
             }
             
             this.currentIntersect = null
+            this.experience.interface && this.experience.cursor.onCursorLeave()
         }
     }
 
