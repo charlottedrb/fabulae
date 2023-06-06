@@ -17,9 +17,13 @@
 }
 
 .landing__title {
-    @apply relative bg-night-blue text-100 xl:text-150 text-white font-roystorie uppercase leading-[100%] whitespace-nowrap cursor-pointer z-[1]; 
+    @apply relative text-100 xl:text-150 text-white font-roystorie uppercase leading-[100%] whitespace-nowrap z-[2]; 
 
+    &-bg {
+        @apply absolute top-0 left-0 w-full h-full bg-night-blue content-[''];
+    }
+    
     &-content {
-        @apply absolute top-1/2 -translate-y-1/2 right-0 w-350 xl:w-440 pl-35 text-white text-12 xl:text-15 font-dubai
+        @apply absolute top-1/2 -translate-y-1/2 right-0 w-350 xl:w-440 pl-35 text-white text-12 xl:text-15 font-dubai -z-1;
     }
 }

@@ -42,7 +42,6 @@ export default class Experience
         this.renderer = null
         this.world = null
         this.raycastHandler = null
-        this.cursor = null
 
         this.resizeBound = this.resize.bind(this)
         this.updateBound = this.update.bind(this)
@@ -93,7 +92,6 @@ export default class Experience
 
        if (this.sceneReady && this.interface) {
         this.interface.update()
-        this.cursor.update()
        }
     }
 

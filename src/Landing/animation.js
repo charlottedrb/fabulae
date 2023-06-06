@@ -1,5 +1,6 @@
 import gsap from "gsap";
 import Splitting from "splitting";
+import Cursor from "../Experience/Utils/Cursor";
 
 export default class Animation {
   constructor() {
@@ -8,6 +9,8 @@ export default class Animation {
 
   init() {
     this.animation = gsap.timeline()
+
+    this.cursor = new Cursor()
 
     this.getElements();
     this.events();
@@ -28,6 +31,13 @@ export default class Animation {
     this.titles = document.querySelectorAll(".landing__title")
     this.titlesWithContent = document.querySelectorAll('.landing__title-with-content')
     this.titlesContent = document.querySelectorAll(".landing__title-content")
+
+    /**
+     * Logo
+     */
+    this.logo = document.querySelector('.landing__logo')
+
+    this.landingContent = document.querySelector('.landing__content')
   }
 
   splitTitles() {
@@ -48,17 +58,26 @@ export default class Animation {
 
   onEnterCompleted()
   {
-    this.animation.to(this.leftIllustration, {
+    this.animation
+    .to(this.leftIllustration, {
       x: '-50%',
       delay: 1.5,
       duration: 2.2,
       ease: 'power3.inOut'
     })
-    this.animation.to(this.rightIllustration, {
+    .to(this.rightIllustration, {
       x: '50%',
       duration: 2.2,
       ease: 'power3.inOut'
     }, '-=2.2')
+    .to(this.logo, {
+      opacity: 0.05,
+      duration: 0.8, 
+      ease: 'power2.inOut'
+    })
+    .to(this.landingContent, {
+      alpha: 1,
+    }, '-=0.5')
 
     this.animateTitles()
   }
@@ -69,7 +88,7 @@ export default class Animation {
     })
 
     this.splittedTitles.forEach((title, i) => {
-        const delay = i === 0 ? '-=1.2' : '-=0.6'
+        const delay = '-=0.6'
         this.animation.to(title.chars, {
             y: '0%',
             alpha: 1,
@@ -81,7 +100,6 @@ export default class Animation {
 
     this.animation.set(this.titles, {
       pointerEvents: 'auto',
-      cursor: 'pointer'
     })
   }
 
@@ -97,9 +115,14 @@ export default class Animation {
       pointerEvents: 'none',
       cursor: 'auto'
     })
+
+    gsap.set(this.landingContent, {
+      alpha: 0
+    })
   }
 
   showContent(index) {
+    this.cursor.onCursorEnterBound()
     gsap.to(this.titlesContent[index], {
       x: '100%',
       duration: 0.8,
@@ -108,6 +131,7 @@ export default class Animation {
   }
 
   hideContent(index) {
+    this.cursor.onCursorLeaveBound()
     gsap.to(this.titlesContent[index], {
       x: 0,
       delay: 0.2,

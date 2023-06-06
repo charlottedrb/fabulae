@@ -2,8 +2,16 @@ import { throttle } from 'throttle-debounce';
 import gsap from 'gsap';
 import Experience from '../Experience';
 
+let cursor = null
 export default class Cursor {
     constructor() {
+        if (cursor) {
+            return cursor
+        }
+        
+        cursor = this
+        window.cursor = this
+
         this.getElements()
 
         this.onCursorMoveBound = throttle(5, this.onCursorMove.bind(this))
@@ -51,8 +59,6 @@ export default class Cursor {
             height: this.cursor.getBoundingClientRect().height
         }
     }
-
-    update() { }
 
     destroy() {
         window.removeEventListener('mousemove', this.onCursorMoveBound)

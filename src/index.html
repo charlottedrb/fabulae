@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="./styles/app.css">
 </head>
 <body>
+    <div class="absolute top-0 left-0 cursor pointer-events-none z-50">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_1155_2)">
+        <path d="M25 14C25 20.105 29.895 25 36 25C29.895 25 25 29.95 25 36C25 29.895 20.05 25 14 25C20.05 25 25 20.105 25 14Z" fill="#F4FAFC"/>
+        <circle class="origin-center" cx="25" cy="25" r="24.5" stroke="#F4FAFC"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_1155_2">
+        <rect width="50" height="50" fill="white"/>
+        </clipPath>
+        </defs>
+        </svg>
+    </div>
     <main data-taxi>
         <div class="h-screen w-screen relative" data-taxi-view>
             <div class="w-full h-full absolute top-0 left-0 z-10 pointer-events-none">
@@ -14,30 +27,37 @@
                 <img class="absolute top-0 right-0 w-full object-center" id="right-illustration" src="/images/landing-bg-right.png" alt="illu-right">
             </div>
             <div class="px-container">
-                <div class="grid grid-cols-12 justify-between items-start relative pt-container">
-                    <div class="col-start-1 col-end-5 xl:col-end-4 text-white uppercase font-dubai text-15 leading-1.6">La bibliothèque des souvenirs <br/> est un lieu de partage des histoires <br/> et des savoirs de nos anciens.</div>
-                    <div class="col-start-11 xl:col-start-12 col-end-13"><img src='/images/logo.png' class="object-cover" /></div>
+                <div class="landing__content">
+                    <div class="grid grid-cols-12 justify-between items-start relative pt-container">
+                        <div class="col-start-1 col-end-5 xl:col-end-4 text-white uppercase font-dubai text-15 leading-1.6">La bibliothèque des souvenirs <br/> est un lieu de partage des histoires <br/> et des savoirs de nos anciens.</div>
+                        <div class="col-start-11 xl:col-start-12 col-end-13"><img src='/images/logo.png' class="object-cover" /></div>
+                    </div>
+                    <div class="absolute top-1/2 left-1/2 flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 z-1">
+                        <div class="relative w-[fit-content]">
+                            <div class="landing__title landing__title-with-content">Raconter</div>
+                            <div class="landing__title-bg"></div>
+                            <div class="landing__title-content">Pour y accéder emprunter les escaliers, l’un vous transportera au cœur des récits de voyages, d’amour, de peur et d’humour, l’autre vous guidera vers des conseils et des astuces.</div>
+                        </div>
+                        <div class="relative w-[fit-content] pl-150">
+                            <div class="landing__title landing__title-with-content">Partager</div>
+                            <div class="landing__title-bg"></div>
+                            <div class="landing__title-content">Vous pouvez commenter, appeler et rendez visite à nos anciens pour découvrir plus en détail leurs aventures. Les livres scellés sont accessibles grâce à un code que seuls les concernés possèdent.</div>
+                        </div>
+                        <div class="relative w-[fit-content] pl-300 group">
+                            <div class="landing__title">Rapprocher</div>
+                            <a href="experience.html" class="absolute left-1/2 -translate-x-1/2 flex justify-center border-px border-white rounded-10 group-hover:shadow-[0_0_15px_var('--color-pale-blue')] group-hover:shadow-pale-blue transition-shadow ease-expo-out duration-500">
+                                <div class="w-[fit-content] py-15 xl:py-25 px-25 xl:px-35 text-white text-18 xl:text-22 font-roystorie uppercase">Entrez dans la bibliothèque des souvenirs</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="absolute left-50 bottom-50 pointer-events-none">
+                        <div class="grid grid-cols-12 justify-between items-start pt-container">
+                            <div class="col-start-1 col-end-3 text-white uppercase font-dubai text-15 leading-1.6">Maison de retraite<br/> Les Lilas - Annecy</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="absolute top-1/2 left-1/2 flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 z-1">
-                    <div class="relative w-[fit-content]">
-                        <div class="landing__title landing__title-with-content">Raconter</div>
-                        <div class="landing__title-content">Pour y accéder emprunter les escaliers, l’un vous transportera au cœur des récits de voyages, d’amour, de peur et d’humour, l’autre vous guidera vers des conseils et des astuces.</div>
-                    </div>
-                    <div class="relative w-[fit-content] pl-150">
-                        <div class="landing__title landing__title-with-content">Partager</div>
-                        <div class="landing__title-content">Vous pouvez commenter, appeler et rendez visite à nos anciens pour découvrir plus en détail leurs aventures. Les livres scellés sont accessibles grâce à un code que seuls les concernés possèdent.</div>
-                    </div>
-                    <div class="relative w-[fit-content] pl-300 group">
-                        <div class="landing__title">Rapprocher</div>
-                        <a href="experience.html" class="absolute left-1/2 -translate-x-1/2 flex justify-center border-px border-white rounded-10 group-hover:shadow-[0_0_15px_var('--color-pale-blue')] group-hover:shadow-pale-blue transition-shadow ease-expo-out duration-500">
-                            <div class="w-[fit-content] py-15 xl:py-25 px-25 xl:px-35 text-white text-18 xl:text-22 font-roystorie uppercase">Entrez dans la bibliothèque des souvenirs</div>
-                        </a>
-                    </div>
-                </div>
-                <div class="absolute left-50 bottom-50 pointer-events-none">
-                    <div class="grid grid-cols-12 justify-between items-start pt-container">
-                        <div class="col-start-1 col-end-3 text-white uppercase font-dubai text-15 leading-1.6">Maison de retraite<br/> Les Lilas - Annecy</div>
-                    </div>
+                <div class="landing__logo absolute bottom-0 left-0 w-screen svg-wrapper pointer-events-none z-1">
+                    <img src="/images/logo.svg" class="w-full"/>
                 </div>
             </div>
         </div>
