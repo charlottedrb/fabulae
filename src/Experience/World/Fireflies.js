@@ -33,13 +33,13 @@ export default class Fireflies
     setGeometry()
     {
         this.geometry = new THREE.BufferGeometry()
-        const firefliesCount = 500
+        const firefliesCount = 5000
         const positionArray = new Float32Array(firefliesCount * 3)
         const scaleArray = new Float32Array(firefliesCount)
         for(let i = 0; i < firefliesCount; i++)
         {
-            positionArray[i * 3 + 0] = (Math.random() - 0.5) * 6
-            positionArray[i * 3 + 1] = Math.random() * 4
+            positionArray[i * 3 + 0] = (Math.random() - 0.5) * 8
+            positionArray[i * 3 + 1] = Math.random() * 8
             positionArray[i * 3 + 2] = (Math.random() - 0.5) * 8
             scaleArray[i] = Math.random()
         }
@@ -50,7 +50,6 @@ export default class Fireflies
 
     setMaterial()
     {
-        // this.material = new THREE.PointsMaterial({ size: 0.1, sizeAttenuation: true })
         this.material = new THREE.ShaderMaterial({
             depthWrite: false,
             // transparent: true,
@@ -58,7 +57,7 @@ export default class Fireflies
             uniforms:
             {
                 uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-                uSize: { value: 80 },
+                uSize: { value: 350 },
                 uTime: { value: 0 },
             },
             vertexShader: `
@@ -88,6 +87,7 @@ export default class Fireflies
 
                     // gl_FragColor = vec4(0.64, 0.93, 0.96, strength);
                     gl_FragColor = vec4(1.0, 0.91, 0.51, strength);
+                    // gl_FragColor = vec4(0.0, 0.0, 1.0, strength);
                 }
             `
         })
@@ -96,15 +96,25 @@ export default class Fireflies
     setMesh()
     {
         this.mesh = new THREE.Points(this.geometry, this.material)
+        this.mesh.scale.set(10, 10, 10)
+        this.mesh.position.y += -10
         this.scene.add(this.mesh)
     }
 
+    updateFirefliesSize() {
+        this.material.uniforms.uSize.value = 250
+    }
+
     resize() {
-        this.material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2)
+        if (this.material) {
+            this.material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2)
+        }
     }
 
     update() {
-        this.material.uniforms.uTime.value = (this.mouse.y * 0.001) * (this.mouse.x * 0.001) * (this.time.elapsed / 2500)
+        if (this.material && this.time) {
+            this.material.uniforms.uTime.value = (this.mouse.y * 0.001) * (this.mouse.x * 0.001) * (this.time.elapsed / 2500)
+        }
     }
 
     destroy() {

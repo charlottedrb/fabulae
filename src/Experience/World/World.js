@@ -42,6 +42,7 @@ export default class World {
                     this.libraryRoom.events()
                     this.experience.interface.navigation.show();
                     this.libraryRoom.setScrollIndication()
+                    this.fireflies.updateFirefliesSize()
                 });
             }
 
