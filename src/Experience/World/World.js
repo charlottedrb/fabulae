@@ -35,7 +35,7 @@ export default class World {
                 this.libraryRoom.setCameraPosition();
                 this.libraryRoom.events()
                 this.experience.interface.navigation.show();
-                    this.libraryRoom.setScrollIndication()
+                this.libraryRoom.setScrollIndication()
             } else {
                 this.visualLoader.disapear();
                 this.stairsRoom = new StairsRoom();

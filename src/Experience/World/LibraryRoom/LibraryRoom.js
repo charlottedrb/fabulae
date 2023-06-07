@@ -86,27 +86,19 @@ export default class LibraryRoom extends EventEmitter {
     setModels()
     {
         this.room = this.resources.items.libraryRoom
-        console.log(this.room);
-        this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
+        this.roomCamera = this.room.scene.getObjectByName('Camera')
 
         /** Tree */
         const treeMaterial = new THREE.SpriteMaterial({ map: this.resources.items.arbreColor })
         this.tree = new THREE.Sprite(treeMaterial)
         this.tree.position.set(-1.38, 6.91, 4.94)
         this.tree.scale.set(24.43, 15.43, 0)
-        // this.tree.scene.rotation.set(0, 0, 0)
-        // this.tree.scene.traverse((obj) => {
-        //     if (obj.isMesh) {
-        //         obj.material.side = THREE.DoubleSide
-        //     }
-        // })
+        this.scene.add(this.tree)
 
         /** Vitrail */
         this.vitrail = this.room.scene.getObjectByName('Vitrail_Centre')
         const vitrailMaterial = new THREE.MeshBasicMaterial().copy(this.vitrail.material)
         this.vitrail.material = vitrailMaterial
-
-        this.scene.add(this.tree)
 
         /** Cloison */
         this.cloison = this.room.scene.getObjectByName('Cloison_Baked_Baked')
@@ -163,7 +155,8 @@ export default class LibraryRoom extends EventEmitter {
     setCameraAnimation()
     {
         this.animMixer = new THREE.AnimationMixer(this.camera.instance)
-        this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.room.animations, 'CameraAction.001'))
+        console.log(this.room.animations);
+        this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.room.animations, 'CameraAction.002'))
         this.cameraAction.setLoop(THREE.LoopRepeat)
 
         setTimeout(() => {
