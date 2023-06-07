@@ -13,22 +13,26 @@ export default class Environment
         // Debug
         if(this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder('environment')
+            this.debugFolder = this.debug.ui.addFolder('environment').close()
         }
 
+        this.setAmbientLight()
         this.setSunLight()
-        this.setEnvironmentMap()
     }
 
     setSunLight()
     {
-        this.sunLight = new THREE.DirectionalLight('#ffffff', 4)
+        this.sunLight = new THREE.DirectionalLight('#fff', 6)
         this.sunLight.castShadow = true
         this.sunLight.shadow.camera.far = 15
         this.sunLight.shadow.mapSize.set(1024, 1024)
         this.sunLight.shadow.normalBias = 0.05
-        this.sunLight.position.set(3.5, 2, - 1.25)
+        this.sunLight.position.set(-0.8, 2.5, 1.7)
+        this.sunLight.target.position.set(0, 0, 0)
         this.scene.add(this.sunLight)
+
+        // this.lightHelper = new THREE.DirectionalLightHelper(this.sunLight, 0.25)
+        // this.scene.add(this.lightHelper)
 
         // Debug
         if(this.debug.active)
@@ -50,8 +54,8 @@ export default class Environment
             this.debugFolder
                 .add(this.sunLight.position, 'y')
                 .name('sunLightY')
-                .min(- 5)
-                .max(5)
+                .min(- 100)
+                .max(100)
                 .step(0.001)
             
             this.debugFolder
@@ -61,6 +65,17 @@ export default class Environment
                 .max(5)
                 .step(0.001)
         }
+    }
+
+    setSunLightBlue() {
+        this.sunLight.color.set('#b0b1ff')
+        this.sunLight.intensity = 0.5
+    }
+
+    setAmbientLight()
+    {
+        this.ambientLight = new THREE.AmbientLight('#fff', 5)
+        this.scene.add(this.ambientLight)
     }
 
     setEnvironmentMap()
@@ -97,5 +112,18 @@ export default class Environment
                 .step(0.001)
                 .onChange(this.environmentMap.updateMaterials)
         }
+    }
+
+    destroy() {
+        this.debugFolder.remove()
+        this.sunLight.dispose()
+        this.sunLight = null
+        this.environmentMap.texture.dispose()
+        this.environmentMap = null
+
+        this.experience = null
+        this.scene = null
+        this.resources = null
+        this.debug = null
     }
 }

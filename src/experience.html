@@ -5,14 +5,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fabulae - Experience</title>
     <link rel="stylesheet" href="./styles/app.css">
+    <link rel="icon" href="/images/favicon.svg" />
 </head>
 <body>
+    <div class="absolute top-0 left-0 cursor pointer-events-none z-50">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_1155_2)">
+        <path d="M25 14C25 20.105 29.895 25 36 25C29.895 25 25 29.95 25 36C25 29.895 20.05 25 14 25C20.05 25 25 20.105 25 14Z" fill="#F4FAFC"/>
+        <circle class="origin-center" cx="25" cy="25" r="24.5" stroke="#F4FAFC"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_1155_2">
+        <rect width="50" height="50" fill="white"/>
+        </clipPath>
+        </defs>
+        </svg>
+    </div>
     <main data-taxi>
         <div data-taxi-view>
+            <div class="absolute top-0 h-screen flex flex-col justify-center gap-y-40 ml-container border-l-white border-l-px z-1 opacity-0 pointer-events-none navigation">
+                <div class="group navigation__link"><div class="svg-wrapper w-25 inline-block -ml-[1.25rem] navigation__link-icon"><img class="w-full" src="/images/logo-icon.svg"></div> <span>Amour</span></div>
+                <div class="group navigation__link"><div class="svg-wrapper w-25 inline-block -ml-[1.25rem] navigation__link-icon"><img class="w-full" src="/images/logo-icon.svg"></div> <span>Voyage</span></div>
+                <div class="group navigation__link"><div class="svg-wrapper w-25 inline-block -ml-[1.25rem] navigation__link-icon"><img class="w-full" src="/images/logo-icon.svg"></div> <span>Cocasse</span></div>
+                <div class="group navigation__link"><div class="svg-wrapper w-25 inline-block -ml-[1.25rem] navigation__link-icon"><img class="w-full" src="/images/logo-icon.svg"></div> <span>Sensationnel</span></div>
+            </div>
+            <div class="category__name-container">
+                <div class="overflow-hidden category__name-Amour">Amour</div>
+                <div class="overflow-hidden category__name-Voyage">Voyage</div>
+                <div class="overflow-hidden category__name-Cocasse">Cocasse</div>
+                <div class="overflow-hidden category__name-Sensationnel">Sensationnel</div>
+            </div>
+
             <canvas class="webgl"></canvas>
+            <video id="video" playsinline webkit-playsinline muted loop autoplay width="320" height="240" src="/videos/background.mp4" style="display: none;"></video>
+
+            <img class="indication" id="stairs-indication" src="/images/notices/stairs.png" alt="">
+            <img class="indication" id="scroll-indication" src="/images/notices/scroll.png" alt="">
+            <img class="indication" id="book-indication" src="/images/notices/book.png" alt="">
+
+            <div>
+                <p class="loader"><span class="rate">0</span><span>%</span></p>
+                <img class="loader-gif" src="/images/loader/loader.gif" alt="">
+                <svg class="loader-circle" version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 693.9 693.9" style="enable-background:new 0 0 693.9 693.9;" xml:space="preserve">
+                    <style type="text/css">
+                        .st0{fill:none;stroke:url(#SVGID_1_);stroke-width:5;stroke-miterlimit:10;}
+                        .st1{fill:url(#SVGID_00000093858657821584767640000001542609506717549751_);}
+                    </style>
+                    <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="3.7441" y1="346.9606" x2="690.1771" y2="346.9606">
+                        <stop  offset="0" style="stop-color:#7F5B21"/>
+                        <stop  offset="0.4673" style="stop-color:#FFEDB7"/>
+                        <stop  offset="1" style="stop-color:#7E571F"/>
+                    </linearGradient>
+                    <circle class="st0" cx="347" cy="347" r="340.7"/>
+                </svg>
+            </div>
+
+            <div class="overlay relative w-screen h-screen grid grid-cols-12 opacity-0 z-[1] pointer-events-none">
+                <div class="col-span-full bg-night-blue/50 overlay__content">
+                    <!-- Book content -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full book__content">
+                        <img src="/images/book/blue/Livre_0001.webp" class="object-cover h-full select-none book__image" />
+                        <div class="absolute top-[8rem] left-[18.5rem] w-[55rem] h-[83.5vh] px-70 py-60 opacity-0 svg-wrapper book__left-page">
+                            <div class="w-full h-full select-none overflow-auto book__left-page__content"></div>
+                            <div class="book__author-infos absolute top-0 -left-40 h-full w-full opacity-0">
+                                <div class="flex flex-col gap-y-25 h-full w-full items-center justify-center">
+                                    <div class="relative pb-[55%] w-240 rounded-[999px]  overflow-hidden">
+                                        <img src="/images/authors/old-woman.jpg" class="absolute top-0 left-0 w-full h-full object-cover book__author-infos__image" />
+                                    </div>
+                                    <div class="font-roystorie text-white text-60 book__author-infos__name"></div>
+                                    <div class="font-roystorie text-white text-18 flex items-center gap-x-10">
+                                        <div class="svg-wrapper w-15 pb-[0.5rem]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="M11.5.5c.5.25 1.5 1.9 1.5 3S12.33 5 11.5 5S10 4.85 10 3.75S11 2 11.5.5m7 8.5C21 9 23 11 23 13.5c0 1.56-.79 2.93-2 3.74V23H3v-5.76c-1.21-.81-2-2.18-2-3.74C1 11 3 9 5.5 9H10V6h3v3h5.5M12 16a2.5 2.5 0 0 0 2.5-2.5H16a2.5 2.5 0 0 0 2.5 2.5a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-2.5-2.5h-13A2.5 2.5 0 0 0 3 13.5A2.5 2.5 0 0 0 5.5 16A2.5 2.5 0 0 0 8 13.5h1.5A2.5 2.5 0 0 0 12 16Z"/></svg></div>
+                                        <div class="book__author-infos__birthdate"></div>
+                                    </div>
+                                    <button class="py-10 px-25 font-roystorie text-white cursor-none text-18 border-px border-white rounded-10">Envoyer un e-mail</button>
+                                </div>
+                            </div>
+                            <div class="absolute top-0 left-0 p-25 w-full h-full select-none pointer-events-none border__style-title book__page-border">
+                                <img class="absolute top-15 left-15 w-240 rotate-180" src="/images/svg/Book/ornement-page.svg" alt="" srcset="">
+                                <img class="absolute top-15 right-15 w-240 -rotate-90" src="/images/svg/Book/ornement-page.svg" alt="" srcset="">
+                                <img class="absolute bottom-15 left-15 w-240 rotate-90" src="/images/svg/Book/ornement-page.svg" alt="" srcset="">
+                                <img class="absolute bottom-15 right-15 w-240" src="/images/svg/Book/ornement-page.svg" alt="" srcset="">
+                            </div>
+                            <div class="absolute top-0 left-0 p-25 w-full h-full select-none pointer-events-none border__style-text book__page-border">
+                                <img class="absolute top-15 left-15 w-full px-30" src="/images/svg/Book/ornement-page-haut.svg" alt="" srcset="">
+                                <img class="absolute bottom-15 left-15 w-full px-30" src="/images/svg/Book/ornement-page-bas.svg" alt="" srcset="">
+                            </div>
+                        </div>
+                        <div class="absolute top-[8rem] right-[17rem] w-[55rem] h-[83.5vh] px-70 py-60 opacity-0 svg-wrapper book__right-page">
+                            <div class="w-full h-full select-none overflow-auto book__right-page__content"></div>
+                            <div class="absolute top-0 left-0 p-25 w-full h-full select-none pointer-events-none book__page-border">
+                                <img class="absolute top-15 left-15 w-full px-30" src="/images/svg/Book/ornement-page-haut.svg" alt="" srcset="">
+                                <img class="absolute bottom-15 left-15 w-full px-30" src="/images/svg/Book/ornement-page-bas.svg" alt="" srcset="">
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Pager -->
+                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 pager z-1">
+                        <div class="absolute bottom-10 -translate-x-full left-0 text-white font-roystorie text-30 pr-25 opacity-0 pager__previous">Précédente</div>
+                        <div class="absolute bottom-10 translate-x-full right-0 text-white font-roystorie text-30 pl-25 opacity-0 pager__next">Suivante</div>
+                        <!-- Board -->
+                        <div class="svg-wrapper w-300">
+                            <img class="pager__board" src="/images/page-board.svg" alt="page-board">
+                        </div>
+                        <!-- Line -->
+                        <div class="border-b-white border-dotted border-b-[0.3rem] rotate-90 origin-center w-300 pager__line"></div>
+                        <!-- Guide -->
+                        <div class="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 svg-wrapper w-100 pager__guide">
+                            <img src="/images/logo-icon.svg" alt="logo-icon">
+                        </div>
+                    </div>
+        
+                    <!-- Login content -->
+                    <div class="hidden flex-col gap-y-70 px-container pt-100">
+                        <div class="font-roystorie text-white text-45 uppercase">Connectez-vous.</div>
+                        <form class="flex flex-col gap-y-40">
+                            <input type="email" placeholder="Email">
+                            <input type="password" placeholder="Mot de passe">
+                        </form>
+                    </div>
+                </div>
+        
+                <!-- Close button -->
+                <div class="absolute top-50 right-50 w-[2.5rem] h-[2.5rem] overlay-close">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-white w-full h-[1px] rotate-45"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 bg-white w-full h-[1px] -rotate-45"></div>
+                </div>
+            </div>
         </div>
     </main>
-    <!-- <canvas class="webgl"></canvas> -->
-    <script type="module" src="./script.js"></script>
+    <script type="module" src="./scripts/webgl.js"></script>
 </body>
 </html>

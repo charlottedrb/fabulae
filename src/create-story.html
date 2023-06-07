@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/app.css">
+    <title>Fabulae - Mon espace</title>
+</head>
+<body>
+    <div class="absolute top-0 left-0 cursor pointer-events-none z-50">
+        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_1155_2)">
+        <path d="M25 14C25 20.105 29.895 25 36 25C29.895 25 25 29.95 25 36C25 29.895 20.05 25 14 25C20.05 25 25 20.105 25 14Z" fill="#F4FAFC"/>
+        <circle class="origin-center" cx="25" cy="25" r="24.5" stroke="#F4FAFC"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_1155_2">
+        <rect width="50" height="50" fill="white"/>
+        </clipPath>
+        </defs>
+        </svg>
+    </div>
+    <main data-taxi>
+        <div class="min-h-screen w-screen relative p-container" data-taxi-view>
+            <form>
+                <div class="flex justify-between items-center">
+                    <div class="font-roystorie text-white text-60">Ajouter une histoire</div>
+                    <input type="submit" value="Partager mon histoire">
+                </div>
+                <input class="w-2/3" type="text" name="title" id="title" placeholder="Titre de l'histoire">
+                <div class="flex flex-col gap-y-10 w-2/3">
+                    <span>Catégorie de votre histoire</span>
+                    <div id="category"></div>
+                </div>
+                <textarea class="w-2/3" name="content" placeholder="Histoire" id="content"></textarea>
+            </form>
+            <div class="absolute bottom-0 left-0 w-screen svg-wrapper pointer-events-none opacity-5">
+                <img src="/images/logo-no-icon.svg" class="w-full"/>
+            </div>
+        </div>
+      </main>
+      <script type="module" src="./scripts/index.js"></script>
+</body>
+</html>

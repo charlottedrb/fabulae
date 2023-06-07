@@ -1,0 +1,47 @@
+export default [
+    {
+        id: 0,
+        title: "Les histoires d'amour de Bernard", 
+        authorId: 0,
+        categoryId: 3,
+        imagePath: '',
+        comments: [],
+        createdAt: '',
+    },
+    {
+        id: 1,
+        title: "Souvenirs de voyages", 
+        authorId: 0,
+        categoryId: 1,
+        imagePath: '',
+        comments: [],
+        createdAt: '',
+    },
+    {
+        id: 2,
+        title: "Histoire d'amour", 
+        authorId: 1,
+        categoryId: 3,
+        imagePath: '',
+        comments: [],
+        createdAt: '',
+    },
+    {
+        id: 3,
+        title: "Anecdotes cocasses", 
+        authorId: 0,
+        categoryId: 0,
+        imagePath: '',
+        comments: [],
+        createdAt: '',
+    },
+    {
+        id: 4,
+        title: "Rencontre avec une star", 
+        authorId: 1,
+        categoryId: 2,
+        imagePath: '',
+        comments: [],
+        createdAt: '',
+    }
+]

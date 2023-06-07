@@ -1,30 +1,57 @@
 export default [
-//     {
-//         name: 'environmentMapTexture',
-//         type: 'cubeTexture',
-//         path:
-//         [
-//             'textures/environmentMap/px.jpg',
-//             'textures/environmentMap/nx.jpg',
-//             'textures/environmentMap/py.jpg',
-//             'textures/environmentMap/ny.jpg',
-//             'textures/environmentMap/pz.jpg',
-//             'textures/environmentMap/nz.jpg'
-//         ]
-//     },
-//     {
-//         name: 'grassColorTexture',
-//         type: 'texture',
-//         path: 'textures/dirt/color.jpg'
-//     },
-//     {
-//         name: 'grassNormalTexture',
-//         type: 'texture',
-//         path: 'textures/dirt/normal.jpg'
-//     },
-//     {
-//         name: 'foxModel',
-//         type: 'gltfModel',
-//         path: 'models/Fox/glTF/Fox.gltf'
-//     }
-]
+    {
+        name: "blueBookModel",
+        type: "gltfModel",
+        path: "models/Book/glTF/Livre_Bleu_Low_3.gltf",
+    },
+    {
+        name: "redBookModel",
+        type: "gltfModel",
+        path: "models/Book/glTF/Livre_Rouge_Low_3.gltf",
+    },
+    {
+        name: "purpleBookModel",
+        type: "gltfModel",
+        path: "models/Book/glTF/Livre_Violet_Low_3.gltf",
+    },
+    {
+        name: "greenBookModel",
+        type: "gltfModel",
+        path: "models/Book/glTF/Livre_Vert_Low_3.gltf",
+    },
+    {
+        name: "stairsRoom",
+        type: "gltfModel",
+        path: "models/Stairs/glTF/room_stairs.gltf",
+    },
+    {
+        name: "libraryRoom",
+        type: "gltfModel",
+        path: "models/Library/glTF/Salle_2_Low.gltf",
+    },
+    {
+        name: "libraryTree",
+        type: "gltfModel",
+        path: "models/Library/Tree/glTF/Arbre_or.gltf",
+    },
+    {
+        name: 'metalnessGround', 
+        type: 'texture', 
+        path: 'textures/library/metalness/sol.jpg'
+    },
+    {
+        name: 'metalnessDoor', 
+        type: 'texture', 
+        path: 'textures/library/metalness/porte.jpg'
+    },
+    {
+        name: 'metalnessPoutre', 
+        type: 'texture', 
+        path: 'textures/library/metalness/poutre.jpg'
+    },
+    {
+        name: 'arbreColor', 
+        type: 'texture', 
+        path: 'textures/library/tree/color.png'
+    }
+];
