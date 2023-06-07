@@ -115,7 +115,7 @@ export default class Fireflies
             this.material.uniforms.uTime.value = this.time.elapsed / 1000
         }
         this.mesh.position.x = (this.mouse.x / 8)
-        this.mesh.position.y = (- this.mouse.y / 8) - 15
+        this.mesh.position.y = (- this.mouse.y / 8) - 55
     }
 
     destroy() {
