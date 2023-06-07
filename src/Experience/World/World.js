@@ -54,6 +54,10 @@ export default class World {
                     this.fireflies.updateFirefliesSize()
                     this.libraryRoom.setSound()
                 });
+
+                this.stairsRoom.transitionShader.on("initTree", () => {
+                    this.libraryRoom.makeTreeVisible()
+                })
             }
 
             this.fireflies = new Fireflies()
@@ -103,6 +107,10 @@ export default class World {
 
         this.visualLoader.destroy();
         this.visualLoader = null;
+
+        this.stairsRoom.off("initLibrary")
+        this.stairsRoom.off("endTransition")
+        this.stairsRoom.off("initTree")
 
         this.experience = null;
         this.scene = null;

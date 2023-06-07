@@ -93,6 +93,7 @@ export default class LibraryRoom extends EventEmitter {
         this.tree = new THREE.Sprite(treeMaterial)
         this.tree.position.set(-1.38, 6.91, 4.94)
         this.tree.scale.set(24.43, 15.43, 0)
+        this.tree.material.opacity = 0
         this.scene.add(this.tree)
 
         /** Vitrail */
@@ -146,6 +147,10 @@ export default class LibraryRoom extends EventEmitter {
         this.excitingShelf = this.room.scene.getObjectByName('Position_Livre_Sensationnel')
     }
 
+    makeTreeVisible() {
+        gsap.to(this.tree.material, { opacity: 1, duration: 1 })
+    }
+
     setShelves()
     {
         this.setBooks(this.loveShelf, this.experience.dataManager.categories.filter(category => category.name === 'Amour')[0].id, 'red')
@@ -157,7 +162,6 @@ export default class LibraryRoom extends EventEmitter {
     setCameraAnimation()
     {
         this.animMixer = new THREE.AnimationMixer(this.camera.instance)
-        console.log(this.room.animations);
         this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.room.animations, 'CameraAction.002'))
         this.cameraAction.setLoop(THREE.LoopRepeat)
 
