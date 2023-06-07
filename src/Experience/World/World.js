@@ -20,7 +20,7 @@ export default class World {
         }
 
         // Debug
-        this.showLibraryOnly = true;
+        this.showLibraryOnly = false;
 
         !this.showLibraryOnly && (this.visualLoader = new VisualLoader());
 
