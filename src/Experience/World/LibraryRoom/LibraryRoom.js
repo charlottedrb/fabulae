@@ -86,45 +86,56 @@ export default class LibraryRoom extends EventEmitter {
     setModels()
     {
         this.room = this.resources.items.libraryRoom
+        console.log(this.room);
         this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
 
         /** Tree */
-        this.tree = this.resources.items.libraryTree
-        this.tree.scene.position.set(0.16, 0.8, 11.26)
-        this.tree.scene.rotation.set(0, 0, 0)
-        this.tree.scene.traverse((obj) => {
-            if (obj.isMesh) {
-                obj.material.side = THREE.DoubleSide
-            }
-        })
+        const treeMaterial = new THREE.SpriteMaterial({ map: this.resources.items.arbreColor })
+        this.tree = new THREE.Sprite(treeMaterial)
+        this.tree.position.set(-1.38, 6.91, 4.94)
+        this.tree.scale.set(24.43, 15.43, 0)
+        // this.tree.scene.rotation.set(0, 0, 0)
+        // this.tree.scene.traverse((obj) => {
+        //     if (obj.isMesh) {
+        //         obj.material.side = THREE.DoubleSide
+        //     }
+        // })
 
-        this.scene.add(this.tree.scene)
+        /** Vitrail */
+        this.vitrail = this.room.scene.getObjectByName('Vitrail_Centre')
+        const vitrailMaterial = new THREE.MeshBasicMaterial().copy(this.vitrail.material)
+        this.vitrail.material = vitrailMaterial
+
+        this.scene.add(this.tree)
 
         /** Cloison */
         this.cloison = this.room.scene.getObjectByName('Cloison_Baked_Baked')
         this.cloison.material.emissiveIntensity = 0.5
 
         /** Ground */
-        this.ground = this.room.scene.getObjectByName('Sol_Baked_Baked')
+        this.ground = this.room.scene.getObjectByName('Sol_Baked001')
         this.ground.material.metalness = 1
-        this.ground.material.roughness = 0.1
+        this.ground.material.roughness = 0
         this.ground.material.metalnessMap = this.resources.items.metalnessGround
         this.ground.material.emissiveIntensity = 0.5
+
+        /** Poutres */
+        this.poutreBas = this.room.scene.getObjectByName('Poutre_Avant_Haut002_Baked_Baked')
+        this.poutreHaut = this.room.scene.getObjectByName('Poutre_Avant_Haut002_Baked_Baked001')
+
+        this.poutreBas.material.emissiveIntensity = 2
 
         if (this.debug.active) {
             this.libraryRoomDebugFolder.add(this.ground.material, 'metalness', 0, 1, 0.01)
             this.libraryRoomDebugFolder.add(this.ground.material, 'roughness', 0, 1, 0.01)
             this.libraryRoomDebugFolder.add(this.ground.material, 'emissiveIntensity', 0, 1, 0.01)
             this.libraryRoomDebugFolder.add(this.ground.material, 'envMapIntensity', 0, 1, 0.01)
-            this.libraryRoomDebugFolder.add(this.tree.scene.position, 'x', -100, 100, 0.01)
-            this.libraryRoomDebugFolder.add(this.tree.scene.position, 'y', -100, 100, 0.01)
-            this.libraryRoomDebugFolder.add(this.tree.scene.position, 'z', -100, 100, 0.01)
-            this.libraryRoomDebugFolder.add(this.tree.scene.scale, 'x', 0, 10, 0.01)
-            this.libraryRoomDebugFolder.add(this.tree.scene.scale, 'y', 0, 10, 0.01)
-            this.libraryRoomDebugFolder.add(this.tree.scene.scale, 'z', 0, 10, 0.01)
-            this.libraryRoomDebugFolder.add(this.tree.scene.rotation, 'x', 0, 100, 0.1)
-            this.libraryRoomDebugFolder.add(this.tree.scene.rotation, 'y', 0, 100, 0.1)
-            this.libraryRoomDebugFolder.add(this.tree.scene.rotation, 'z', 0, 100, 0.1)
+            this.libraryRoomDebugFolder.add(this.tree.position, 'x', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.position, 'y', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.position, 'z', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scale, 'x', 0, 30, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scale, 'y', 0, 30, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scale, 'z', 0, 30, 0.01)
         }
 
         this.room.scene.traverse((obj) => {
@@ -152,7 +163,7 @@ export default class LibraryRoom extends EventEmitter {
     setCameraAnimation()
     {
         this.animMixer = new THREE.AnimationMixer(this.camera.instance)
-        this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.room.animations, 'CameraAction.002'))
+        this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.room.animations, 'CameraAction.001'))
         this.cameraAction.setLoop(THREE.LoopRepeat)
 
         setTimeout(() => {

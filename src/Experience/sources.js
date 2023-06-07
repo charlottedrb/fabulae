@@ -27,7 +27,7 @@ export default [
     {
         name: "libraryRoom",
         type: "gltfModel",
-        path: "models/Library/glTF/Salle_2_L_3.gltf",
+        path: "models/Library/glTF/Salle_2_Low.gltf",
     },
     {
         name: "libraryTree",
@@ -49,4 +49,9 @@ export default [
         type: 'texture', 
         path: 'textures/library/metalness/poutre.jpg'
     },
+    {
+        name: 'arbreColor', 
+        type: 'texture', 
+        path: 'textures/library/tree/color.png'
+    }
 ];
