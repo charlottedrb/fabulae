@@ -110,6 +110,8 @@ export default class LibraryRoom extends EventEmitter {
         this.ground.material.roughness = 0
         this.ground.material.metalnessMap = this.resources.items.metalnessGround
         this.ground.material.emissiveIntensity = 0.5
+        this.ground.material.emissiveMap.minFilter = THREE.LinearFilter
+        this.ground.material.metalnessMap.minFilter = THREE.LinearFilter
 
         /** Poutres */
         this.poutreBas = this.room.scene.getObjectByName('Poutre_Avant_Haut002_Baked_Baked')
