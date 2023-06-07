@@ -16,12 +16,15 @@ export default class LibraryRoom extends EventEmitter {
         this.resources = this.experience.resources
         this.time = this.experience.time
         this.timer = null
+        this.debug = this.experience.debug
 
         this.playCameraAnimationBound = this.playCameraAnimation.bind(this)
         this.resetCameraAnimationBound = this.resetCameraAnimation.bind(this)
         this.pauseCameraAnimationBound = this.pauseCameraAnimation.bind(this)
-        
-        this.shelves = []
+
+        if (this.debug.active) {
+            this.libraryRoomDebugFolder = this.experience.world.worldDebugFolder.addFolder("libraryRoom");
+        }
         
         this.setModels()
         this.setShelves()
@@ -29,6 +32,7 @@ export default class LibraryRoom extends EventEmitter {
 
         this.experience.interface.initNavigation()
         this.onScrollBound = throttle(5, this.onScroll.bind(this))
+
     }
 
     events()
@@ -82,10 +86,57 @@ export default class LibraryRoom extends EventEmitter {
     setModels()
     {
         this.room = this.resources.items.libraryRoom
-        this.roomCamera = this.room.scene.getObjectByName('Camera_Bake_2')
+        this.roomCamera = this.room.scene.getObjectByName('Camera')
+
+        /** Tree */
+        const treeMaterial = new THREE.SpriteMaterial({ map: this.resources.items.arbreColor })
+        this.tree = new THREE.Sprite(treeMaterial)
+        this.tree.position.set(-1.38, 6.91, 4.94)
+        this.tree.scale.set(24.43, 15.43, 0)
+        this.tree.material.opacity = 0
+        this.scene.add(this.tree)
+
+        /** Vitrail */
+        this.vitrail = this.room.scene.getObjectByName('Vitrail_Centre')
+        const vitrailMaterial = new THREE.MeshBasicMaterial().copy(this.vitrail.material)
+        this.vitrail.material = vitrailMaterial
+
+        /** Cloison */
+        this.cloison = this.room.scene.getObjectByName('Cloison_Baked_Baked')
+        this.cloison.material.emissiveIntensity = 0.5
+
+        /** Ground */
+        this.ground = this.room.scene.getObjectByName('Sol_Baked001')
+        this.ground.material.metalness = 1
+        this.ground.material.roughness = 0
+        this.ground.material.metalnessMap = this.resources.items.metalnessGround
+        this.ground.material.emissiveIntensity = 0.5
+        this.ground.material.emissiveMap.minFilter = THREE.LinearFilter
+        this.ground.material.metalnessMap.minFilter = THREE.LinearFilter
+
+        /** Poutres */
+        this.poutreBas = this.room.scene.getObjectByName('Poutre_Avant_Haut002_Baked_Baked')
+        this.poutreHaut = this.room.scene.getObjectByName('Poutre_Avant_Haut002_Baked_Baked001')
+
+        this.poutreBas.material.emissiveIntensity = 2
+
+        if (this.debug.active) {
+            this.libraryRoomDebugFolder.add(this.ground.material, 'metalness', 0, 1, 0.01)
+            this.libraryRoomDebugFolder.add(this.ground.material, 'roughness', 0, 1, 0.01)
+            this.libraryRoomDebugFolder.add(this.ground.material, 'emissiveIntensity', 0, 1, 0.01)
+            this.libraryRoomDebugFolder.add(this.ground.material, 'envMapIntensity', 0, 1, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.position, 'x', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.position, 'y', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.position, 'z', -100, 100, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scale, 'x', 0, 30, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scale, 'y', 0, 30, 0.01)
+            this.libraryRoomDebugFolder.add(this.tree.scale, 'z', 0, 30, 0.01)
+        }
+
         this.room.scene.traverse((obj) => {
             if (obj.isMesh) {
                 obj.material.transparent = false
+                obj.material.depthWrite = true
             }
         })
         this.scene.add(this.room.scene)
@@ -96,20 +147,23 @@ export default class LibraryRoom extends EventEmitter {
         this.excitingShelf = this.room.scene.getObjectByName('Position_Livre_Sensationnel')
     }
 
+    makeTreeVisible() {
+        gsap.to(this.tree.material, { opacity: 1, duration: 1 })
+    }
+
     setShelves()
     {
-        this.setBooks(this.loveShelf, this.experience.dataManager.categories.filter(category => category.name === 'Amour')[0].id)
-        this.setBooks(this.tripShelf, this.experience.dataManager.categories.filter(category => category.name === 'Voyage')[0].id)
-        this.setBooks(this.humorShelf, this.experience.dataManager.categories.filter(category => category.name === 'Cocasse')[0].id)
-        this.setBooks(this.excitingShelf, this.experience.dataManager.categories.filter(category => category.name === 'Sensationnel')[0].id)
+        this.setBooks(this.loveShelf, this.experience.dataManager.categories.filter(category => category.name === 'Amour')[0].id, 'red')
+        this.setBooks(this.tripShelf, this.experience.dataManager.categories.filter(category => category.name === 'Voyage')[0].id, 'blue')
+        this.setBooks(this.humorShelf, this.experience.dataManager.categories.filter(category => category.name === 'Cocasse')[0].id, 'green')
+        this.setBooks(this.excitingShelf, this.experience.dataManager.categories.filter(category => category.name === 'Sensationnel')[0].id, 'purple')
     }
 
     setCameraAnimation()
     {
         this.animMixer = new THREE.AnimationMixer(this.camera.instance)
         this.cameraAction = this.animMixer.clipAction(THREE.AnimationClip.findByName(this.room.animations, 'CameraAction.002'))
-        this.cameraAction.setLoop(THREE.LoopOnce)
-        this.cameraAction.clampWhenFinished = true
+        this.cameraAction.setLoop(THREE.LoopRepeat)
 
         setTimeout(() => {
             this.resetCameraAnimationBound()
@@ -134,10 +188,11 @@ export default class LibraryRoom extends EventEmitter {
 
     update()
     {
+        // this.tree.scene.quaternion.copy(this.camera.instance.quaternion)
         this.animMixer.update(this.time.delta / 1000)
     }
 
-    setBooks(shelf, categoryId) {
+    setBooks(shelf, categoryId, color) {
         const books = this.experience.dataManager.books.filter(book => book.categoryId === categoryId);
         
         if (books.length > 0) {
@@ -147,12 +202,11 @@ export default class LibraryRoom extends EventEmitter {
             
             books.forEach((book, i) => {
                 const position = new THREE.Vector3(
-                    initialPosition.x,
-                    initialPosition.y + shelf.geometry.boundingSphere.radius / 2 - 0.1,
+                    initialPosition.x - 0.18,
+                    initialPosition.y + shelf.geometry.boundingSphere.radius / 2 - 0.08,
                     initialPosition.z - 1 + (bookDistance * i)
                 );
-    
-                new Book(shelf, position, book.id);
+                new Book(shelf, position, book.id, color);
             })
         }
     }

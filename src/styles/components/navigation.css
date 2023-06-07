@@ -1,6 +1,6 @@
 .navigation {
     &__link {
-        @apply font-roystorie text-white text-30 cursor-pointer;
+        @apply font-roystorie text-white text-30;
 
         span.active {
             text-shadow:

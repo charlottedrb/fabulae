@@ -40,11 +40,17 @@ export default [
         visual: '/videos/stories/sensationnel.mp4'
     },
     {
-        id: 4,
+        id: 5,
         bookId: 4,
         title: "Rencontre avec une star",
         content:
         "<p>Il y a quelques années, j'ai eu la chance incroyable de rencontrer une célébrité française lors d'un événement caritatif.</p><p>J'étais à Paris et j'ai assisté à un gala de bienfaisance auquel participaient de nombreuses personnalités du monde du cinéma.</p><p>Alors que je me promenais dans la salle, je me suis retrouvé nez à nez avec l'une de mes actrices préférées, Catherine Deneuve.</p><p>J'étais tellement surprise et impressionnée que j'ai eu du mal à trouver mes mots.</p><p>Mais Mme Deneuve s'est avérée être une personne charmante et très accessible.</p><p>Nous avons commencé à discuter et j'ai été étonnée par sa simplicité et sa gentillesse.</p><p>Elle m'a posé des questions sur ma vie et mes intérêts, et elle a vraiment pris le temps de m'écouter.</p><p>C'était comme si nous étions juste deux personnes ordinaires en train de bavarder.</p><p>Nous avons ri ensemble et échangé quelques anecdotes.</p><p>Je me sentais tellement chanceuse d'avoir cette opportunité de passer du temps avec une icône du cinéma français.</p><p>J'ai également pu prendre une photo avec elle, ce qui a été un souvenir précieux que je chéris encore aujourd'hui.</p><p>Cette rencontre avec Catherine Deneuve m'a montré qu'au-delà de sa renommée, elle reste une personne attentionnée et humble.</p><p>C'était une expérience inoubliable qui a renforcé ma passion pour le cinéma français et m'a donné de merveilleux souvenirs à partager avec ma famille et mes amis.</p>",
         visual: '/videos/stories/voyage.mp4'
     },
+    {
+        id: 6, 
+        bookId: 5,
+        title: "Anecdote sensationnelle", 
+        content: "<p>Je me souviens d'une expérience vraiment sensationnelle qui s'est produite il y a bien longtemps.</p><p>J'étais en voyage à l'étranger, explorant un pays que je n'avais jamais visité auparavant.</p><p>Un jour, alors que je me promenais dans une ville animée, j'ai remarqué une foule rassemblée près d'un bâtiment.</p><p>Intrigué, je me suis approché pour voir ce qui se passait.</p><p>Et là, j'ai réalisé que des artistes de cirque étaient en train de réaliser un numéro spectaculaire en plein air.</p><p>Il y avait des acrobates, des jongleurs, des trapézistes et même un funambule qui marchait sur un fil tendu en hauteur.</p><p>Cependant, ce qui a vraiment attiré mon attention, c'était un homme incroyable qui exécutait des tours de magie époustouflants.</p><p>Il semblait pouvoir faire disparaître et réapparaître des objets sous les yeux ébahis du public.</p><p>J'étais fasciné par ses compétences et je me suis mêlé à la foule pour profiter du spectacle.</p><p>À un moment donné, il a demandé un volontaire pour participer à un tour.</p><p>Par un heureux hasard, il m'a choisi !</p><p>J'étais à la fois ravi et un peu nerveux.</p><p>Le magicien m'a fait asseoir sur une chaise et il a posé une couverture sur moi.</p><p>Lorsqu'il l'a retirée, j'étais complètement stupéfait de constater que j'étais assis sur une chaise en lévitation, suspendu dans les airs !</p><p>C'était une sensation absolument incroyable de flotter dans les hauteurs, soutenu uniquement par la magie du magicien.</p><p>Le public applaudissait et je me sentais comme si j'étais le personnage principal d'un film fantastique.</p><p>Cette expérience sensationnelle restera à jamais gravée dans ma mémoire.</p><p>Elle m'a rappelé la magie qui existe dans le monde et m'a donné une dose d'émerveillement et d'étonnement que je chérirai toujours.</p>"
+    }
 ];

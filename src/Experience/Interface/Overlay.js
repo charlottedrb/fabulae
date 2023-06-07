@@ -2,12 +2,14 @@ import gsap from 'gsap'
 import EventEmitter from '../Utils/EventEmitter'
 import Pager from './Book/Pager'
 import BookContent from './Book/BookContent'
+import Experience from '../Experience'
 
 export default class Overlay extends EventEmitter {
     constructor()
     {
         super()
         
+        this.experience = new Experience()
         this.pager = null 
         this.bookContent = null 
 
@@ -29,28 +31,31 @@ export default class Overlay extends EventEmitter {
 
     initPager()
     {
-        // Reset pager on init
+        this.pager && this.pager.destroy()
         this.pager = null
         this.pager = new Pager()
     }
 
-    initBookContent(bookId)
+    initBookContent(bookId, bookColor)
     {
-        // Reset book content on init
+        this.bookContent && this.bookContent.destroy()
         this.bookContent = null
-        this.bookContent = new BookContent(bookId)
+        this.bookContent = new BookContent(bookId, bookColor)
     }
     
     events()
     {
         this.close.addEventListener('click', this.onCloseClick.bind(this))
+        this.close.addEventListener('mouseenter', this.onCloseEnter.bind(this))
+        this.close.addEventListener('mouseleave', this.onCloseLeave.bind(this))
     }
 
     show() 
     {
         gsap.to(this.el, {
             alpha: 1,
-            pointerEvents: 'auto'
+            pointerEvents: 'auto',
+            delay: 0.5
         })
     }
 
@@ -61,5 +66,13 @@ export default class Overlay extends EventEmitter {
             alpha: 0,
             pointerEvents: 'none'
         })
+    }
+
+    onCloseEnter() {
+        this.experience.cursor.onCursorEnterBound()
+    }
+
+    onCloseLeave() {
+        this.experience.cursor.onCursorLeaveBound()
     }
 }

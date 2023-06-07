@@ -2,17 +2,22 @@ export default [
     {
         name: "blueBookModel",
         type: "gltfModel",
-        path: "models/Book/glTF/Livre_Bleu.gltf",
+        path: "models/Book/glTF/Livre_Bleu_Low_3.gltf",
     },
     {
         name: "redBookModel",
         type: "gltfModel",
-        path: "models/Book/glTF/Livre_Rouge_Low.gltf",
+        path: "models/Book/glTF/Livre_Rouge_Low_3.gltf",
     },
     {
         name: "purpleBookModel",
         type: "gltfModel",
-        path: "models/Book/glTF/Livre_Violet_Low.gltf",
+        path: "models/Book/glTF/Livre_Violet_Low_3.gltf",
+    },
+    {
+        name: "greenBookModel",
+        type: "gltfModel",
+        path: "models/Book/glTF/Livre_Vert_Low_3.gltf",
     },
     {
         name: "stairsRoom",
@@ -22,6 +27,31 @@ export default [
     {
         name: "libraryRoom",
         type: "gltfModel",
-        path: "models/Library/glTF/Test_L.gltf",
+        path: "models/Library/glTF/Salle_2_Low.gltf",
+    },
+    {
+        name: "libraryTree",
+        type: "gltfModel",
+        path: "models/Library/Tree/glTF/Arbre_or.gltf",
+    },
+    {
+        name: 'metalnessGround', 
+        type: 'texture', 
+        path: 'textures/library/metalness/sol.jpg'
+    },
+    {
+        name: 'metalnessDoor', 
+        type: 'texture', 
+        path: 'textures/library/metalness/porte.jpg'
+    },
+    {
+        name: 'metalnessPoutre', 
+        type: 'texture', 
+        path: 'textures/library/metalness/poutre.jpg'
+    },
+    {
+        name: 'arbreColor', 
+        type: 'texture', 
+        path: 'textures/library/tree/color.png'
     }
 ];

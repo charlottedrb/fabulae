@@ -1,14 +1,19 @@
 import * as THREE from 'three'
 import Experience from '../../Experience.js'
 import gsap from "gsap"
+import EventEmitter from '../../Utils/EventEmitter.js'
 
-export default class TransitionShader
+export default class TransitionShader extends EventEmitter
 {
     constructor()
     {
+        super()
+
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+
+        this.setTriggerBound = this.setTrigger.bind(this)
 
         this.setMesh()
     }
@@ -45,13 +50,19 @@ export default class TransitionShader
     }
 
     end() {
-        gsap.to(this.material.uniforms.uAlpha, { duration: 2, value: 0, delay: 1 })
+        gsap.to(this.material.uniforms.uAlpha, { duration: 2, value: 0, delay: 1, onComplete: this.setTriggerBound })
+    }
+
+    setTrigger() {
+        this.trigger('initTree')
+        this.transitionMesh.material.visible = false
     }
 
     destroy() {
         this.experience = null
         this.scene = null
         this.camera = null
+        this.setTriggerBound = null
 
         this.material.dispose()
         this.material = null

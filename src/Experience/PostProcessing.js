@@ -34,12 +34,12 @@ export default class PostProcessing {
         this.gammaPass = new ShaderPass(GammaCorrectionShader);
         this.composer.addPass(this.gammaPass);
 
-        this.fxaaPass = new ShaderPass(FXAAShader);
-        this.fxaaPass.uniforms['resolution'].value.x = 1 / (this.experience.sizes.width * renderer.getPixelRatio());
+        // this.fxaaPass = new ShaderPass(FXAAShader);
+        // this.fxaaPass.uniforms['resolution'].value.x = 1 / (this.experience.sizes.width * renderer.getPixelRatio());
         // this.composer.addPass(this.fxaaPass);
 
-        this.copyPass = new ShaderPass(CopyShader);
-        this.composer.addPass(this.copyPass);
+        // this.copyPass = new ShaderPass(CopyShader);
+        // this.composer.addPass(this.copyPass);
     }
 
     update() {

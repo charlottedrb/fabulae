@@ -152,6 +152,8 @@ export default class Navigation {
                             stagger: 0.05,
                         });
 
+                        this.links[i].querySelector("span").classList.add("active");
+
                     if (i === 0 && !this.hasShowIndication) {
                         this.hasShowIndication = true
                         this.setIndication()
@@ -170,6 +172,8 @@ export default class Navigation {
                         ease: "power2.out",
                         stagger: 0.03,
                     });
+
+                    this.links[i].querySelector("span").classList.remove("active");
                 }
             });
         }

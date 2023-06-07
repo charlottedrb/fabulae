@@ -14,6 +14,11 @@ export default class World {
         this.resources = this.experience.resources;
         this.books = [];
 
+        if (this.experience.debug.active) {
+            this.worldDebugFolder = this.experience.debug.ui.addFolder("world");
+            this.booksDebugFolder = this.worldDebugFolder.addFolder("books").close();
+        }
+
         // Debug
         this.showLibraryOnly = false;
 
@@ -28,6 +33,9 @@ export default class World {
                 this.experience.interface = new InterfaceUI();
                 this.libraryRoom = new LibraryRoom();
                 this.libraryRoom.setCameraPosition();
+                this.libraryRoom.events()
+                this.experience.interface.navigation.show();
+                this.libraryRoom.setScrollIndication()
             } else {
                 this.visualLoader.disapear();
                 this.stairsRoom = new StairsRoom();
@@ -38,6 +46,7 @@ export default class World {
                 });
                 
                 this.stairsRoom.on("endTransition", () => {
+                    this.environment.setSunLightBlue()
                     this.libraryRoom.setCameraPosition()
                     this.libraryRoom.events()
                     this.experience.interface.navigation.show();
@@ -45,6 +54,10 @@ export default class World {
                     this.fireflies.updateFirefliesSize()
                     this.libraryRoom.setSound()
                 });
+
+                this.stairsRoom.transitionShader.on("initTree", () => {
+                    this.libraryRoom.makeTreeVisible()
+                })
             }
 
             this.fireflies = new Fireflies()
@@ -94,6 +107,10 @@ export default class World {
 
         this.visualLoader.destroy();
         this.visualLoader = null;
+
+        this.stairsRoom.off("initLibrary")
+        this.stairsRoom.off("endTransition")
+        this.stairsRoom.off("initTree")
 
         this.experience = null;
         this.scene = null;
