@@ -46,6 +46,7 @@ export default class World {
                 });
                 
                 this.stairsRoom.on("endTransition", () => {
+                    this.environment.setSunLightBlue()
                     this.libraryRoom.setCameraPosition()
                     this.libraryRoom.events()
                     this.experience.interface.navigation.show();
