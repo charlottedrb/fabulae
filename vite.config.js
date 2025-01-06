@@ -4,7 +4,7 @@ const isCodeSandbox = 'SANDBOX_URL' in process.env || 'CODESANDBOX_HOST' in proc
 export default {
     root: 'src/',
     publicDir: '../static/',
-    base: '/fabulae/',
+    base: './',
     server:
     {
         host: true,
