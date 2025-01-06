@@ -96,6 +96,10 @@ export default class LibraryRoom extends EventEmitter {
         this.tree.material.opacity = 0
         this.scene.add(this.tree)
 
+        /** Windows */
+        this.window = this.room.scene.getObjectByName('Fenêtres_Bas')
+        this.window.material.emissiveIntensity = 0.8
+
         /** Vitrail */
         this.vitrail = this.room.scene.getObjectByName('Vitrail_Centre')
         const vitrailMaterial = new THREE.MeshBasicMaterial().copy(this.vitrail.material)

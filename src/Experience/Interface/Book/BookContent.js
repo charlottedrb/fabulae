@@ -44,6 +44,7 @@ export default class BookContent {
          * Sound management
          */
         this.pageTurnSound = new Audio("/sounds/Book/page-turning.mp3");
+        this.pageTurnSound.volume = 0.8
 
         // Loops to handle the images
         this.intervalNextPage = null;

@@ -12,13 +12,13 @@ export default [
     },
     {
         id: 1,
-        firstName: 'Bernard',
-        lastName: 'Pirelli',
-        email: 'bernard.pirelli@gmail.com', 
+        firstName: 'Jacques',
+        lastName: 'Litt',
+        email: 'jacques.litt@gmail.com', 
         phone: '06 12 34 56 78',
-        birthdate: '17/12/1948',
+        birthdate: '17/12/1953',
         showEmail: true, 
         showPhone: false,
-        imagePath: 'old-man.jpg'
+        imagePath: 'thomas.jpg'
     }
 ]
